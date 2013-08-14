@@ -26,7 +26,7 @@ int num_of_mass(int a, int b, int c){
 			}
 		}
 	}
-	printf("CPLUSPLUS: %d %d %d %d\n",a,b,c,myset.size());
+	//printf("CPLUSPLUS: %d %d %d %d\n",a,b,c,myset.size());
 	return myset.size();
 }
 using namespace std;
