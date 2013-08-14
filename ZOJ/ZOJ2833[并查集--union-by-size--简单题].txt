@@ -1,0 +1,67 @@
+#include<iostream>
+#include<cstdio>
+
+using namespace std;
+
+int father[100001];
+
+void Initialize(int N)
+{
+     int i;
+     for(i=1;i<=N;i++)
+       father[i]=-1;
+}
+int Find(int x)
+{
+    if(father[x]<0) return x;
+    return (father[x]=Find(father[x]));
+}
+void Union(int a, int b)
+{
+    int roota, rootb;
+    roota=Find(a);
+    rootb=Find(b);
+    if(roota==rootb) return;
+    if(father[roota]>father[rootb])
+    {
+        father[rootb]+=father[roota];
+        father[roota]=rootb;
+    }
+    else
+    {
+        father[roota]+=father[rootb];
+        father[rootb]=roota;
+    }
+}
+int main()
+{
+    int N,M,i;
+    int cnt=1;
+    char Str[3];
+    int a,b;
+    scanf("%d%d",&N,&M);
+    while(true)
+    {
+        printf("Case %d:\n",cnt++);
+        Initialize(N);
+        for(i=0;i<M;++i)
+        {
+            scanf("%s",Str);
+            if(Str[0]=='M')
+            {
+                scanf("%d%d",&a,&b);
+                Union(a,b);
+            }
+            else
+            {
+                scanf("%d",&a);
+                printf("%d\n",-father[Find(a)]);
+                //printf("%d\n",father[2]);
+            }
+        }
+        if(scanf("%d%d",&N,&M)!=EOF)
+           printf("\n");
+        else break;
+    }
+    return 0;
+}

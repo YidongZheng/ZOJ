@@ -1,0 +1,54 @@
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+
+using namespace std;
+
+int main()
+{
+    int T,n;
+    bool less[26][26];
+    bool already[26][26];
+    char str[10];
+    scanf("%d",&T);
+    for(int m=1;m<=T;++m)
+    {
+	memset(less,0,sizeof(less));
+	memset(already,0,sizeof(already));
+	scanf("%d",&n);
+	for(int i=0;i<n;++i){
+	    scanf("%s",str);
+	    if(str[1]=='<') {
+		less[str[0]-'A'][str[2]-'A']=true;
+		already[str[0]-'A'][str[2]-'A']=true;
+	    }
+	    else
+	    {
+		less[str[2]-'A'][str[0]-'A']=true;
+		already[str[2]-'A'][str[0]-'A']=true;
+	    }
+	}
+	bool found=false;
+	bool found1=false;
+	do{
+	    found=false;
+	    for(int i=0;i<26;++i)
+		for(int j=0;j<26;++j)
+		    for(int k=0;k<26;++k)
+		    {
+			if(!less[i][j]&&less[i][k]&&less[k][j]){
+			    less[i][j]=true;
+			    found=true;
+			    found1=true;
+			}
+		    }
+	}while(found);
+	printf("Case %d:\n",m);
+	for(int i=0;i<26;++i)
+	    for(int j=0;j<26;++j)
+		if(!already[i][j]&&less[i][j])
+		    printf("%c<%c\n",i+'A',j+'A');
+	if(!found1) printf("NONE\n");
+    }
+    return 0;
+}

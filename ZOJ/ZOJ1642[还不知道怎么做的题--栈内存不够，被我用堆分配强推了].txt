@@ -1,0 +1,56 @@
+#include<iostream>
+#include<cstdio>
+#include<map>
+#include<cstring>
+using namespace std;
+
+int main()
+{
+    int T;
+    int tempv;
+    int i,j;
+    char tempc[3];
+    char str1[2002],str2[2002];
+    map<char,int> MyMap;
+    int* DP[2002];
+    for(i=0;i<2002;i++)
+        DP[i]=new int[2002];
+    int len1,len2;
+    int tempmax1,tempmax2,tempmax3;
+    while(scanf("%d",&T)!=EOF)
+    {
+        MyMap.clear();
+        for(i=0;i<T;++i)
+        {
+            scanf("%s%d",tempc,&tempv);
+            MyMap.insert(pair<char,int>(tempc[0],tempv));
+        }
+        scanf("%s%s",str1,str2);
+        len1=strlen(str1);
+        len2=strlen(str2);
+        for(i=0;i<=len1;++i)
+          for(j=0;j<=len2;++j)
+          {
+              DP[i][j]=0;
+          }
+        for(i=1;i<=len1;++i)
+          for(j=1;j<=len2;++j)
+         {
+          DP[i][j]=DP[i-1][j-1]>DP[i-1][j]?DP[i-1][j-1]:DP[i-1][j];
+          DP[i][j]=DP[i][j]>DP[i][j-1]?DP[i][j]:DP[i][j-1];
+          tempmax3=0;
+          if(str1[i-1]==str2[j-1]){
+             tempmax3=DP[i-1][j-1]+MyMap.find(str1[i-1])->second;
+             //printf("%c  The value:    %d\n",str1[i-1],MyMap.find(str1[i-1])->second);
+          }
+          DP[i][j]=DP[i][j]>tempmax3?DP[i][j]:tempmax3;
+          }
+    printf("%d\n",DP[len1][len2]);
+    }
+    //for(i=0;i<2002;i++)
+        //delete []DP;
+    return 0;
+}
+
+//字符的长度为1000到2000之间，开不了那么大的二维DP数组。
+//递归实现的话，时间复杂度为O(N^3). 

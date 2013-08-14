@@ -1,0 +1,93 @@
+#include <cstdio>
+#include <iostream>
+#include <queue>
+#include <cstring>
+
+using namespace std;
+
+char graph[31][31][40];
+bool visited[31][31][31];
+bool found;
+int l,c,r;
+int spl,spx,spy,epl,epx,epy;
+int ans;
+
+struct point
+{
+    int l,x,y,s;
+    point(int ll,int xx,int yy,int ss){l=ll,x=xx,y=yy,s=ss;}
+    point(int ll,int xx,int yy){l=ll,x=xx,y=yy,s=0;}
+};
+
+point move[6]={point(0,0,1),point(0,0,-1),point(0,1,0),point(0,-1,0),
+                point(1,0,0),point(-1,0,0)};
+
+void bfs()
+{
+   queue<point> myq;
+   myq.push(point(spl,spx,spy,0));
+   visited[spl][spx][spy]=true;
+   while(!myq.empty())
+   {
+        point tmp=myq.front();
+        myq.pop();
+        if(tmp.l==epl&&tmp.x==epx&&tmp.y==epy)
+        {
+            found=true;
+            ans=tmp.s;
+            break;
+        }
+        //visited[tmp.l][tmp.x][tmp.y]=true;
+        for(int i=0;i<6;++i)
+        {
+            point tmp2=tmp;
+            tmp2.l+=move[i].l;
+            tmp2.x+=move[i].x;
+            tmp2.y+=move[i].y;
+            tmp2.s=tmp.s+1;
+            if(tmp2.l<0||tmp2.l>=l||tmp2.x<0||tmp2.x>=c
+                ||tmp2.y<0||tmp2.y>=r)continue;
+            if(graph[tmp2.l][tmp2.x][tmp2.y]=='#')continue;
+            if(visited[tmp2.l][tmp2.x][tmp2.y])continue;
+            visited[tmp2.l][tmp2.x][tmp2.y]=true;
+            myq.push(tmp2);
+        }
+   }
+}
+
+int main()
+{
+    //freopen("in.txt","r",stdin);
+    //freopen("out.txt","w",stdout);
+    while(~scanf("%d%d%d",&l,&c,&r)&&(c||l||r))
+    {
+        found=false;
+        memset(visited,0,sizeof(visited));
+        for(int i=0;i<l;++i)
+            for(int j=0;j<c;++j)
+            {
+                scanf("%s",graph[i][j]);
+                for (int k=0;graph[i][j][k];++k){
+                    if(graph[i][j][k]=='S')
+                    {
+                        spl=i,spx=j,spy=k;
+                    }
+                    else if(graph[i][j][k]=='E')
+                    {
+                        epl=i,epx=j,epy=k;
+                    }
+                }
+            }
+        bfs();
+        if(found)
+        {
+            printf("Escaped in %d minute(s).\n",ans);
+        }
+        else
+        {
+            printf("Trapped!\n");
+        }
+
+    }
+    return 0;
+}

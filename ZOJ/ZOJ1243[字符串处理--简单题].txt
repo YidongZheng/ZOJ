@@ -1,0 +1,66 @@
+#include<iostream>
+#include<cstdio>
+#include<cmath>
+#include<cstring>
+
+using namespace std;
+
+int main()
+{
+    int N,i,j,k,m,cur;
+    int len;
+    char proto[63];
+    char host[63];
+    char port[63];
+    char path[63];
+    char URL[63];
+    scanf("%d",&N);
+    for(i=0;i<N;i++)
+    {
+        
+        scanf("%s",URL);
+        len=strlen(URL);
+        strcpy(port,"<default>");
+        strcpy(path,"<default>");
+        printf("URL #%d\n",i+1);
+        for(j=0;URL[j] != ':';j++)
+        {
+           proto[j]=URL[j];
+        }
+        proto[j]=0;
+        cur=j+3;
+        for(k=0;k+cur < len && URL[k+cur] != '/' && URL[k+cur] != ':';k++)
+        {
+            host[k]=URL[k+cur];
+        }
+        host[k]=0;
+        cur=k+cur;
+        if(URL[cur] == ':')
+        {
+          for(m=0;m+cur+1 < len && URL[m+cur+1] != '/';m++)
+          {
+             port[m]=URL[m+cur+1];
+          }
+          cur=m+cur+1;
+          if(m!=0)
+            port[m]=0;
+        }
+        for(m=0;m+cur+1 < len;m++)
+        {
+             path[m]=URL[m+cur+1];
+        }
+        if(m!=0)path[m]=0;
+        //for(k=0;(URL[k+j+3] != ':') && (k+j+3<len) && (URL[k+j+3] != '/');k++)
+        //{
+        //   if(URL[k+j+3] == ':')
+        //     host[k]=URL[k+j+3];
+        //}
+        //host[k]=0;
+        
+        printf("Protocol = %s\n",proto);
+        printf("Host     = %s\n",host);
+        printf("Port     = %s\n",port);
+        printf("Path     = %s\n\n",path);
+    }
+    return 0;
+}

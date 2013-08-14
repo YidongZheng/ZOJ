@@ -1,0 +1,53 @@
+#include<iostream>
+#include<cstdio>
+#include<cmath>
+using namespace std;
+
+int main()
+{
+    double N;
+    int i,j;
+    bool Found;
+    while(scanf("%lf",&N)!=EOF)
+    {
+        if(N==0) break;
+        Found=false;
+        if(N>0)
+        {
+            for(j=32;j>=2;j--)
+            {
+              for(i=2;pow(1.0*i,j)<=N+1;i++)
+              {
+                  if(pow(1.0*i,j)==N)
+                  {
+                    Found=true;
+                    break;
+                  }    
+              }
+              if(Found)
+                break;
+            }
+        }
+        else
+        {
+            N=-N;
+            for(j=31;j>=3;j-=2)
+            {
+              for(i=2;pow(1.0*i,j)<=(N+1);i++)
+              {
+                  if(pow(1.0*i,j)==N)
+                  {
+                    Found=true;
+                    break;
+                  }    
+              }
+              if(Found)
+                break;
+            }
+        }
+        printf("%d\n",j);
+    }
+}
+
+
+//i+1-(Array[i]-N)

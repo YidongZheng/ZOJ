@@ -1,0 +1,40 @@
+#include <stdio.h>
+#include <math.h>
+
+int main()
+{
+    double num;
+    int L;
+    int ans, ansi;
+    int N1,N2,N3;
+    while(~scanf("%lf%d",&num,&L))
+    {
+	double Min=1e10;
+	for(int i=1;i<=L;++i)
+	{
+	    N1=int(num*i);
+	    N2=int(num*i)+1;
+	    N3=int(num*i)-1;
+	    if(N1<=L&&fabs(1.0*N1/i-num)<Min)
+	    {
+		ans = N1;
+		ansi = i;
+		Min = fabs(1.0*N1/i-num);
+	    }
+	    if(N2<=L&&fabs(1.0*N2/i-num)<Min)
+	    {
+		ans = N2;
+		ansi = i;
+		Min = fabs(1.0*N2/i-num);
+	    }
+	    if(N3<=L&&fabs(1.0*N3/i-num)<Min)
+	    {
+		ans = N3;
+		ansi = i;
+		Min = fabs(1.0*N3/i-num);
+	    }
+	}
+	printf("%d %d\n",ans,ansi);
+    }
+    return 0;
+}

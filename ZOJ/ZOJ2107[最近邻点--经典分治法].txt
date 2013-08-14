@@ -1,0 +1,106 @@
+/*基于分治法思想的题目----最近邻点问题    通过分治法，把问题分成两部分来解决，主要是在合并的思路上*/
+
+
+#include<cstdio>
+#include<iostream>
+#include<string>
+#include<algorithm>
+#include<cmath>
+#define Infinity 1000000
+
+using namespace std;
+double PairDis(int Left, int Right);
+double Distance(struct Point A, struct Point B);
+bool CompareX(struct Point a, struct Point b);
+bool CompareY(int a, int b);
+struct Point
+{
+    double x;
+    double y;
+};
+struct Point A[100001];
+int a[100001];
+int main()
+{
+    int N;
+    while(scanf("%d",&N) != EOF)
+    {
+       if(N == 0) break;
+       for(int i=0;i<N;i++)
+       {
+          scanf("%lf%lf",&(A[i].x),&(A[i].y));
+       }
+       sort(A,A+N,CompareX);     //对点序列进行关于x坐标的升序排列 
+       printf("%.2lf\n",PairDis(0,N)/2);  
+    }
+    return 0;
+}
+double PairDis(int Left, int Right)
+{
+     int Sleft,Sright;
+     double min,mid,d1,d2,d3,dis;
+     /*如果是2或者3，则采取简单地计算*/ 
+     if(Right-Left == 2)
+     {  
+         return Distance(A[Right-1],A[Left]);
+     }
+     if(Right-Left == 3)
+     {
+         d1=Distance(A[Right-1],A[Left]);
+         d2=Distance(A[Right-2],A[Left]);
+         d3=Distance(A[Right-2],A[Right-1]);
+         d1=d1<d2?d1:d2;
+         return d1=d1<d3?d1:d3;   
+     }
+     mid = A[(Left+Right)/2].x;    
+     /*递归地计算左右两边*/ 
+     d1=PairDis(Left,(Left+Right)/2);
+     d2=PairDis((Left+Right)/2,Right);
+     min=d1<d2?d1:d2;
+     /*找出mid-min到mid+min的区间*/
+     for(Sleft=(Left+Right)/2;Sleft>Left && A[Sleft].x>=mid-min;Sleft--);
+     for(Sright=(Left+Right)/2;Sright<Right && A[Sright].x<=mid+min;Sright++);
+     int cnt=0;
+     for(int i=Sleft;i<Sright;i++)
+          a[cnt++]=i;
+     sort(a,a+cnt,CompareY); //将相应的坐标的数组索引按纵坐标升序排列 
+     /*对于mid-min到mid的所有点，向上、向下遍历，若y方向上差大于min则break*/
+     for(int i=0;i<cnt;i++)
+     {
+             int j=i;
+             if(a[i]>=(Left+Right)/2)
+                continue;            //mid到mid+min的点直接跳过。 
+             while(j>0 && (A[a[i]].y-A[a[--j]].y)<min)
+             {
+                if((dis=Distance(A[a[i]],A[a[j]]))<min)
+                    min=dis;
+             }
+             j=i;
+             while(j<cnt-1 && (A[a[++j]].y-A[a[i]].y)<min)
+             {
+                if((dis=Distance(A[a[i]],A[a[j]]))<min)
+                    min=dis;
+             }
+     }
+     
+     return min;
+}
+bool CompareX(struct Point a, struct Point b)
+{
+     if(a.x < b.x)
+         return true;
+     else
+         return false;
+}
+
+bool CompareY(int a, int b)
+{
+     if(A[a].y < A[b].y)
+         return true;
+     else
+         return false;
+}
+inline double Distance(struct Point A, struct Point B)
+{
+       return sqrt((A.x-B.x)*(A.x-B.x)+(A.y-B.y)*(A.y-B.y));
+}

@@ -1,0 +1,85 @@
+/* ZOJ Problem Set - 3008
+ * Gold Coins
+ * zyd 2012-12-29
+ * intFactor & DFS.
+ */
+#include <stdio.h>
+typedef long long LL;
+int p[30], c[30], pcnt;
+int n, m, num;
+
+void DFS(int x, LL s)
+{
+    if(s > (LL)n) return;
+    
+    if(x == pcnt)
+    {
+        if(s <= (LL)n) ++num;
+        return;
+    }
+    
+    DFS(x+1, s);
+    
+    int i;
+    for(i = 1; i <= c[x]; ++i)
+    {
+        s *= p[x];
+        if(s > (LL)n) return;
+        
+        DFS(x+1, s);
+    }
+}
+
+int main(void)
+{
+    char isPrime[10000];
+    int prime[1300], primeCnt;
+    int i, j;
+    
+    for(i = 2; i < 10000; ++i)
+        isPrime[i] = 1;
+        
+    for(i = 2; i < 100; ++i)
+        if(isPrime[i]) for(j = i; i*j < 10000; ++j)
+            isPrime[i*j] = 0;
+            
+    primeCnt = 0;
+    for(i = 2; i < 10000; ++i)
+        if(isPrime[i]) prime[primeCnt++] = i;
+    
+    while(scanf("%d%d", &n, &m) != EOF)
+    {
+        pcnt = num = 0;
+        
+        int t = n;
+        for(i = 0; i < primeCnt; ++i)
+        {
+            if(t % prime[i] == 0)
+            {
+                p[pcnt] = prime[i];
+                c[pcnt] = 0;
+                
+                while(t % prime[i] == 0)
+                {
+                    t /= prime[i];
+                    ++ c[pcnt];
+                }
+                ++ pcnt;
+            }
+        }
+        if(t != 1)
+        {
+            p[pcnt] = t;
+            c[pcnt] = 1;
+            ++ pcnt;
+        }
+        
+        for(i = 0; i < pcnt; ++i)
+            c[i] *= m;
+        
+        DFS(0, 1LL);
+        printf("%d\n", num);
+        
+    }
+    return 0;
+}

@@ -1,0 +1,44 @@
+#include<string>
+#include<iostream>
+#include<sstream>
+#include<cstdio>
+#include<set>
+#include<map>
+using namespace std;
+
+int main()
+{
+    int T;
+    char Str[40];
+    int i,a1,a2,a3,a4;
+    scanf("%d",&T);
+    while(T--)
+    {
+        a1=a2=a3=a4=0;
+        scanf("%s",Str);
+        for(i=0;i<8;i++)
+        {
+           if(Str[i]=='1')
+               a1+=(1<<(7-i));
+        }
+        for(i=8;i<16;i++)
+        {
+           if(Str[i]=='1')
+               a2+=(1<<(15-i));
+        }
+        for(i=16;i<24;i++)
+        {
+           if(Str[i]=='1')
+               a3+=(1<<(23-i));
+        }
+        for(i=24;i<32;i++)
+        {
+           if(Str[i]=='1')
+               a4+=(1<<(31-i));
+        }
+        printf("%d.%d.%d.%d\n",a1,a2,a3,a4);
+        
+        
+    }
+    return 0;
+}

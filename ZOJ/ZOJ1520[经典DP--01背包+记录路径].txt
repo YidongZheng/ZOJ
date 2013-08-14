@@ -1,0 +1,69 @@
+#include<iostream>
+#include<cstdio>
+#include<set>
+#include<cstdlib>
+#include<cstring>
+using namespace std;
+
+int main()
+{
+    int M,L,N;
+    int i,j;
+    int sum;
+    int DP[1001];
+    int Box[2004];
+    int Choosen[1001];
+    set<int> MySet;
+    set<int>::iterator MyIter;
+    while(scanf("%d%d",&M,&L)!=EOF)
+    {
+        if(M==0&&L==0)  break;
+        sum=0;
+        MySet.clear();
+        //smaller=M<L?M:L;
+        memset(Choosen,0,sizeof(Choosen));
+        //bigger=M+L-smaller;
+        scanf("%d",&N);
+        for(i=1;i<=N;i++)
+        {
+          scanf("%d",&Box[i]);
+          sum+=Box[i];
+        }
+        for(j=M;j>=0;j--)
+          DP[j]=0;
+        for(i=1;i<=N;i++)
+          for(j=M;j>=0;j--)
+          {
+              if(j-Box[i]>=0)
+              {
+                  if(DP[j] < DP[j-Box[i]]+Box[i])
+                  {
+                       //printf("Yes\n");
+                       DP[j]=DP[j-Box[i]]+Box[i];
+                       Choosen[j]=i;
+                  }
+              }
+          }
+          //for(j=1;j<=M;j++)
+            //printf("%d %d\n",j,Choosen[j]);
+        //printf("value:%d\n",DP[M]);
+        //printf("sum:%d\n",sum);
+        //printf("%d\n");
+        if(sum-DP[M]>L)
+           printf("Impossible to distribute\n");
+        else
+        {
+           for(j=M;Choosen[j]>0 && j-Box[Choosen[j]]>=0;j-=Box[Choosen[j]])
+           {
+               MySet.insert(Choosen[j]);
+           }
+            printf("%d ",MySet.size());
+            for(MyIter=MySet.begin();MyIter!=MySet.end();MyIter++)
+            {
+                printf("%d ",*MyIter);
+            }
+            printf("\n");
+        }
+    }
+    return 0;
+}

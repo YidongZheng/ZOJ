@@ -1,0 +1,52 @@
+#include<iostream>
+#include<cstdio>
+
+class Point
+{
+public:
+       double x;
+       double y;
+};
+using namespace std;
+bool segment_is_cross(Point sp1,Point ep1,Point sp2,Point ep2);
+double Direction(Point p0, Point p1, Point p2);
+int main()
+{
+    int N;
+    int i,j;
+    bool cross;
+    Point spoint[2001],epoint[2001];
+    while(scanf("%d",&N)!=EOF)
+    {
+        cross=false;
+        for(i=0;i<N;++i)
+        {
+            scanf("%lf%lf%lf%lf",&spoint[i].x,&spoint[i].y,&epoint[i].x,&epoint[i].y);
+        }
+        for(i=1;i<N;++i)
+        {
+            for(j=0;j<i;++j)
+              if(segment_is_cross(spoint[i],epoint[i],spoint[j],epoint[j]))
+                  {cross=true;break;}
+        }
+        if(cross) printf("burned!\n");
+        else printf("ok!\n");
+    }
+    return 0;
+}
+
+bool segment_is_cross(Point sp1,Point ep1,Point sp2,Point ep2)
+{
+     double d1,d2,d3,d4;
+     d1=Direction(sp2,ep2,sp1);
+     d2=Direction(sp2,ep2,ep1);
+     d3=Direction(sp1,ep1,sp2);
+     d4=Direction(sp1,ep1,ep2);
+     if( ((d1>0&&d2<0)||(d1<0&&d2>0)) && ((d3>0&&d4<0)||(d3<0&&d4>0)) ) return true;
+     return false;
+}
+
+double Direction(Point p0, Point p1, Point p2)
+{
+    return (p1.x-p0.x)*(p2.y-p0.y)-(p2.x-p0.x)*(p1.y-p0.y);
+}

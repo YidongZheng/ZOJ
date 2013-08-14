@@ -1,0 +1,40 @@
+/*ZOJ1007*/
+#include<iostream>
+#include<cstdio>
+using namespace std;
+int main()
+{
+	double i, sum, x = 0, temp = 0;
+	for(i = 950000;i > 20000;i--)
+		temp += 1.0 / (i * i * (i+1));
+	
+	/*当i > 20000时，均用上述公式所求得的temp近似*/
+	for(x = 0;x <= 2.000;x+=0.001)
+	{
+		sum = temp;
+		for(i = 1;i <= 20000;i++)
+		{
+				sum += 1.0 / (i * (i + x) * (i + 1));
+		}
+		sum = sum * (1-x);
+		sum += 1;
+		printf("%5.3f %16.12f\n", x, sum);		
+	}
+	
+	
+	/*
+	以下是另一种方法：对余项用积分。
+
+	for(x=0;x<=2.000;x+=0.001)
+	{
+		sum = 0;
+		for(i = 1;i <= 20000;i++)
+		{
+				sum += 1.0 / (i * (i + x) * (i + 1));
+		}
+		sum = sum * (1-x) + (1 - x) / (2 * 20000 * 20000) + 1;
+		printf("%5.3f %16.12f\n", x, sum);		
+	}
+	*/   /*积分的方法才应是最正确的方法，它可以从理论上保证精度，可从公式推出*/
+	return 0;
+}

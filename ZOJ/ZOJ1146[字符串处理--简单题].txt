@@ -1,0 +1,130 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+using namespace std;
+
+int main()
+{
+    int s,len,i,j,k;
+    char Str[20];
+    char Res[1000];
+    //freopen("")
+    //freopen("out.txt","w",stdout);
+    while(scanf("%d%s",&s,Str)!=EOF)
+    {
+        if(s==0&&!strcmp(Str,"0")) break;
+        len=strlen(Str);
+        for(i=0;i<len;i++)
+        {
+          printf(" ");
+          if(Str[i]=='1'||Str[i]=='4')
+          {
+              for(j=0;j<s;j++)
+                printf(" ");
+          }
+          else
+          {
+              for(j=0;j<s;j++)
+               printf("-");
+              
+          }
+          printf(" ");
+          if(i!=len-1) printf(" ");
+        }
+        printf("\n");
+        for(k=0;k<s;k++)
+        {
+            for(i=0;i<len;i++)
+            {
+              if(Str[i]=='1'||Str[i]=='2'||Str[i]=='3'||Str[i]=='7')
+              {
+                  for(j=0;j<s+1;j++)
+                    printf(" ");
+                  printf("|");
+              }
+              else if(Str[i]=='5'||Str[i]=='6')
+              {
+                  printf("|");
+                  for(j=0;j<s+1;j++)
+                    printf(" ");
+                  
+              }
+              else
+              {
+                  printf("|");
+                  for(j=0;j<s;j++)
+                    printf(" ");
+                  printf("|");
+              }
+              if(i!=len-1) printf(" ");
+            }
+            printf("\n");
+        }
+        for(i=0;i<len;i++)
+        {
+          printf(" ");
+          if(Str[i]=='1'||Str[i]=='7'||Str[i]=='0')
+          {
+              for(j=0;j<s;j++)
+                printf(" ");
+          }
+          else
+          {
+              for(j=0;j<s;j++)
+               printf("-");
+              
+          }
+          printf(" ");
+          if(i!=len-1) printf(" ");
+        }
+        printf("\n");
+        for(k=0;k<s;k++)
+        {
+            for(i=0;i<len;i++)
+            {
+              if(Str[i]=='4'||Str[i]=='1'||Str[i]=='5'||Str[i]=='3'||Str[i]=='7'||Str[i]=='9')
+              {
+                  for(j=0;j<s+1;j++)
+                    printf(" ");
+                  printf("|");
+              }
+              else if(Str[i]=='2')
+              {
+                  printf("|");
+                  for(j=0;j<s+1;j++)
+                    printf(" ");
+                  
+              }
+              else
+              {
+                  printf("|");
+                  for(j=0;j<s;j++)
+                    printf(" ");
+                  printf("|");
+              }
+              if(i!=len-1) printf(" ");
+            }
+            printf("\n");
+        }
+        for(i=0;i<len;i++)
+        {
+          printf(" ");
+          if(Str[i]=='1'||Str[i]=='7'||Str[i]=='4')
+          {
+              for(j=0;j<s;j++)
+                printf(" ");
+          }
+          else
+          {
+              for(j=0;j<s;j++)
+               printf("-");
+              
+          }
+          printf(" ");
+          if(i!=len-1) printf(" ");
+        }
+        printf("\n");
+        printf("\n");
+    }
+    return 0;   
+}

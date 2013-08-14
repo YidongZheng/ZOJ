@@ -1,0 +1,25 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+using namespace std;
+
+int main()
+{
+    int N,i;
+    double num;
+    char Str[10];
+    scanf("%d",&N);
+    for(i=1;i<=N;i++)
+    {
+        scanf("%lf%s",&num,Str);
+        if(!strcmp(Str,"kg"))
+           printf("%d %.4lf lb\n",i,2.2046*num);
+        if(!strcmp(Str,"l"))
+           printf("%d %.4lf g\n",i,0.2642*num);
+        if(!strcmp(Str,"lb"))
+           printf("%d %.4lf kg\n",i,0.4536*num);
+        if(!strcmp(Str,"g"))
+           printf("%d %.4lf l\n",i,3.7854*num);
+    }
+    return 0;
+}

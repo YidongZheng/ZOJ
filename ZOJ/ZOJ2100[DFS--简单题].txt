@@ -1,0 +1,61 @@
+#include<iostream>
+#include<cstdio>
+
+using namespace std;
+int n,m,cnt;
+bool Yes;
+char Map[10][10];
+bool Visited[10][10];
+void DFS(int nowx, int nowy, int step);
+int main()
+{
+    int i,j;
+    while(scanf("%d%d",&n,&m)!=EOF)
+    {
+        if(n==0&&m==0) break;
+        cnt=0;
+        Yes=false;
+        for(i=0;i<n;i++) scanf("%s",Map[i]);
+        for(i=0;i<n;i++)
+          for(j=0;j<m;j++)
+          {
+            Visited[i][j]=false;
+            if(Map[i][j]!='S')
+              cnt++;
+          }
+        Visited[0][0]=true;
+        DFS(0,0,1);
+        if(Yes) printf("YES\n");
+        else printf("NO\n");
+    }
+    return 0;
+}
+
+void DFS(int nowx, int nowy, int step)
+{
+     if(step==cnt) {Yes=true;return;}
+     if(nowx+1<n && !Visited[nowx+1][nowy] && Map[nowx+1][nowy]!='S')
+     {
+         Visited[nowx+1][nowy]=true;
+         DFS(nowx+1,nowy,step+1);
+         Visited[nowx+1][nowy]=false;
+     }
+     if(nowx-1>=0 && !Visited[nowx-1][nowy] &&  Map[nowx-1][nowy]!='S')
+     {
+         Visited[nowx-1][nowy]=true;
+         DFS(nowx-1,nowy,step+1);
+         Visited[nowx-1][nowy]=false;
+     }
+     if(nowy+1<m && !Visited[nowx][nowy+1] && Map[nowx][nowy+1]!='S')
+     {
+         Visited[nowx][nowy+1]=true;
+         DFS(nowx,nowy+1,step+1);
+         Visited[nowx][nowy+1]=false;
+     }
+     if(nowy-1>=0 && !Visited[nowx][nowy-1] && Map[nowx][nowy-1]!='S')
+     {
+         Visited[nowx][nowy-1]=true;
+         DFS(nowx,nowy-1,step+1);
+         Visited[nowx][nowy-1]=false;
+     }
+}

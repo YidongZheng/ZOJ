@@ -1,0 +1,129 @@
+//以后要注意写compare函数关于循环的问题，一定要双方向考虑！！
+
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<algorithm>
+#include<vector>
+using namespace std;
+void BackTrace(int ans, int num, int N, int count, int secnt);
+int Array[50];
+int TempArray[50];
+int cnt;
+//char Str[200][200];
+class MyStr
+{
+public:
+    //char str[200];
+    int str[50];
+    int len;
+}Str;
+vector<MyStr> MyVec; 
+
+bool Compare(MyStr A, MyStr B)
+{
+     int i;
+     bool Yes=false;
+     if(A.len < B.len) return true;
+     else if(A.len == B.len)
+     {
+          for(i=0;i<(A.len)-1;i++)
+          {
+             if(A.str[i]<B.str[i])
+                return true;
+             else if(A.str[i]>B.str[i])
+                return false;
+          }
+     }
+     return false;
+}
+int main()
+{
+    int T;
+    int i,j,N;
+    scanf("%d",&T);
+    while(T--)
+    {
+        MyVec.clear();
+        scanf("%d",&N);
+        cnt=0;
+        for(i=0;i<N;i++)
+        {
+            scanf("%d",&Array[i]);               
+        }
+        //for(i=0;i<N;i++)
+        //{
+        //    printf("%d\n",Array[i]);
+        //}
+        sort(Array,Array+N);
+        for(i=2;i<N;i++)
+        {
+            BackTrace(0,Array[i],i,0,0);
+        }
+        //printf("%d\n",cnt);
+        /*MyStr str1[2];
+        str1[0].len=2;
+        str1[0].str[0]=1;
+        str1[0].str[1]=5;
+        str1[1].len=2;
+        str1[1].str[0]=2;
+        str1[1].str[1]=4;
+        sort(str1,str1+2,Compare);
+        for(i=0;i<2;i++)
+        {
+            printf("What:   %d\n",str1[i].str[0]);
+        }*/
+        if(cnt==0)
+           printf("Can't find any equations.\n");
+        else
+        {
+            sort(MyVec.begin(),MyVec.end(),Compare);
+            for(i=0;i<cnt;i++)
+            {
+                for(j=0;j<MyVec[i].len-2;j++)
+                    printf("%d+",MyVec[i].str[j]);
+                
+                printf("%d=%d\n",MyVec[i].str[j],MyVec[i].str[j+1]);
+                //printf("%d\n",MyVec[i].len);
+            }
+        }
+        printf("\n");
+    }
+    return 0;
+}
+void BackTrace(int ans, int num, int N, int count, int secnt)
+{
+     int i;
+     //printf("%d\n",ans);
+     if(ans > num) return;
+     if(ans == num) 
+     {
+         //printf("secnt::  %d\n",secnt);
+         for(i=0;i<secnt;i++)
+         {
+             //Str.str[2*i]=TempArray[i]+48;
+             //Str.str[2*i+1]='+';
+             //printf("%d\n",TempArray[i]);
+             Str.str[i]=TempArray[i];
+          }
+          Str.str[secnt]=num;
+          Str.len=secnt+1;
+          //Str.str[2*secnt-2]=TempArray[secnt-1]+48;
+          //Str.str[2*secnt-1]='=';
+          //Str.str[2*secnt]=num+48;
+          //Str.str[2*secnt+1]=0;
+          cnt++;
+          MyVec.push_back(Str);
+         return;
+     }
+     if(count>=N) return;
+     //printf("%d  %d\n",ans,Array[count]);
+     if(ans+Array[count]<=num)
+     {
+         //printf("YES   %d\n",ans+Array[count]);
+         TempArray[secnt]=Array[count];
+         BackTrace(ans+Array[count],num,N,count+1,secnt+1);
+     }
+     BackTrace(ans,num,N,count+1,secnt);
+     
+}

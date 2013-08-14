@@ -1,0 +1,90 @@
+#include<cstdio>
+#include<iostream>
+#include<cmath>
+using namespace std;
+/*首先定义了Jug这个类并封装了方法*/
+class Jug
+{
+	int State;
+	int Cap;
+	char name;
+public:
+	int GetCap(){return Cap;}
+	int GetState(){return State;}
+	int GetRest(){return Cap - State;}
+	char GetName(){return name;}
+	void SetState(int NewState){State = NewState;}
+	void Empty()
+	{
+		State = 0;
+		printf("empty %c\n",name);
+	}
+	void Fill()
+	{
+		State = Cap;
+		printf("fill %c\n",name);
+	}
+	Jug(int Cap, char nam):State(0),name(nam)
+	{
+		this->Cap = Cap;
+	}
+	void Pour(Jug& B)
+	{
+		if(State < B.GetRest())
+		{
+			B.SetState(B.GetState()+State);
+			SetState(0);
+		}
+		else
+		{
+			SetState(State-B.GetRest());
+			B.SetState(B.GetCap());
+			
+		}
+		printf("pour %c %c\n",name,B.GetName());
+	}
+};
+
+bool IsSuccess(Jug& A, int goal);
+int main()
+{
+
+	int goal;
+	int Ca,Cb;
+	/*算法的主要过程就是从大的往小的倒，没有从小的往大的倒的过程，这两个过程中任选一个
+	都是可以的*/
+	while(scanf("%d%d%d",&Ca,&Cb,&goal)!=EOF)
+	{
+		Jug A(Ca,'A');
+		Jug B(Cb,'B');
+		int success = 0;
+		while(success == 0)
+		{
+			B.Fill();
+			if((IsSuccess(A,goal)||IsSuccess(B,goal)) != 0)
+				break;
+			B.Pour(A);
+			if((IsSuccess(A,goal)||IsSuccess(B,goal)) != 0)
+				break;
+			while(A.GetState() == A.GetCap())
+				{
+					A.Empty();
+					B.Pour(A);
+					if((IsSuccess(A,goal)||IsSuccess(B,goal)) != 0)
+					{	
+						success = 1;
+						break;
+					}
+				}
+		}
+		printf("success\n");
+	}
+	return 0;
+}
+bool IsSuccess(Jug& A, int goal)
+{
+	if(A.GetState() == goal)
+		return true;
+	else 
+		return false;
+}

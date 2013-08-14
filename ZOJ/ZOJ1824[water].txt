@@ -1,0 +1,79 @@
+#include <stdio.h>
+
+char str[60][62];
+
+void move(int& row,int& col, char& direct,char ins)
+{
+    switch(ins)
+    {
+	case 'Q':
+	    printf("%d %d %c\n",row+1,col+1,direct);
+	    break;
+	case 'R':
+	    if(direct=='N')
+		direct='E';
+	    else if(direct=='E')
+		direct='S';
+	    else if(direct=='S')
+		direct='W';
+	    else
+		direct='N';
+	    break;
+	case 'L':
+	    if(direct=='N')
+		direct='W';
+	    else if(direct=='W')
+		direct='S';
+	    else if(direct=='S')
+		direct='E';
+	    else
+		direct='N';
+	    break;
+	case 'F':
+	    if(direct=='N'&&str[row-1][col]==' ')
+		--row;
+	    if(direct=='E'&&str[row][col+1]==' ')
+		++col;
+	    if(direct=='S'&&str[row+1][col]==' ')
+		++row;
+	    if(direct=='W'&&str[row][col-1]==' ')
+		--col;
+	    break;
+    }
+}
+int main()
+{
+    int n,m;
+    int row,col;
+    char direct;
+    
+    char ins[10000];
+    while(~scanf("%d%d",&n,&m))
+    {
+	row=-1,col=-1;
+	direct='N';
+	gets(ins);
+	for(int i=0;i<n;++i)
+	{
+	    gets(str[i]);
+	}
+	scanf("%d%d",&row,&col);
+	--row,--col;
+	gets(ins);
+	
+	char lastins=0;
+	while(gets(ins))
+	{
+	    for(int i=0;ins[i];++i)
+	    {
+		if(ins[i]!=' ')
+		{
+		    move(row,col,direct,ins[i]);
+		    lastins=ins[i];
+		}
+	    }
+	    if(lastins=='Q')break;
+	}
+    }
+    return 0;
+}

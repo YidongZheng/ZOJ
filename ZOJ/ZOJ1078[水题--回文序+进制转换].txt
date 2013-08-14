@@ -1,0 +1,89 @@
+#include<cstdio>
+#include<iostream>
+using namespace std;
+void TenToN(int number, int N, int ans[]);
+int main()
+{
+	int ans[16];
+	int revans[16];
+	int pali[17];
+	int N;
+	scanf("%d",&N);
+	while(N != 0)
+	{
+		for(int d=0;d<=16;d++){pali[d] = 0;}
+		int count = 0;
+		for(int c=2;c<=16;c++)
+		{
+			bool test = false;
+			bool pal = true;	
+			TenToN(N,c,ans);
+		//	for(int tes = 15;tes>=0;tes--)
+		//	{
+		//		printf("%d",ans[tes]);
+		//	}
+		//	printf("\n");
+			for(int d=0;d<16;d++){revans[d] = 0;}
+			int pow = 0;
+			for(int i=15;i>=0;i--)
+			{
+				if(ans[i]!=0)
+				{	
+					pow = i;
+					break;
+				}
+			}
+			
+			for(int j=0;j<=pow;j++)
+			{
+				revans[j] = ans[pow - j];
+			}
+			//for(int tess = 15;tess>=0;tess--)
+			//{
+			//	printf("%d",revans[tess]);
+		//	}
+		//	printf("\n");
+			for(int k=0;k<pow;k++)
+			{
+				if(revans[k] != ans[k])
+				{
+					pal = false;
+					break;
+				}
+			}
+			if(pal)
+			{
+				pali[c] = 1;
+				count++;
+			}
+		}
+	if(count == 0)
+		printf("Number %d is not a palindrom\n",N);
+	else
+	{
+		printf("Number %d is palindrom in basis",N);
+		for(int i=0;i<=16;i++)
+			if(pali[i] == 1)
+			{
+				printf(" %d",i);
+			}
+		printf("\n");
+	}
+	scanf("%d",&N);
+	}
+	return 0;
+}
+
+void TenToN(int number, int N, int ans[])
+{
+	for(int i=0;i<16;i++)
+		ans[i] = 0;
+	ans[0] = number % N;
+
+	int j = 1;
+	while((number = number / N) !=0)
+	{
+		ans[j] = number % N;
+		j++;
+	}
+}

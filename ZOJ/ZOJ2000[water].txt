@@ -1,0 +1,60 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<cstdlib>
+#include<cmath>
+using namespace std;
+
+int main()
+{
+    long long a[51];
+    long long sum[51];
+    long long temp = 9;
+    long long tempsum = 0;
+    char str[51];
+    char tempstr[51];
+    for(int i=1;i<=50;++i)
+    {
+	a[i]=temp;
+	tempsum+=temp;
+	sum[i]=tempsum;
+	if(i%2==0)
+	    temp*=10;
+	if(tempsum>2e9)break;
+    }
+    int n;
+    while(scanf("%d",&n)!=EOF)
+    {
+	if(n==0)break;
+	memset(str,0,sizeof(str));
+	int i;
+	for(i=1;i<=51;++i)
+	    if(sum[i]>=n)break;
+	if(i!=1) n-=sum[i-1];
+	n--;/*count from 0,for convenience*/
+	long long x = a[i]/9;
+	long long digit=0;
+	long  tempx=x;
+	while(tempx>0)
+	{
+	    tempx/=10;
+	    digit++;
+	}
+	digit-=2;
+	digit=pow(10,digit);
+	str[0]=str[i-1]=n/x+49;
+	str[i]=0;
+	n%=x;
+	int j=0;
+	while(digit>=1)
+	{
+	    str[j+1]=str[i-j-2]=(n/digit)+48;
+	    j++;
+	    n%=digit;
+	    digit/=10;
+	}
+	printf("%s\n",str);
+    }
+    return 0;
+}
+

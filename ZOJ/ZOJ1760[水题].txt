@@ -1,0 +1,29 @@
+#include<iostream>
+#include<cstdio>
+#include<cmath>
+using namespace std;
+
+int main()
+{
+    int Num[15];
+    scanf("%d",&Num[0]);
+    while(Num[0] != -1)
+    {
+         scanf("%d",&Num[1]);
+         int i = 1;
+         int count=0;
+         while(Num[i] != 0)
+         {
+              scanf("%d",&Num[++i]);
+         }
+         for(int j=0;j<i;j++)
+             for(int k=0;k<i;k++)
+              {
+                 if(Num[j] == 2 * Num[k])
+                 count++;   
+              }
+         printf("%d\n",count);
+         scanf("%d",&Num[0]);
+    }
+    return 0;
+}

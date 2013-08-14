@@ -1,0 +1,45 @@
+#include<cstring>
+#include<iostream>
+#include<sstream>
+#include<cstdio>
+#include<set>
+#include<map>
+using namespace std;
+
+class Window
+{
+public:
+    int left;
+    int top;
+    int right;
+    int bottom;             
+}MyWindow[12];
+int main()
+{
+    int N,M;
+    int x1,y1;
+    int lefttop[12][12];
+    int rightbot[12][12];
+    int i;
+    char Str[15];
+    while(scanf("%d",&N) != EOF)
+    {
+        if(N == 0)  break;
+        for(i=0;i<N;i++)
+          scanf("%d%d%d%d",&MyWindow[i].left,&MyWindow[i].top,&MyWindow[i].right,&MyWindow[i].bottom);
+        scanf("%d",&M);
+        while(M--)
+        {
+          scanf("%d%d",&x1,&y1);
+          for(i=N-1;i>=0;i--)
+          {
+              
+              if(x1>=MyWindow[i].left&&x1<=MyWindow[i].right&&y1<=MyWindow[i].bottom&&y1>=MyWindow[i].top)
+                 break;
+          }
+          printf("%d\n",i);
+        }
+    }
+        
+    return 0;
+}

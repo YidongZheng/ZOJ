@@ -1,0 +1,102 @@
+/*
+ *ZOJ Problem Set - 1610
+ *Count the Colors
+ *zyd 2012-12-19
+ *segment-tree
+ *easy
+ */
+#include<stdio.h>  
+#include<string.h>
+#include<assert.h>
+#define MAX 8192
+  
+struct TNode
+{  
+    int l ,r;  
+    int col;  
+}segtree[2*MAX+2]; /*the size should at least be (int)pow(2,(log2(MAX)+1))-1*/
+  
+int CalColor[8001],Many [8001];
+/*CalColor[i] represents the color of [i,i+1]*/
+/*Many[i] represents the number of segments of color i*/
+void build(int n,int l,int r)  
+{  
+    int mid = (l+r)/2;  
+    if(l>=r) return;
+    segtree[n].col = -1;  
+    segtree[n].l = l;  
+    segtree[n].r = r;  
+    if(l+1 != r)  
+    {  
+        build(2*n,l,mid);  
+        build(2*n+1,mid,r);
+    }
+    
+}  
+  
+void insert(int n,int l,int r,int c)  
+{  
+    int mid = (segtree[n].l+segtree[n].r)/2;
+    if(l==segtree[n].l && r==segtree[n].r)  
+    {  
+        segtree[n].col=c;  
+        return;  
+    }  
+    if(segtree[n].col!=-2)  
+    {  
+        segtree[2*n].col=segtree[n].col;  
+        segtree[2*n+1].col=segtree[n].col;  
+    }  
+    segtree[n].col=-2;  
+    if(r<=mid)  
+    {  
+        insert(2*n,l,r,c);  
+        return;  
+    }  
+    if(l>=mid)  
+    {  
+        insert(2*n+1,l,r,c);  
+        return;  
+    }  
+    insert(2*n,l,mid,c);  
+    insert(2*n+1,mid,r,c);  
+}  
+  
+void compute(int n)  
+{  
+    if(segtree[n].col != -2 && segtree[n].col != -1)  
+    {  
+        int i;  
+        for(i=segtree[n].l;i<segtree[n].r;i++)
+            CalColor[i]=segtree[n].col;
+    }  
+    if(segtree[n].col == -2){compute(2*n);compute(2*n+1);}
+}
+int main()  
+{  
+    int n,x1,x2,c,i;
+    while(scanf("%d",&n)!=EOF)  
+    {  
+        build(1,0,8000);  
+        while(n--)  
+        {  
+            scanf("%d%d%d",&x1,&x2,&c);  
+            insert(1,x1,x2,c);  
+        }  
+        memset(CalColor,-1,sizeof(CalColor));  
+        memset(Many,0,sizeof(Many)); 
+        compute(1);
+        int t=-1;  
+        for(i=0;i<8000;i++)  
+        {  
+            if(CalColor[i]==t) continue;  
+            t=CalColor[i];  
+            if(t!=-1) Many[t]++;  
+        }  
+        for(i=0;i<=8000;i++)
+            if(Many[i])  
+                printf("%d %d\n", i, Many[i]);  
+        printf("\n");  
+    }  
+    return 0;  
+}

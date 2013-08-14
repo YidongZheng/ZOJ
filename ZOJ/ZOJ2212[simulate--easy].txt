@@ -1,0 +1,74 @@
+/* ZOJ Problem Set - 2212
+ * Argus
+ * zyd 2012-12-23
+ * simulate -- easy
+ *
+ */
+#include<iostream>
+#include<cstdio>
+#include<algorithm>
+#include<set>
+
+using namespace std;
+
+class Ins
+{
+public:
+    int index;
+    int period;
+}ins[1001];
+struct compare
+{
+public:
+    bool operator()(const pair<int,int> a,const pair<int,int> b) const
+    {
+        if(a.second!=b.second) return a.second<b.second;
+        else return a.first<b.first;
+    }
+};
+int main()
+{
+    char temp[100];
+    int k;
+    int Min=1<<30;
+    int cnt=0;
+    //freopen("in.txt","r",stdin);
+    //freopen("out.txt","w",stdout);
+    set<pair<int,int>,compare> mySet;
+    set<pair<int,int>,compare>::iterator myit;
+    while(scanf("%s",temp)!=EOF)
+    {
+        if(!strcmp(temp,"#"))
+        {
+            scanf("%d",&k);
+            for(int i=0;i<cnt;i++)
+            {
+                if(ins[i].period*(k+1)<Min)
+                    Min=ins[i].period*(k+1);
+            }
+            for(int i=0;i<cnt;i++)
+            {
+                for(int j=1;j<=k;j++)
+                {
+                    if(j*ins[i].period>Min) break;
+                    mySet.insert(pair<int,int>(ins[i].index,j*ins[i].period));
+                }
+            }
+            int t;
+            for(myit=mySet.begin(),t=0;t<k;t++,myit++)
+            {
+                printf("%d\n",myit->first);
+            }
+            cnt=0;
+            Min=1<<30;
+            mySet.clear();
+            continue;
+        }
+        else
+        {
+            scanf("%d%d",&ins[cnt].index,&ins[cnt].period);
+            cnt++;
+        }
+    }   
+    return 0;
+}

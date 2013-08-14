@@ -1,0 +1,44 @@
+#include<iostream>
+#include<cstdio>
+#include<set>
+int DigitSum(int Array[], int bits)
+{
+    int i,ans=0;
+    for(i=0;i<bits;i++)
+       ans+=Array[i];
+    return ans;
+}
+int TenToN(int N, int radix, int ans[20])
+{
+     int j;
+
+     for(j=0;j<20;j++) ans[j]=0;
+     ans[0] = N % radix; 
+     j=1;
+     while((N /= radix)!=0)
+     {
+	    ans[j] = N % radix;
+	    j++;
+     }  
+     return j;
+}
+using namespace std;
+
+int main()
+{
+    int i,j,Myten,Mysixteen,Mytwelve;
+    int ans[20];
+    for(i=2992;i<=9999;i++)
+    {
+        j=TenToN(i,10,ans);
+        Myten=DigitSum(ans,j);
+        j=TenToN(i,16,ans);
+        Mysixteen=DigitSum(ans,j);
+        j=TenToN(i,12,ans);
+        Mytwelve=DigitSum(ans,j);
+        if(Myten==Mysixteen && Myten==Mytwelve)
+          printf("%d\n",i);
+    }
+    getchar();
+    return 0;
+}

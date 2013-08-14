@@ -1,0 +1,38 @@
+#include<stdio.h>
+
+int main()
+{
+    int N;
+    int cnt;
+    int found;
+    int i;
+    int temp;
+    while(scanf("%d",&N)!=EOF)
+    {
+        if(N==-1) break;
+        found=0;
+        for(i=N-1;i>0;i--)
+        {
+            temp=N;
+            cnt=0;
+            while(temp%i==1)
+            {
+                temp=(temp-1)-(temp-1)/i;
+                if(temp<0) break;
+                cnt++;
+            }
+            if(temp>=0 && cnt==i && temp%i==0)
+            {
+                found=1;
+                break;
+            }
+        }
+        if(!found)
+        {
+            printf("%d coconuts, no solution\n",N);
+        }
+        else
+            printf("%d coconuts, %d people and 1 monkey\n",N,i);
+    }
+    return 0;
+}

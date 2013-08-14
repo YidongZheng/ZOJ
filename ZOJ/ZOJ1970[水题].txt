@@ -1,0 +1,30 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<set>
+using namespace std;
+
+int main()
+{
+    char S[100000];
+    char T[100000];
+    int len1,len2;
+    int i,j,cnt;
+    while(scanf("%s%s",S,T) != EOF)
+    {
+         cnt=0;
+         i=0;
+         len1=strlen(S);
+         len2=strlen(T);
+         while(i < len1 && cnt < len2)
+         {
+             if(T[cnt++] == S[i])
+                 i++;
+         }        
+         if(i==len1)
+           printf("Yes\n");
+         else
+           printf("No\n");
+    }    
+    return 0;
+}

@@ -1,0 +1,22 @@
+#include<cstdio>
+#include<iostream>
+using namespace std;
+int main()
+{
+	double T;
+	int n;
+	scanf("%lf",&T);
+	while(T != 0.00)
+	{
+		n = 2;
+		double sum = 0;
+		while(sum < T)
+		{
+			sum = sum + 1.0 / n;
+			n++;
+		}
+		printf("%d card(s)\n",n-2);
+		scanf("%lf",&T);
+	}
+	return 0;
+}

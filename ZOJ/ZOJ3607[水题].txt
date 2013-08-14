@@ -1,0 +1,51 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+using namespace std;
+int main()
+{
+    int T,i,j,k,N;
+    int PI[1005],TI[1005];
+    double minT,maxT,sumT;
+    double avgW,tempW;
+    scanf("%d",&T);
+    for(i=0;i<T;i++)
+    {
+        scanf("%d",&N);
+        for(j=0;j<N;j++)
+           scanf("%d",&PI[j]);
+        for(j=0;j<N;j++)
+           scanf("%d",&TI[j]);
+        if(N == 1)
+           {minT = TI[0];avgW=PI[0];printf("%lf %lf\n",minT,avgW);continue;}
+        
+        sumT = PI[0];
+        maxT = TI[0];
+        if(TI[1] - TI[0] > TI[0])
+        {
+            minT = TI[0];
+            avgW = PI[0];
+        }
+        else
+        {
+            avgW = 0;
+        }
+        for(j=1;j<N;j++)
+        {
+            if(TI[j]-TI[j-1] > maxT)
+                maxT = TI[j]-TI[j-1];
+            sumT+=PI[j];
+            if(j == N-1 || TI[j+1]-TI[j] > maxT)
+            {
+              tempW = 1.0 * sumT / (j+1);
+              if(tempW > avgW) //|| (tempW == avgW && minT>maxT))
+              {
+                avgW = tempW;
+                minT = maxT;
+              }
+            }
+        }
+        printf("%lf %lf\n",minT,avgW);
+    }
+    return 0;
+}

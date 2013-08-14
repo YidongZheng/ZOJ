@@ -1,0 +1,99 @@
+#include<iostream>
+#include<cstdio>
+#include<cstdlib>
+#include<cstring>
+
+using namespace std;
+void NextCombination(int N, int M);
+
+struct Stack
+{
+       char source[20];
+       int size;
+}MyStack;
+int A[20];
+void push(char Element);
+char pop();
+bool firstT,lastT;
+
+int main()
+{
+  
+   
+   char fir[20],sec[20],Array[20],thd[20];
+   int cnt1=0,cnt2=0;
+   int len=0;
+   while(scanf("%s%s",fir,sec) != EOF)
+   {   
+       
+       printf("[\n");
+       firstT=true;
+       lastT=false;
+       len=strlen(fir); 
+       for(int i=0;i<len;i++)
+          A[i]=i+1;     
+       while(!lastT)
+       {
+               cnt1=0,cnt2=0;
+               MyStack.size=0;
+               memset(MyStack.source,0,20);
+               memset(Array,'o',20);
+               memset(thd,0,20);
+               NextCombination(2*len, len);
+               for(int j=0;j<len;j++)
+               {
+                    Array[A[j]-1] = 'i';
+               }
+               for(int j=0;j<2*len;j++)
+               {
+                    if(Array[j] == 'i')
+                        push(fir[cnt1++]);
+                    else
+                       thd[cnt2++]=pop();         
+               }
+               thd[cnt2]=0; 
+               if(!strcmp(thd,sec))
+               {
+                   for(int k=0;k<2*len;k++)
+                   {
+                           printf("%c ",Array[k]);
+                   }
+                   printf("\n");
+               }
+       }
+       printf("]\n");   
+            
+   }   
+   return 0;
+}
+
+void NextCombination(int N, int M)
+{
+      if(firstT) {firstT=false; return;}
+      
+      for(int i=M-1;i>=0;i--)
+      {
+          if(A[i]<N-M+1+i)
+          {
+              A[i]++;
+              for(int j=i+1;j<M;j++)
+                A[j]=A[i]+j-i;
+              break;
+          }
+          
+      }
+      if(A[0] == N-M+1)
+        lastT=true;
+      //printf("%d %d %d\n",A[0],A[1],A[2]);
+}
+void push(char Element)
+{
+    MyStack.source[MyStack.size++]=Element;
+}
+
+char pop()
+{   
+    if(MyStack.size)
+       return MyStack.source[--MyStack.size];
+    return 0;
+}

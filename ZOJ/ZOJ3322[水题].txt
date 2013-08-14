@@ -1,0 +1,22 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+int main()
+{
+    int T,i;
+    int ay,am,ad,by,bm,bd;
+    scanf("%d",&T);
+    for(i=0;i<T;i++)
+    {
+        scanf("%d%d%d%d%d%d",&ay,&am,&ad,&by,&bm,&bd);
+        if(ay<by||(ay==by &&(am<bm || (am==bm && ad<bd))))
+             printf("javaman\n");
+        else if(ay==by && am==bm && ad==bd)
+             printf("same\n");
+        else
+             printf("cpcs\n");
+           
+    }
+    return 0;
+}
+

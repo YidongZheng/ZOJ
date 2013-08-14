@@ -1,0 +1,30 @@
+#include<iostream>
+#include<cstdio>
+#include<queue>
+using namespace std;
+
+int main()
+{
+    int N,i,K;
+    //priority_queue<int> MyQueue;
+    //int Array[15];
+    int temp;
+    int ans;
+    scanf("%d",&N);
+    while(N--)
+    {
+        ans=0;
+        scanf("%d",&K);
+        for(i=0;i<K;i++)
+        {
+           scanf("%d",&temp);
+           ans+=temp-1;
+           //MyQueue.push(temp);
+        }
+        ans++;
+        printf("%d\n",ans);
+        
+        
+    }
+    return 0;
+}

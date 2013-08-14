@@ -1,0 +1,46 @@
+/* ZOJ Problem Set - 2256
+ * Mincost
+ * zyd 2012-12-27
+ * water easy
+ * NOTE:Do not use ((int)x==x) when test a double value 
+ * is equal to a integer value.
+ * use ((int)x-x)<=1e-15[double's precision]
+ */
+
+#include<iostream>
+#include<cstdio>
+
+using namespace std;
+
+int main()
+{
+    int N;
+    double ans;
+    while(scanf("%d",&N)!=EOF)
+    {
+	if(N==0)break;
+	if(N<=4)
+	{
+	    printf("%d\n",10);
+	    continue;
+	}
+	ans=0;
+	ans+=N/16*36;
+	N%=16;
+	if(N==0)
+	    ;
+	else if(N<=4)
+	    ans+=N*2.4;
+	else if(N<=8)
+	    ans+=10+(N-4)*2;
+	else if(N<=12)
+	    ans+=18+(N-8)*2.4;
+	else
+	    ans+=18+10+(N-12)*2;
+	if(ans-(int)ans<=1e-15)
+	    printf("%d\n",(int)ans);
+	else
+	    printf("%.1lf\n",ans);
+    }
+    return 0;
+}

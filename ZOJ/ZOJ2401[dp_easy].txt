@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    //freopen("in.txt","r",stdin);
+    //freopen("out.txt","w",stdout);
+    int T;
+    scanf("%d",&T);
+    char str1[201],str2[201],str3[402];
+    int dp[201][201];
+    for(int i=1;i<=T;++i)
+    {
+        printf("Data set %d: ",i);
+        scanf("%s%s%s",str1,str2,str3);
+        int len1=strlen(str1);
+        int len2=strlen(str2);
+        int len3=strlen(str3);
+        memset(dp,0,sizeof(dp));
+        dp[0][0]=1;
+        for(int j=0;j<len3;++j)
+        {
+            for(int m=0;m<=len1&&m<=j;++m)
+            {
+                if(dp[m][j-m])
+                { 
+                    if(m<len1&&str3[j]==str1[m])
+                        dp[m+1][j-m]=1;
+                    if(str3[j]==str2[j-m])
+                        dp[m][j-m+1]=1;
+                }
+            }
+        }
+        if(dp[len1][len2])
+            printf("yes\n");
+        else
+            printf("no\n");
+        //printf("DEBUG: %d\n",dp[3][4]);
+    }
+    return 0;
+}

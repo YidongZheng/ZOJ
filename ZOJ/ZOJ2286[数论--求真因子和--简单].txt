@@ -1,0 +1,41 @@
+#include<iostream>
+#include<cstdio>
+#include<cmath>
+#include<cstring>
+
+using namespace std;
+
+int main()
+{
+    int *fn = new int [1000001];
+    memset(fn,0,sizeof(fn));
+    int *m = new int[3392929];
+    int *sum = new int[3392929];
+    memset(m,0,sizeof(m));
+    for(int i=2;i<=1000;i++)
+	for(int j=i+1;j*i<=1000000;j++)
+	    fn[i*j]+=i+j;
+    for(int i=2;i<=1000;i++)
+	fn[i*i]+=i;
+    for(int i=2;i<=1000000;i++)
+    {
+	fn[i]++;
+	m[fn[i]]++;
+    }
+    m[fn[1]]++;
+    int temp=0;
+    for(int i=0;i<3392929;i++)
+    {
+	temp+=m[i];
+	sum[i]=temp;
+    }
+    int N;
+    while(scanf("%d",&N)!=EOF)
+    {
+	if(N>=3392928) printf("%d\n",sum[3392928]);
+	else printf("%d\n",sum[N]);
+    }
+    return 0;
+}
+
+

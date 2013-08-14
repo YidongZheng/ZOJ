@@ -1,0 +1,25 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<set>
+using namespace std;
+
+
+int main()
+{   
+    double M,N,sum,ans;
+    int i;
+    while(scanf("%lf%lf",&M,&N) != EOF)
+    {
+        if(M==0&&N==0) break;
+        ans=1;
+        sum=M+N;
+        M=M<N?M:N;
+        for(i=0;i<M;i++)
+          ans*=sum-i;
+        for(i=1;i<=M;i++)
+          ans/=i;
+        printf("%.0lf\n",ans);
+    }
+    return 0;
+}

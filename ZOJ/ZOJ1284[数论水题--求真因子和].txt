@@ -1,0 +1,42 @@
+#include<iostream>
+#include<cstdio>
+
+using namespace std;
+
+int Array[60001];
+int main()
+{
+    int i,j,N;
+    for(i=0;i<60001;i++)
+      Array[i]=1;
+    Array[1]=0;
+    for(i=2;i<250;i++)
+      for(j=i;i*j<=60000;j++)
+        {
+         if(i != j)
+          Array[i*j]+=(i+j);
+         else
+          Array[i*j]+=i;
+        }
+    printf("PERFECTION OUTPUT\n");
+    while(scanf("%d",&N) != EOF)
+    {
+      if(N == 0) break;
+      
+      if(Array[N] == N) printf("%5d  PERFECT\n",N);
+      else if(Array[N] > N) printf("%5d  ABUNDANT\n",N);
+      else printf("%5d  DEFICIENT\n",N);
+    }
+    printf("END OF OUTPUT\n");
+    //scanf("%d",&N);
+    return 0;
+}
+//PERFECTION OUTPUT
+//   15  DEFICIENT
+//   28  PERFECT
+//    6  PERFECT
+//   56  ABUNDANT
+//60000  ABUNDANT
+//   22  DEFICIENT
+//  496  PERFECT
+//END OF OUTPUT

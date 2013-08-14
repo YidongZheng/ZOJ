@@ -1,0 +1,26 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+int main()
+{
+    int T,i,j,temp,cnt;
+    char Pass[30];
+    char Passc[30];
+    scanf("%d",&T);
+    for(i=0;i<T;i++)
+    {
+        cnt=0;
+        scanf("%s",Pass);
+        temp=strlen(Pass);
+        for(j=0;j<temp;j++)
+        {
+           if(Pass[j] < '0' || Pass[j] > '9')
+               Passc[cnt++]=Pass[j];
+        }
+        Passc[cnt]=0;
+        printf("%s\n",Passc);
+    }
+    getchar();
+    return 0;
+}
+

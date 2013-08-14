@@ -1,0 +1,32 @@
+#include<iostream>
+#include<cstdio>
+#include<set>
+
+using namespace std;
+
+int main()
+{
+    int N,i;
+    int temp;
+    set<int> MySet;
+    set<int>::iterator p;
+    while(scanf("%d",&N) != EOF)
+    {
+        if( N == 0 ) break;
+        MySet.clear();
+        for(i=0;i<N;i++)
+        {
+           scanf("%d",&temp);
+           MySet.insert(temp);
+        }
+        for(p=MySet.begin();p != MySet.end();p++)
+        {
+          if((++p) != MySet.end())
+            printf("%d ",*(--p));
+          else
+            printf("%d\n",*(--p));
+        }
+        
+    }
+    return 0;
+}

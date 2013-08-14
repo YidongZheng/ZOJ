@@ -1,0 +1,127 @@
+//ZOJ Problem Set - 3261
+//Connections in Galaxy War
+//Disjoint set
+#include<iostream>
+#include<cstdio>
+#include<map>
+#include<cstring>
+using namespace std;
+
+struct node
+{
+    int father;
+    int key;
+}father[10001];
+void init()
+{
+    for(int i=0;i<10001;i++)
+        father[i].father=-1;
+}
+
+int Find(int x)
+{
+    if(father[x].father<0) return x;
+    else return father[x].father = Find(father[x].father);
+}
+
+void Union(int a, int b)
+{
+    int roota,rootb;
+    //printf("%d %d\n",a,b);
+    roota = Find(a);
+    //printf("   %d\n",father[a].father);
+    rootb = Find(b);
+    if(roota==rootb) return;
+    if(father[roota].key>father[rootb].key)
+    {
+        //father[roota].father+=father[rootb].father;
+        father[rootb].father=roota;
+    }
+    else if(father[roota].key==father[rootb].key && roota<rootb)
+    {
+        //father[roota].father+=father[rootb].father;
+        father[rootb].father=roota;
+    }
+    else 
+    {
+        //father[rootb].father+=father[roota].father;
+        father[roota].father=rootb;
+    }
+}
+int main()
+{
+    //freopen("in.txt","r",stdin);
+    //freopen("out.txt","w",stdout);
+    map< pair<int,int>,int> edge;
+    int N,Q,M;
+    int start,end;
+    bool isDestroy[50000];
+    int queryNum[50000];
+    int desStart[50000];
+    int desEnd[50000];
+    char msg[20];
+    int answers[50000];
+    scanf("%d",&N);
+    while(true)
+    {
+        init();
+        edge.clear();
+        for(int i=0;i<N;i++)
+        {
+            scanf("%d",&father[i].key); 
+        }
+        scanf("%d",&M);
+        for(int i=0;i<M;i++)
+        {
+            scanf("%d%d",&start,&end);
+            edge.insert(pair< pair<int,int>,int>(pair<int,int>(start,end),1));
+        }
+        scanf("%d",&Q);
+        for(int i=0;i<Q;i++)
+        {
+            scanf("%s",msg);
+            if(!strcmp(msg,"query"))
+            {
+                isDestroy[i]=false;
+                scanf("%d",&queryNum[i]);
+            }
+            else
+            {
+                isDestroy[i]=true;
+                scanf("%d%d",&desStart[i],&desEnd[i]);
+                //printf("???\n");
+                edge.erase(pair<int,int>(desStart[i],desEnd[i]));
+                edge.erase(pair<int,int>(desEnd[i],desStart[i]));
+                //edge.erase(pair<int,int>(0,1));
+            }
+        }
+        
+        map< pair<int,int>,int>::iterator myit;
+        for(myit=edge.begin();myit!=edge.end();myit++)
+        {
+            Union(myit->first.first,myit->first.second);
+        }
+        
+        for(int i=Q-1;i>=0;i--)
+        {
+            if(!isDestroy[i])
+            {
+                int root = Find(queryNum[i]);
+                answers[i]= father[root].key>father[queryNum[i]].key?root:-1;
+            }
+            else
+            {
+                Union(desStart[i],desEnd[i]);
+            }
+            
+        }
+        for(int i=0;i<Q;i++)
+        {
+            if(!isDestroy[i])
+                printf("%d\n",answers[i]);
+        }
+        if(scanf("%d",&N)==EOF) break;
+        printf("\n");
+    }
+    return 0;
+}

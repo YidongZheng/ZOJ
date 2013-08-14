@@ -1,0 +1,111 @@
+/********************************************/
+/* ZOJ Problem Set - 1161                   */
+/* Gone Fishing                             */
+/* Yidong Zheng, 2013-2-3                   */
+/* Greedy & simulate    normal              */
+/*                                          */
+/*Solve:                                    */
+/*Traverse every possibilites:go lake1 only,*/
+/*go lake1&2, go lake1&2&3, and so on to fi-*/
+/*nd the largest fish number.               */
+/*For each possibility, the total time used */
+/*by walking[travel to other lake] is const-*/
+/*ant, and                                  */
+/*the remaining time is used for fishing.   */
+/*For every 5-minutes in the remaining time,*/
+/*we choose to fish at the lake where we can*/
+/*get the maximum fishing number.[Greedy wo-*/
+/*rks because what we choose affects nothing*/
+/*.                                         */
+/*                                          */
+/********************************************/
+
+
+
+#include <stdio.h>
+
+int main()
+{
+    //freopen("in.txt","r",stdin);
+    //freopen("out.txt","w",stdout);
+    int blocks;
+    int n,h;
+    int f[30];
+    int d[30];
+    int now[30];
+    int t[30];
+    int sumt[30];
+    int everyt[30];
+    int maxeveryt[30];
+    scanf("%d",&blocks);
+    for(int i=0;i<blocks;++i)
+    {
+	scanf("%d",&n);
+	while(true)
+	{
+	    if(n==0)break;
+	    scanf("%d",&h);
+	    for(int j=0;j<n;++j)
+		scanf("%d",&f[j]);
+	    for(int j=0;j<n;++j)
+		scanf("%d",&d[j]);
+	    sumt[0]=0;
+	    for(int j=1,tempsum=0;j<n;++j)
+	    {
+		scanf("%d",&t[j]);
+		tempsum+=t[j];
+		sumt[j]=tempsum;
+	    }
+	    int maxFish=-1;
+	    for(int j=0;j<n;++j)
+	    {
+		for(int k=0;k<n;++k)
+		{
+		    now[k]=f[k];
+		    everyt[k]=0;
+		}
+		//int alltime=sumt[j];
+		int allfish=0;
+		int times=h*12-sumt[j];
+		for(int k=0;k<times;++k)
+		{
+		    int Max=-1;
+		    int MaxInd=-1;
+		    for(int m=0;m<=j;++m)
+		    {
+			if(now[m]>Max)
+			{
+			    Max=now[m];
+			    MaxInd=m;
+			}
+		    }
+		    //alltime+=n[MaxInd];
+		    allfish+=now[MaxInd];
+		    //printf("fishes: %d %d\n",MaxInd,now[MaxInd]);
+		    everyt[MaxInd]+=5;
+		    if(now[MaxInd]>0)
+		    {
+			now[MaxInd]-=d[MaxInd];	
+		    }
+		    if(now[MaxInd]<0)now[MaxInd]=0;
+		}
+		if(allfish>maxFish)
+		{
+		    //printf("Fish:   %d\n",allfish);
+		    maxFish=allfish;
+		    for(int k=0;k<n;++k)
+			maxeveryt[k]=everyt[k];
+		}
+	    }
+	    printf("%d",maxeveryt[0]);
+	    for(int k=1;k<n;++k)
+		printf(", %d",maxeveryt[k]);
+	    printf("\n");
+	    printf("Number of fish expected: %d\n",maxFish);
+	    scanf("%d",&n);
+	    if(n!=0)printf("\n");
+	}
+	if(i!=blocks-1)printf("\n");
+    }
+    return 0;
+}

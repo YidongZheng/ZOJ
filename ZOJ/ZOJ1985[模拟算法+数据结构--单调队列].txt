@@ -1,0 +1,52 @@
+#include<iostream>
+#include<cstdio>
+
+using namespace std;
+
+int main()
+{
+    int N,i,j;
+    int min;
+    int Array[100005];
+    int MQ[100005];
+    int tail;
+    int Left[100005],Right[100005];
+    double Max,temp;
+    while(scanf("%d",&N) != EOF)
+    {
+        if(N==0) break;
+        for(i=1;i<=N;i++)
+          scanf("%d",&Array[i]);
+        Array[0]=-1;Array[N+1]=-1;
+        
+        //优先队列对Right的初始化 
+        tail=0;
+        MQ[0]=0;
+        for(i=1;i<=N+1;++i)
+        {
+           while(tail>=0 && Array[MQ[tail]]>Array[i])
+             Right[MQ[tail--]]=i;
+           MQ[++tail]=i;  
+        }
+        
+        //优先队列对Left的初始化 
+        tail=0;
+        MQ[0]=0;
+        for(i=N;i>=0;--i)
+        {
+           while(tail>=0 && Array[MQ[tail]]>Array[i])
+             Left[MQ[tail--]]=i;
+           MQ[++tail]=i;  
+        }
+        Max=0;
+        for(i=1;i<=N;i++)
+        {
+            temp=1.0*Array[i]*(Right[i]-Left[i]-1);
+            if(Max < temp)
+               Max=temp;
+        }
+        printf("%.0lf\n",Max);
+        
+    }
+    return 0;
+}

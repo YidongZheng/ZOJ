@@ -1,0 +1,43 @@
+#include<iostream>
+#include<cstdio>
+#include<algorithm>
+using namespace std;
+
+int main()
+{
+	int N,IP;
+	int increment=0;
+	int cnt=0;
+	int temp;
+	int array[600];
+	while(scanf("%d%d",&N,&IP)!=EOF)
+	{
+		increment=0;
+		cnt=0;
+		for(int i=0;i<N;i++)
+		{
+			scanf("%d",&temp);
+			if(temp<=IP) increment++;
+			else array[cnt++]=temp; 
+		}
+		sort(array,array+cnt);
+		int startindex=0;
+		//IP+=2;
+		while(startindex<cnt)
+        {
+            for(;startindex<cnt&&array[startindex]<=IP;increment++,startindex++);
+            if(startindex<cnt)
+            {
+                IP+=2;
+            }
+            startindex++;
+        }     
+		IP+=increment;
+		printf("%d\n",IP);
+	}
+	return 0;
+}
+//92    92    96
+//9/2  91:1(+1)
+//    92:1(+1)
+//    96:1(+0)

@@ -1,0 +1,54 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<set>
+#include<stack>
+#include<queue>
+using namespace std;
+
+int main()
+{
+    queue<int> MyQueue;
+    stack<int> MyStack;
+    int i,j,T;
+    int N;
+    int Array1[120],Array2[120];
+    int temp;
+    bool NoStack,NoQueue;
+    scanf("%d",&T);
+    for(i=0;i<T;i++)
+    {
+        NoStack=NoQueue=false;
+        scanf("%d",&N);
+        for(j=0;j<N;j++)
+        {
+          scanf("%d",&temp);
+          MyQueue.push(temp);
+          MyStack.push(temp);
+        }
+        for(j=0;j<N;j++)
+        {
+          Array1[j]=MyQueue.front();
+          Array2[j]=MyStack.top();
+          MyQueue.pop();
+          MyStack.pop();
+        }
+        for(j=0;j<N;j++)
+        {
+          scanf("%d",&temp);
+            if(Array1[j] != temp)
+               NoQueue=true;
+            if(Array2[j] != temp)
+               NoStack=true;
+        }
+        
+        if(NoStack && NoQueue) printf("neither\n");
+        else if(NoStack) printf("queue\n");
+        else if(NoQueue) printf("stack\n");
+        else printf("both\n");
+    }
+    return 0;
+}
+
+
+ 

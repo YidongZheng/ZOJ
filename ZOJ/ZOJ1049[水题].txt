@@ -1,0 +1,28 @@
+#include<cstdio>
+#include<iostream>
+
+using namespace std;
+
+int main()
+{
+	double r;
+	int T;
+	double x,y;
+	scanf("%d",&T);
+	int count = 1;
+	for(int i=0;i<T;i++)
+	{
+		int year = 0;
+		scanf("%lf",&x);
+		scanf("%lf",&y);
+		while((x*x+y*y) * 3.14 >year * 50 * 2)
+		{
+			year++;
+		}
+		printf("Property %d: This property will begin eroding in year %d.\n",count,year);
+		count++;
+	}
+
+	printf("END OF OUTPUT.\n");
+	return 0;
+}

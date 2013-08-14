@@ -1,0 +1,36 @@
+#include <iostream>
+#include <cstdio>
+#include <map>
+
+using namespace std;
+
+int main()
+{
+    freopen("in.txt","r",stdin);
+    freopen("out.txt","w",stdout);
+    string str;
+    int count=0;
+    map<string,int> mymap;
+    map<string,int>::iterator myit;
+    while(getline(cin,str))
+    {
+	count=1;
+	mymap.clear();
+	mymap.insert(pair<string,int>(str,1));
+	while(true)//getline(cin,str))
+	{
+	    
+	    if(!getline(cin,str))
+	    {
+		for(myit=mymap.begin();myit!=mymap.end();++myit)
+		{
+		    printf("%s %.4lf\n",myit->first.c_str(),
+			    100.0*myit->second/count);
+		}
+		return 0;
+	    }
+	    else if(!str.compare(""))
+	    {
+		for(myit=mymap.begin();myit!=mymap.end();++myit)
+		{
+		    printf("%s %.4lf\n",myit->first.c_str(),

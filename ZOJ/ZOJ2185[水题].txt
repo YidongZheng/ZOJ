@@ -1,0 +1,25 @@
+#include<iostream>
+#include<cstdio>
+
+using namespace std;
+
+int main()
+{
+    int N;
+    int Array[5001],i;
+    for(i=1;i<=3200;i++)
+       Array[i]=i*(i+1)/2;
+    while(scanf("%d",&N)!=EOF)
+    {
+        for(i=1;i<3200;i++)
+           if(Array[i]>=N) break;
+        if(i%2)
+            printf("TERM %d IS %d/%d\n",N,Array[i]-N+1,i+N-Array[i]);
+        else
+            printf("TERM %d IS %d/%d\n",N,i+N-Array[i],Array[i]-N+1);
+    }
+    return 0;
+}
+
+
+//i+1-(Array[i]-N)

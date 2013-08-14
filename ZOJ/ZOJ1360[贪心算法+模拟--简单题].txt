@@ -1,0 +1,103 @@
+//注意贪心的思想，一定要从某个端点[左或者右]区间开始，否则可能会把一个雷达拆成左右两半。
+
+#include<iostream>
+#include<cstdio>
+#include<cmath>
+#include<cstring>
+using namespace std;
+
+struct Interval
+{
+    double start;
+    double end;
+}MyInt[1003];
+
+bool Cleared[1003];
+int main()
+{
+    int n,d;
+    int x,y;
+    double x1,x2;
+    int i,j;
+    int cnt;
+    int Case1=1;
+    int num;
+    double Min;
+    bool NoAns;
+    bool NotAllCleared;
+    while(scanf("%d%d",&n,&d)!=EOF)
+    {
+        if(n==0&&d==0)  break;
+        memset(Cleared,0,1003);
+        cnt=0;
+        num=0;
+        NoAns=false;
+        
+        for(j=0;j<n;j++)
+        {
+            //Found=false;
+            scanf("%d%d",&x,&y);
+            if(y>d||y<-d)
+              NoAns=true; 
+            else if(!NoAns)
+            {
+                x1=1.0*x-sqrt(1.0*d*d-1.0*y*y);
+                x2=1.0*x+sqrt(1.0*d*d-1.0*y*y);
+                MyInt[cnt].start=x1;
+                MyInt[cnt].end=x2;
+                cnt++;
+            }
+        }
+        if(NoAns) printf("Case %d: -1\n",Case1++);
+        else 
+        {
+            
+            NotAllCleared=true;
+            while(NotAllCleared)
+            {
+                Min=99999999;
+                for(i=0;i<cnt;i++)
+                {
+                    if(!Cleared[i] && MyInt[i].end<Min)
+                        Min=MyInt[i].end;
+                }
+                for(i=0;i<cnt;i++)
+                {
+                    if(!Cleared[i] && MyInt[i].start<=Min&&MyInt[i].end>=Min)
+                        Cleared[i]=true;
+                }
+                num++;
+                for(i=0;i<cnt;i++)
+                {
+                    if(!Cleared[i])
+                        {NotAllCleared=true;break;}
+                }
+                if(i==cnt) NotAllCleared=false;
+            }
+            printf("Case %d: %d\n",Case1++,num);
+        }
+                /*for(i=0;i<cnt;i++)
+                {
+                    if(MyInt[i].start<=MyInt[i].end && x2>=MyInt[i].start&&x1<=MyInt[i].end)
+                    {
+                        MyInt[i].start=x1>MyInt[i].start?x1:MyInt[i].start;
+                        MyInt[i].end=x2<MyInt[i].end?x2:MyInt[i].end;
+                        Found=true;
+                        break;
+                    }
+                }
+                if(!Found)
+                {
+                    MyInt[cnt].start=x1;
+                    MyInt[cnt].end=x2;
+                    cnt++;
+                    num++;
+                }
+            }
+        }*/
+        //}
+        
+    }
+    return 0;
+}
+//Case 2: 1

@@ -1,0 +1,65 @@
+#include<iostream>
+#include<cmath>
+#include<cstdio>
+void PrimeCircle(int T, int count, int ans[], int a[]);
+using namespace std;
+
+int main()
+{
+    int a[21];
+    int ans[21];
+    int T;
+    for(int i=1;i<=20;i++)
+        {
+            a[i] = i;
+            ans[i] = 0;
+        }
+    ans[0] = 1;
+    int Case = 1;
+    while(scanf("%d",&T) !=EOF)
+    {
+        printf("Case %d:\n",Case++);
+        PrimeCircle(T,0,ans,a);
+        printf("\n");
+    }
+    return 0;
+}
+bool IsPrime(int n)
+{
+     if(n == 1 || n == 0)
+        return false;
+     for(int i=2;i<=pow(n,0.5);i++)
+             if(n % i == 0)
+                  return false;
+     return true;
+}
+void PrimeCircle(int T, int count, int ans[], int a[])
+{
+     if(T % 2)
+             return;
+     if(count == T - 1)
+         {
+              if(!IsPrime(ans[count] + 1))
+                  return;
+              for(int i=0;i<T;i++)
+                        {
+                            if(i != T-1)
+                               printf("%d ",ans[i]);
+                            else
+                               printf("%d\n",ans[i]);
+                        }
+
+              return;
+         }
+      for(int i=2;i<=T;i++)
+        {
+           if(a[i] != 0 && IsPrime(ans[count] + a[i]))
+           {
+               ans[count+1] = a[i];
+               a[i] = 0;
+               PrimeCircle(T, count+1, ans, a);
+               ans[count+1] = 0;
+               a[i] = i;
+           }
+        }
+}

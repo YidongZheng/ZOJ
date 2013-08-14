@@ -1,0 +1,66 @@
+#includeiostream
+#includecstdio
+#includecstring
+#includeset
+using namespace std;
+
+char  Str[1000003];
+char Str2[500001];
+int main()
+{
+    int len;
+    int i,j;
+    int cnt;
+    int temp;
+    bool found;
+    setint MySet;
+    setintiterator MyIter;
+    while(gets(Str)!=NULL)
+    {
+        if(!strcmp(Str,.))  break;
+        MySet.clear();
+        found=false;
+        len=strlen(Str);
+        if(len==1) {printf(1n);continue;}
+        for(i=1;ii=len;i++)
+        {
+             if(len%i==0)
+             {
+                 MySet.insert(i);
+                 MySet.insert(leni);
+             }
+        }
+        MySet.erase(len);
+        temp=0;
+        for(MyIter=MySet.begin();MyIter!=MySet.end();MyIter++)
+        {
+             for(j=temp;j(MyIter);j++)
+                Str2[j]=Str[j];
+             Str2[j]=0;
+             for(j=0;j(MyIter);j++)
+                Str2[j]=Str[j];
+             Str2[j]=0;
+             cnt=0;
+             for(;jlen;j++)
+             {
+                 if(cnt=(MyIter))
+                   cnt-=(MyIter);
+                   
+                 if(Str2[cnt]==Str[j])
+                    cnt++;
+                 else
+                    break;
+             }
+             if(j==len)
+             {
+               found=true;break;
+             }
+             temp=(MyIter);
+        }
+          if(found)
+             printf(%dn,len(MyIter));
+          else
+             printf(1n);       
+    }
+    return 0;
+}

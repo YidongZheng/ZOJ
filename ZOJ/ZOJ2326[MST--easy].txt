@@ -1,0 +1,80 @@
+#include <cstdio>
+#include <iostream>
+#include <map>
+#define infi (1<<30)
+
+using namespace std;
+
+double graph[500][500];
+bool visited[500];
+double length[500];
+
+double MST_Prim(int n)
+{
+    double ans=0;
+    for(int i=0;i<n;++i)
+    {
+	visited[i]=0;
+	length[i]=infi;
+    }
+    length[0]=0;
+    for(int i=0;i<n;++i)
+    {
+	int minV=-1;
+	for(int j=0;j<n;++j)
+	{
+	    if(!visited[j]&&(minV==-1||length[j]<length[minV]))
+		minV=j;
+	}
+	ans+=length[minV];
+	visited[minV]=true;
+	for(int j=0;j<n;++j)
+	{
+	    if(!visited[j]&&(graph[minV][j]<length[j]))
+		length[j]=graph[minV][j];
+	}
+    }
+    return ans;
+}
+
+int main()
+{
+    double total;
+    int n,m;
+    char str[1000][25];
+    char tmpa[25],tmpb[25];
+    int a,b;
+    double len;
+    while(~scanf("%lf",&total))
+    {
+	map<string,int> mymap;
+	scanf("%d",&n);
+	for(int i=0;i<n;++i)
+	{
+	    scanf("%s",str[i]);
+	    mymap.insert(pair<string,int>(string(str[i]),i));
+	    for(int j=0;j<n;++j)
+		graph[i][j]=infi;
+	}
+	scanf("%d",&m);
+	for(int i=0;i<m;++i)
+	{
+	    scanf("%s%s%lf",tmpa,tmpb,&len);
+	    a=mymap.find(string(tmpa))->second;
+	    b=mymap.find(string(tmpb))->second;
+	    graph[a][b]=len;
+	    graph[b][a]=len;
+	}
+	double ans = MST_Prim(n);
+	//printf("%.1lf\n",ans);
+	if(total-ans>1e-9)
+	{
+	    printf("Need %.1lf miles of cable\n",ans);
+	}
+	else
+	{
+	    printf("Not enough cable\n");
+	}
+    }
+    return 0;
+}

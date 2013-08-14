@@ -1,0 +1,118 @@
+#include <stdio.h>
+#include <string.h>
+
+//int dis[500][500];
+int tax[500];
+int path[500][500];
+int dis[500][500];
+
+/*int cnt;
+
+void recordpath(int a, int b,int apath[]);
+bool cmppath(int a[],int b[],int n);
+*/
+void floyd(int n)
+{
+	int path1[500];
+	int path2[500];
+	for(int i=0;i<n;++i)
+		for(int j=0;j<n;++j)
+		{
+			path[i][j]=j;
+			dis[i][j]=dis[i][j];
+		}
+		for(int k=0;k<n;++k)
+			for(int i=0;i<n;++i)
+				for(int j=0;j<n;++j)
+				{
+					if(~dis[i][k]&&~dis[k][j]&&(!~dis[i][j]||dis[i][k]+dis[k][j]<dis[i][j]))
+					{
+						dis[i][j]=dis[i][k]+dis[k][j];
+						path[i][j]=path[i][k];
+					}
+					else if(~dis[i][k]&&~dis[k][j]&&dis[i][k]+dis[k][j]==dis[i][j])
+					{
+						if(path[i][j]>path[i][k])
+							path[i][j]=path[i][k];
+						/*cnt=0;
+						memset(path1,-1,sizeof(path1));
+						memset(path2,-1,sizeof(path2));
+						recordpath(i,j,path1);
+						int temp=path[i][j];
+						path[i][j]=k;
+						cnt=0;
+						recordpath(i,j,path2);
+						if(cmppath(path1,path2,n))
+							path[i][j]=temp;*/
+					}
+				}
+}
+/*
+void printpath(int a, int b)
+{
+	if(path[a][b]==a)
+		printf("%d-->",a+1);
+	else
+	{
+		printpath(a,path[a][b]);
+		printpath(path[a][b],b);
+	}
+}
+
+void recordpath(int a, int b,int apath[])
+{
+	if(path[a][b]==a)
+		apath[cnt++]=a;
+	else
+	{
+		recordpath(a,path[a][b],apath);
+		recordpath(path[a][b],b,apath);
+	}
+}
+
+bool cmppath(int a[],int b[],int n)
+{
+	for(int i=0;i<n;++i)
+		if(a[i]<b[i])
+			return true;
+	return false;
+}*/
+int main()
+{
+	//freopen("in.txt","r",stdin);
+	//freopen("out.txt","w",stdout);
+	int n;
+	while(~scanf("%d",&n)&&n)
+	{
+		for(int i=0;i<n;++i)
+			for(int j=0;j<n;++j)
+			{
+				scanf("%d",&dis[i][j]);
+			}
+		for(int i=0;i<n;++i)
+		{
+			scanf("%d",&tax[i]);
+			for(int j=0;j<n;++j)
+				if(~dis[i][j])dis[j][i]+=tax[i];
+		}
+		floyd(n);
+		int s,e;
+		while(~scanf("%d%d",&s,&e)&&~s&&~e)
+		{
+			printf("From %d to %d :\n",s,e);
+			printf("Path: %d",s);
+			for(int i=s-1;i!=e-1;i=path[i][e-1])
+				printf("-->%d",path[i][e-1]+1);
+			printf("\n");
+			//if(s!=e)
+				//printpath(s-1,e-1);
+			//printf("%d\n",e);
+			//while(path[s][])
+			printf("Total cost : %d\n\n",dis[s-1][e-1]-tax[e-1]);
+		}
+
+	}
+	return 0;
+}
+
+

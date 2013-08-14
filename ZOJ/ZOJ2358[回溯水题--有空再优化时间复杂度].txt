@@ -1,0 +1,32 @@
+#include<iostream>
+#include<cstdio>
+using namespace std;
+bool found;
+int N;
+int fact[]={1,1,2,6,24,120,720,5040,40320,362880};
+void Func(int ans, int cnt)
+{
+   if(cnt > 9)
+      return;
+   ans+=fact[cnt];
+   if(ans == N)
+       {found=true;return;}
+   if(ans < N)
+      Func(ans,cnt+1);
+   Func(ans-fact[cnt],cnt+1);
+}
+int main()
+{
+    while(scanf("%d",&N) != EOF)
+    {
+        if(N < 0) break;
+        found=false;
+        Func(0,0);
+        if(found)
+          printf("YES\n");
+        else
+          printf("NO\n");   
+    }
+    return 0;
+}
+

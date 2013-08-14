@@ -1,0 +1,43 @@
+/*很简单的一道题，一直没深刻理解，南辕北辙的做了半天。。。*/
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+
+using namespace std;
+int main()
+{
+    char Str[10010];
+    //char NewStr[10010];
+    int len;
+    int i,cnt;
+    long Func[10010];
+    while(scanf("%s",Str) != EOF)
+    {
+        if(!strcmp(Str,"0")) break;
+        len=strlen(Str);
+        for(i=0;i<len;i++)
+        {
+            if(i == 0)
+                Func[i]=1;
+            else if(i == 1)
+            {
+                if((Str[1] != '0') && ((Str[0]=='2' && Str[1] <= '6') || (Str[0] == '1')))
+                   Func[i]=2;
+                else 
+                   Func[i]=1;
+            }
+            else if(Str[i] == '0')
+                  Func[i]=Func[i-2];
+            else if((Str[i-1]=='2' && Str[i] <= '6') || (Str[i-1] == '1'))
+                  Func[i]=Func[i-1]+Func[i-2];
+            else
+                  Func[i]=Func[i-1];
+        }
+        //if(len == 0)
+         // printf("1\n");
+        //else
+          printf("%ld\n",Func[len-1]);
+    }
+    return 0;
+}
+

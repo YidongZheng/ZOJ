@@ -1,0 +1,51 @@
+#include <stdio.h>
+#include <math.h>
+
+int main()
+{
+    double x1,y1,r1,x2,y2,r2;
+    double theta1, theta2;
+    double temp;
+    double r3,area;
+    const double pi = 3.141592653;
+    while(~scanf("%lf%lf%lf%lf%lf%lf",&x1,&y1,&r1,&x2,&y2,&r2))
+    {
+	if(r1>r2)
+	{
+	    temp=x1;
+	    x1=x2;
+	    x2=temp;
+	    temp=y1;
+	    y1=y2;
+	    y2=temp;
+	    temp=r1;
+	    r1=r2;
+	    r2=temp;
+	} /*ensure r1<=r2*/
+	r3 = sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
+	/*printf("%lf %lf %lf\n",r1,r2,r3);*/
+	if(r3<=r2-r1) printf("%.3lf\n",r1*r1*pi);
+	else if(r3>=r1+r2) printf("0.000\n");
+	else/* if(r3>=r2)*/
+	{
+	    theta1 = 2*acos((r1*r1+r3*r3-r2*r2)/(2*r1*r3));
+	    /*printf("??    %lf\n",(r1*r1+r3*r3-r2*r2)/(2*r1*r2));*/
+	    theta2 = 2*acos((r2*r2+r3*r3-r1*r1)/(2*r2*r3));
+	    area = 0.5*(theta1*r1*r1-sin(theta1)*r1*r1+theta2*r2*r2-sin(theta2)*r2*r2);
+	    printf("%.3lf\n",area);
+	    /*printf("%.3lf %.3lf\n",theta1,theta2);*/
+	}
+	/*
+	else
+	{
+	    theta2 = 2*acos((r2*r2+r3*r3-r1*r1)/(2*r2*r3));
+	    printf("??    %lf\n",(r1*r1+r3*r3-r2*r2)/(2*r1*r3));
+	    theta1 = 2*acos((r1*r1+r3*r3-r2*r2)/(2*r1*r3));
+	    area = 0.5*(theta1*r1*r1-sin(theta1)*r1*r1+theta2*r2*r2-sin(theta2)*r2*r2);
+	    printf("%lf         %lf\n",0.5*(theta1*r1*r1-sin(theta1)*r1*r1),0.5*(theta2*r2*r2-sin(theta2)*r2*r2));
+	    printf("%.3lf\n",area);
+	    printf("%.3lf %.3lf\n",theta1,theta2);
+	}*/
+    }
+    return 0;
+}

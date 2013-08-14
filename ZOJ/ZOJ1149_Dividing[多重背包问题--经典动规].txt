@@ -1,0 +1,96 @@
+#include<iostream>
+#include<cstdio>
+
+int A[120005];
+int Vi[400];
+int POW(int x, int y)
+{
+    int ans=1;
+    for(int i=0;i<y;i++)
+    {
+       ans*=x;
+    }
+    return ans;
+}
+int main()
+{ 
+    int a1,a2,a3,a4,a5,a6,sum,cnt=1,temp,i=0,j;
+    while(scanf("%d%d%d%d%d%d",&a1,&a2,&a3,&a4,&a5,&a6) != EOF)
+    {
+
+        if(a1+a2+a3+a4+a5+a6 == 0) break;
+        printf("Collection #%d:\n",cnt++);
+        sum=a1+2*a2+3*a3+4*a4+5*a5+6*a6;
+        for(i=0;i<sum;i++)
+           A[i]=-50000;
+        A[0]=0;
+        i=0;
+        if(sum%2) {printf("Can't be divided.\n\n");continue;}
+        if(!(a1%2) && !(a2%2) && !(a3%2) && !(a4%2) && !(a5%2) && !(a6%2)) {printf("Can be divided.\n\n");continue;}
+        
+        temp=a1;
+        j=0;
+        while(temp > POW(2,j))
+        {
+           temp-=POW(2,j);
+           Vi[++i]=POW(2,j++);     
+        }
+        if(temp) Vi[++i]=temp;
+        
+        temp=a2;
+        j=0;
+        while(temp > POW(2,j))
+        {
+           temp-=POW(2,j);
+           Vi[++i]=2*POW(2,j++);     
+        }
+        if(temp) Vi[++i]=2*temp;
+      
+        temp=a3;
+        j=0;
+        while(temp > POW(2,j))
+        {
+           temp-=POW(2,j);
+           Vi[++i]=3*POW(2,j++);     
+        }
+        if(temp) Vi[++i]=3*temp;
+        
+        temp=a4;
+        j=0;
+        while(temp > POW(2,j))
+        {
+           temp-=POW(2,j);
+           Vi[++i]=4*POW(2,j++);     
+        }
+        if(temp) Vi[++i]=4*temp;
+        
+        temp=a5;
+        j=0;
+        while(temp > POW(2,j))
+        {
+           temp-=POW(2,j);
+           Vi[++i]=5*POW(2,j++);     
+        }
+        if(temp) Vi[++i]=5*temp;
+        
+        temp=a6;
+        j=0;
+        while(temp > POW(2,j))
+        {
+           temp-=POW(2,j);
+           Vi[++i]=6*POW(2,j++);     
+        }
+        if(temp) Vi[++i]=6*temp;
+
+        for(j=1;j<=i;j++)
+           for(int k=sum/2;k>=Vi[j];k--)
+             A[k]= A[k] > A[k-Vi[j]]+1?A[k]:A[k-Vi[j]]+1;
+        
+        if(A[sum/2] > 0)
+          printf("Can be divided.\n");
+       else
+          printf("Can't be divided.\n");
+       printf("\n");
+   }
+    return 0;
+}

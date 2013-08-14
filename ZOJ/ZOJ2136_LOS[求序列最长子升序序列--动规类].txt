@@ -1,0 +1,46 @@
+#include<cstdio>
+#include<iostream>
+#include<string>
+
+
+//这里的子串不一定要是连续的
+//本题不是升序，而是非降序
+//一定要初始化每一个b[i]为1.
+//INIT: MAXLENGTH=1
+using namespace std;
+int MaxLength=1;
+int main()
+{
+    int N;
+    int a[1001],b[1001];  //b[i]记录的是前i项中包含了a[i]这一项的最长递增子串.
+    int blocks;
+    scanf("%d",&blocks);
+    getchar();
+    for(int j=0;j<blocks;j++)
+    {
+         MaxLength=1;
+         scanf("%d",&N); 
+         for(int i=0;i<N;i++)
+         {
+             scanf("%d",&a[i]);
+             b[i]=1;
+         }
+         for(int i=1;i<N;i++)
+            for(int j=i-1;j>=0;j--)
+             if(a[i] > a[j] && b[j]+1 > b[i])
+                b[i] = b[j] + 1;
+/*上面的两层for循环是本程序的核心代码，它基于以下几个事实：
+1.b[i]表示的是以前i项中以b[i]为末项的最长递增子串
+2.最长非降序子序列必定存在于所有的b[i][i=0 to n-1]中
+3.b[i]的值必定由第i项和前面i-1项中比i小的项能够成的最长串，而这个串符合
+在所有的b[i][i=0 to i-1]中。
+*/
+         for(int i=0;i<N;i++)
+           if(MaxLength < b[i])
+             MaxLength=b[i];
+         printf("%d\n",MaxLength);
+         if(j != blocks-1) printf("\n");
+         getchar();
+    }
+    return 0;
+}

@@ -1,0 +1,33 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<cstdlib>
+
+using namespace std;
+bool IsPrime(int N);
+int main()
+{   
+   char Signal[15];
+   char Message[210];
+   while(scanf("%s",Signal) != EOF)
+   {
+        getchar();
+        if(!strcmp(Signal,"ENDOFINPUT")) break;
+        gets(Message);
+        for(int i=0;i<strlen(Message);i++)
+        {
+                if(Message[i] >='A' && Message[i] <='Z') 
+               {
+                 if(Message[i] <= 'E')
+                   Message[i] += 21;
+                 else
+                   Message[i] -= 5;
+               }
+        }
+        //printf("%s\n",Message);
+        puts(Message);
+        
+        scanf("%s",Signal);
+   }
+   return 0;
+}

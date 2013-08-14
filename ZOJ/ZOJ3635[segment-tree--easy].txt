@@ -1,0 +1,70 @@
+/* ZOJ Problem Set - 3635
+ * Cinema in Akiba
+ * zyd 2012-12-20
+ * segment-tree[discrete version]
+ * easy
+ */
+#include<iostream>
+#include<cstdio>
+#define MAX 50000
+using namespace std;
+
+struct tree
+{
+    int l,r;
+    int val;
+}segtree[4*MAX+1];
+
+void build(int i,int l,int r)
+{
+    if(l>r) return;
+    segtree[i].l=l;
+    segtree[i].r=r;
+    segtree[i].val=r-l+1;
+    if(l==r) return;
+    int mid=(l+r)/2;
+    build(2*i,l,mid);
+    build(2*i+1,mid+1,r);
+}
+int update(int i/*,int l,int r*/,int val)
+{
+    int ans;
+    if(segtree[i].l==segtree[i].r)
+    {
+	segtree[i].val=0;
+	ans=segtree[i].l;
+	return ans;
+    }
+    if(val<=segtree[2*i].val)
+	ans=update(2*i,val);
+    else
+	ans=update(2*i+1,val-segtree[2*i].val);
+    segtree[i].val=segtree[2*i].val+segtree[2*i+1].val;
+    return ans;
+}
+void find(){}
+int main()
+{
+    int n,m;
+    int ans[50001];
+    while(scanf("%d",&n)!=EOF)
+    {
+	build(1,1,n);
+	int order;
+	for(int i=1;i<=n;i++)
+	{
+	    scanf("%d",&order);
+	    ans[i]=update(1,order);
+	}
+	scanf("%d",&m);
+	int query;
+	for(int i=1;i<=m;i++)
+	{
+	    scanf("%d",&query);
+	    printf("%d",ans[query]);
+	    if(i!=m) printf(" ");
+	    else printf("\n");
+	}
+    }
+    return 0;
+}

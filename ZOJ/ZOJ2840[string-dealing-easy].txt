@@ -1,0 +1,90 @@
+/*ZOJ Problem Set - 2840
+ *File Searching
+ *string-dealing easy[need to extend]
+ */
+#include<stdio.h>
+#include<string.h>
+#define bool int
+#define false 0
+#define true 1
+int main()
+{
+    char files[100][70];
+    char query[70];
+    /*freopen("in.txt","r",stdin);*/
+    /*freopen("out.txt","w",stdout);*/
+    int N,M;
+    scanf("%d",&N);
+    int i,j,k,m;
+    int cnt;
+    int fip=0;
+    int quep=0;
+    int lenq=strlen(query);
+    int lens=strlen(files[j]);
+    bool Match=false;
+    bool NoStar=true;
+    while(true)
+    {
+        for(i=0;i<N;i++)
+            scanf("%s",files[i]);
+        scanf("%d",&M);
+        for(i=0;i<M;i++)
+        {
+            scanf("%s",query);
+            cnt=0;
+            for(j=0;j<N;j++)
+            {
+                fip=0;
+                quep=0;
+                lenq=strlen(query);
+                lens=strlen(files[j]);
+                Match=false;
+                NoStar=true;
+                if(lenq>lens+1) continue;
+                while(!Match)
+                {
+                    if(NoStar)
+                    {
+                        if(quep==lenq&&fip==lens) Match=true;/*change later*/
+                        else if(query[quep]==files[j][fip])
+                        {
+                            quep++,fip++;
+                        }
+                        else if(query[quep]=='*')
+                        {
+                            NoStar=false;
+                        } 
+                        else break;
+                    }
+                    else
+                    {
+                        for(m=lenq-1,k=lens-1;m>quep && k>=0;m--,k--)
+                        {
+                            if(query[m]!=files[j][k])
+                            {
+                                break;
+                            }
+                        }
+                        if(m==quep) Match=true;
+                        else Match=false;
+                        break;
+                    }
+                }
+                if(Match)
+                {
+                    if(cnt==0) printf("%s",files[j]);
+                    else printf(", %s",files[j]);
+                    cnt++;
+                }
+            }
+            if(cnt==0) printf("FILE NOT FOUND");
+            printf("\n");
+        }
+        if(scanf("%d",&N)!=EOF)
+        {
+            printf("\n");
+        }
+        else break;
+    }
+    return 0;
+}

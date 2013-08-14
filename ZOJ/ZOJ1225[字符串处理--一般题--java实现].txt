@@ -1,0 +1,59 @@
+import java.util.*;
+
+public class Main{
+	public static void main(String[] args){
+		Scanner in = new Scanner(System.in);
+		while(in.hasNextLine()){
+			String str = in.nextLine();
+			if(str.length()==1) break;
+			str = str.replace(".","");
+			String[] strArray = str.split(", ");
+			boolean numberArrayRecord[] = new boolean[1000];
+
+			//int numberArray[] = new int[1000];
+			ArrayList<Integer> numberArray = new ArrayList<Integer>();
+			//String stringArray[] = new String[1000];
+			ArrayList<String> stringArray = new ArrayList<String>();
+			for(boolean i:numberArrayRecord)
+			    i=false;
+			int numberCnt=0;
+			for(int i=0;i<strArray.length;i++){
+			    boolean isNumber=true;
+				for(int j=0;j<strArray[i].length();j++){
+					if(strArray[i].charAt(j)!='-' && (strArray[i].charAt(j)>'9'||strArray[i].charAt(j)<'0'))
+						isNumber=false;
+						break;
+				}
+				if(isNumber){
+					numberArrayRecord[i]=true;
+					numberArray.add(Integer.valueOf(strArray[i]));
+				}
+				else{
+					stringArray.add(strArray[i]);
+				}
+			}
+			Collections.sort(numberArray);
+			Collections.sort(stringArray,new MyCompare());
+			int numCnt=0;
+			int strCnt=0;
+			for(int i=0;i<numberArray.size()+stringArray.size();i++){
+				if(numberArrayRecord[i]){
+					System.out.print(numberArray.get(numCnt++));
+				}
+				else{
+					System.out.print(stringArray.get(strCnt++));
+				}
+				if(i!=numberArray.size()+stringArray.size()-1){
+					System.out.print(", ");
+				}
+			}
+			System.out.println(".");
+		}
+	}
+}
+
+class MyCompare implements Comparator<String>{
+	public int compare(String o1, String o2){
+		return o1.compareToIgnoreCase(o2);
+	}
+}

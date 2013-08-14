@@ -1,0 +1,41 @@
+/* ZOJ Problem Set - 1394
+ * Polar Explorer
+ * zyd 2013-1-24
+ * water
+ */
+
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#define pi 3.14159
+
+using namespace std;
+
+int main()
+{
+    //freopen("in.txt","r",stdin);
+    //freopen("out.txt","w",stdout);
+    char str[100];
+    int x,y,z;
+    double left;
+    double dist;
+    while(scanf("%s",str)!=EOF)
+    {
+	if(!strcmp(str,"ENDOFINPUT")) break;
+	scanf("%d%d%d",&x,&y,&z);
+	if(z>180)z=360-z;
+	//if(z<180)
+	//{
+	dist = 2*pi*x*z/360;
+	//cout<<"dist: "<<dist<<endl;
+	//    dist = 
+	//}
+	if(5*y>=2*dist)
+	    printf("YES %d\n",(int)(y-2*dist/5));
+	else 
+	    printf("NO %d\n",5*y);
+	scanf("%s",str);
+    }
+    return 0;
+}
+

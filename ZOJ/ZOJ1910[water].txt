@@ -1,0 +1,24 @@
+#include <stdio.h>
+
+int main()
+{
+    int T,n;
+    int DP[1001];
+    for(int i=1;i<=1000;++i)
+	DP[i]=1<<30;
+    for(int i=1;i<=1000;++i)
+	for(int j=1;j<=1000;++j)
+	    for(int k=1;k<=1000;++k)
+	    {
+		if(i*j*k>1000) break;
+		if(2*i*j+2*i*k+2*j*k<DP[i*j*k])
+		    DP[i*j*k]=2*i*j+2*i*k+2*j*k;
+	    }
+    scanf("%d",&T);
+    while(T--)
+    {
+	scanf("%d",&n);
+	printf("%d\n",DP[n]);
+    }
+    return 0;
+}

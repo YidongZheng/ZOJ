@@ -1,0 +1,47 @@
+/*把两个数从100到1依次选取，两种顺序都有。这基于以下两个事实：
+1.如果两个都到1，那么显然有解
+2.如果有1个没到1，由于遍历了所有的情况，必定有一种情况是不会漏掉可能性的，所以必定
+无解*/
+
+#include<iostream>
+#include<cstdio>
+
+void Check(int M, int N, int n);
+bool BothTrue=false;
+bool SmallTrue=false;
+int main()
+{
+   int M,N;
+   while(scanf("%d%d",&M,&N) != EOF)
+   {
+      if(M<N)
+      {
+         N=M+N;
+         M=N-M;
+         N=N-M;
+      }
+      Check(M,N,100);
+      if(BothTrue || !SmallTrue)
+         printf("%d\n",M);
+      else if(SmallTrue)
+         printf("%d\n",N);
+   }
+   return 0;
+}
+
+void Check(int M, int N, int n)
+{
+     if(BothTrue) return;
+     if(M == 1 && N == 1)
+     {
+        BothTrue=true;
+        SmallTrue=true;
+     }
+     else if(N == 1 && n==1)
+     {
+        SmallTrue=true;
+        return;
+     }
+     if(n!=0 && M % n)  Check(M/n,N,n-1);
+     if(n!=0 && N % n)  Check(M,N/n,n-1); 
+}

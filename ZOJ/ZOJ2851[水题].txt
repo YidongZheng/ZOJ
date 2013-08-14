@@ -1,0 +1,56 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+using namespace std;
+
+int main()
+{
+    char Str[10000];
+    int anst=0;
+    int anss=0;
+    int i,j,k;
+    int len;
+    int N;
+    //freopen("in.txt","r",stdin);
+    //freopen("out.txt","w",stdout);
+    scanf("%d",&N);
+    getchar();
+    for(j=0;j<N;j++)
+    {
+        gets(Str);
+        anst=0;
+        anss=0;
+        while(strcmp(Str,"##"))
+        {
+            len=strlen(Str);
+            for(i=0;i<len;i++)
+            {
+                if(Str[i]=='\t')
+                {
+                   anst++;
+                   for(k=len+3;k>=i+4;k--)
+                      Str[k]=Str[k-3];
+                   Str[i]=' ';
+                   Str[i+1]=' ';
+                   Str[i+2]=' ';
+                   Str[i+3]=' ';
+                   len=len+3;
+                }
+            }
+            for(i=len-1;i>=0;i--)
+            {
+                 if(Str[i]==' ')
+                   anss++;
+                 else
+                   break;
+            }
+            gets(Str);
+        }
+        printf("%d tab(s) replaced\n",anst);
+        printf("%d trailing space(s) removed\n",anss);
+    }
+   
+    return 0;
+}
+//  axxxxb\0
+//  akb\0   

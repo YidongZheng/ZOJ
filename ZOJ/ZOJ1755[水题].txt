@@ -1,0 +1,33 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+using namespace std;
+struct Student
+{
+   int x;
+   int y;
+   int z;
+   char name[10];
+}stu[10];
+int main()
+{
+    int N,i;
+    while(scanf("%d",&N) != EOF)
+    {
+        if(N == -1)  break;
+        int min=300;
+        int max=0;
+        int mini=0;
+        int maxi=0;
+        for(i=0;i<N;i++)
+        {
+          scanf("%d%d%d%s",&stu[i].x,&stu[i].y,&stu[i].z,&stu[i].name);
+          if(stu[i].x * stu[i].y * stu[i].z > max)
+             { max=stu[i].x * stu[i].y * stu[i].z;mini=i;}
+          if(stu[i].x * stu[i].y * stu[i].z < min)
+             { min=stu[i].x * stu[i].y * stu[i].z;maxi=i;}        
+        }               
+        printf("%s took clay from %s.\n",stu[mini].name,stu[maxi].name);
+    }
+    return 0;
+}

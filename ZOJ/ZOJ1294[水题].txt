@@ -1,0 +1,25 @@
+#include<iostream>
+#include<cstdio>
+
+using namespace std;
+
+int main()
+{
+    int par,real;
+    int cnt=1;
+    while(scanf("%d%d",&par,&real) != EOF)
+    {
+        if(par == 0) break;
+        printf("Hole #%d\n",cnt++);
+        if(real == 1) printf("Hole-in-one.\n");
+        else if(par - real == 3) printf("Double Eagle.\n");
+        else if(par - real == 2) printf("Eagle.\n");
+        else if(par - real == 1) printf("Birdie.\n");
+        else if(par == real) printf("Par.\n");
+        else if(par - real == -1) printf("Bogey.\n");
+        else printf("Double Bogey.\n");
+        printf("\n");
+        
+    }
+    return 0;
+}

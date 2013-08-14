@@ -1,0 +1,29 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+int main()
+{
+    int leftx,rightx,topx,bottomx;
+    int lefty,righty,topy,bottomy;
+    int tempx, tempy;
+    while(scanf("%d %d",&tempx,&tempy) != EOF)
+    {
+        if(tempx == 0 && tempy == 0) break;
+        leftx=rightx=topx=bottomx=tempx;
+        lefty=righty=topy=bottomy=tempy;
+        while(scanf("%d %d",&tempx, & tempy) != EOF)
+        {
+            if(tempx == 0 && tempy == 0) break;
+            if(tempx < leftx)
+              leftx=tempx,lefty=tempy;
+            if(tempx > rightx)
+              rightx=tempx,righty=tempy;
+            if(tempy>topy)
+              topx=tempx,topy=tempy;
+            if(tempy<bottomy)
+              bottomx=tempx,bottomy=tempy;
+        }
+        printf("%d %d %d %d\n",leftx,bottomy,rightx,topy);
+    }
+    return 0;
+}

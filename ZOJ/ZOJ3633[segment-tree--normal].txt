@@ -1,0 +1,103 @@
+/* ZOJ Problem Set - 3633
+ * Alice's present
+ * zyd 2012-12-20
+ * seg-tree
+ * normal
+ */
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<algorithm>
+#define MAX 500000
+using namespace std;
+
+class Doll
+{
+public:
+    int val;
+    int index;
+};
+bool compare(Doll a, Doll b)
+{
+    if(a.val!=b.val)
+	return a.val<b.val;
+    else
+	return a.index<b.index;
+}
+struct tree
+{
+    int l,r;
+    int val;
+}segtree[4*MAX+1];
+//tree *segtree;// = new tree[4*MAX+1];
+void build(int i,int l,int r)
+{
+    if(l>r) return;/*if no coding mistake,this won't happen.*/
+    segtree[i].l=l;
+    segtree[i].r=r;
+    segtree[i].val=0;
+    if(l==r) return;
+    int mid=(l+r)/2;
+    build(2*i,l,mid);
+    build(2*i+1,mid+1,r);
+}
+void update(int i,int l,int r,int val)
+{
+    if(segtree[i].l>r||segtree[i].r<l)return;
+    if(segtree[i].l>=l&&segtree[i].r<=r)
+    {
+	segtree[i].val=val;
+	return;
+    }
+    update(2*i,l,r,val);
+    update(2*i+1,l,r,val);
+    segtree[i].val=max(segtree[2*i].val,segtree[2*i+1].val);
+}
+int ans;
+void find(int i,int l,int r)
+{
+    if(segtree[i].l>r||segtree[i].r<l)return;
+    if(segtree[i].l>=l&&segtree[i].r<=r)
+    {
+	   ans=max(ans,segtree[i].val);
+	   return;
+    }
+    find(2*i,l,r);
+    find(2*i+1,l,r);
+}
+int main()
+{
+    int N,m;
+    Doll dolls[500001];
+    int original[500001];
+    while(scanf("%d",&N)!=EOF)
+    {
+        build(1,1,N);
+        for(int i=1;i<=N;i++)
+        {
+    	    scanf("%d",&dolls[i].val);
+            dolls[i].index=i;
+            original[i]=dolls[i].val;
+        }
+        sort(dolls+1,dolls+N+1,compare);
+        for(int i=2;i<=N;i++)
+        {
+    	    if(dolls[i].val==dolls[i-1].val)
+                update(1,dolls[i].index,dolls[i].index,dolls[i-1].index);
+        }
+        scanf("%d",&m);
+        int s,e;
+        for(int i=0;i<m;i++)
+        {
+        	ans=0;
+        	scanf("%d%d",&s,&e);
+        	find(1,s,e);
+        	if(ans<s)
+        	    printf("OK\n");
+        	else
+        	    printf("%d\n",original[ans]);
+        }
+        printf("\n");
+    }
+    return 0;
+}

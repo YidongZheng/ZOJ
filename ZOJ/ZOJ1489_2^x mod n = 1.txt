@@ -1,0 +1,43 @@
+/*数论题，用到到同余式有解的条件和快速幂*/
+#include<iostream>
+#include<cstdio>
+int PowerMod(int a, int b, int c);
+using namespace std;
+
+int main()
+{
+    int N;
+    
+    while(scanf("%d",&N) != EOF)
+    {
+         if(N % 2 == 0 || N == 1)
+           printf("2^? mod %d = 1\n",N);
+         else
+         {
+             for(int i=1;i<10000;i++)
+             {
+                     if(PowerMod(2,i,N) == 1)
+                       {
+                           printf("2^%d mod %d = 1\n",i,N);
+                           break;
+                       }
+                     
+             }
+         }
+    }
+    return 0;
+}
+int PowerMod(int a, int b, int c)
+{
+int ans = 1;
+a = a % c;
+while(b>0)
+	{
+	
+	if(b % 2 == 1)
+	ans = (ans * a) % c;
+	b = b/2;
+	a = (a * a) % c;
+	}
+return ans;
+}

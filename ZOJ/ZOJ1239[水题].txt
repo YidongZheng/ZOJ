@@ -1,0 +1,49 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<cmath>
+
+using namespace std;
+
+bool IsSqure(int x)
+{
+     int tempn = (int)sqrt(1.0*x);
+     if(tempn*tempn == x) return true;
+     return false;
+}
+int main()
+{
+    int T,N;
+    int Array[51];
+    int len;
+    int i,j;
+    bool found;
+    scanf("%d",&T);
+    while(T--)
+    {
+        i=1;
+        len=1;
+        scanf("%d",&N);
+        memset(Array,0,sizeof(Array));
+        while(true)
+        {
+            found=false;
+            for(j=1;j<len;j++)
+            {
+                if(IsSqure(Array[j]+i))
+                {
+                    Array[j]=i;
+                    found=true;
+                }
+            }
+            if(!found)
+            {
+                if(len>N) break;
+                Array[len++]=i;
+            }
+            i++;
+        }
+        printf("%d\n",i-1);
+    }
+    return 0;
+}

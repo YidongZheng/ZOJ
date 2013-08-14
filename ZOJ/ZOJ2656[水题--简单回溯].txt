@@ -1,0 +1,47 @@
+#include<iostream>
+#include<cstdio>
+
+using namespace std;
+bool Possible;
+int Oil[10000];
+int Distance[10000];
+void BackTrace(int N, int Start, int cnt, int oil);
+int main()
+{
+    int N,i;
+
+    
+    while(scanf("%d",&N) != EOF)
+    {
+        Possible=false;
+        for(i=0;i<N;i++)
+          scanf("%d%d",&Oil[i],&Distance[i]);
+        for(i=0;i<N;i++)
+        {
+            BackTrace(N, i, 0 ,0);
+            if(Possible) break;
+        }
+        if(Possible)
+           printf("%d\n",i);
+        else
+           printf("impossible\n");
+    }
+    return 0;
+}
+
+void BackTrace(int N, int Start, int cnt, int oil)
+{
+    if(cnt==N) {Possible=true;return;}
+    
+    if(cnt+Start<N)
+    {
+       if(oil+Oil[cnt+Start]>=Distance[cnt+Start])
+          BackTrace(N,Start,cnt+1,oil+Oil[cnt+Start]-Distance[cnt+Start]);
+    }
+    else
+    {
+        if(oil+Oil[cnt+Start-N]>=Distance[cnt+Start-N])
+          BackTrace(N,Start,cnt+1,oil+Oil[cnt+Start-N]-Distance[cnt+Start-N]);
+    }
+    return;
+}

@@ -1,0 +1,31 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+using namespace std;
+int main()
+{
+    int N,i,j;
+    int len1,len2;
+    int Time;
+    int answer;
+    char Tony[85];
+    char Ans[85];
+    scanf("%d",&N);
+    for(i=0;i<N;i++)
+    {
+        scanf("%d",&Time);
+        getchar();
+        gets(Tony);
+        gets(Ans);
+        len1=strlen(Tony);
+        len2=strlen(Ans);
+        for(j=0;j<(len1<len2?len1:len2);j++)
+        {
+            if(Tony[j] != Ans[j])
+                break;
+        }
+        answer=Time*((len1-j)+(len2-j));
+        printf("%d\n",answer);
+    }
+    return 0;
+}

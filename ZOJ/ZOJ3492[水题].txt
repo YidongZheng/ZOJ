@@ -1,0 +1,32 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+using namespace std;
+
+int main()
+{
+    int N,T;
+    char Str[100][30];
+    char Name[30];
+    scanf("%d",&T);
+    int i,j;
+    while(T--)
+    {
+        scanf("%d%s",&N,Name);
+        for(i=0;i<N;i++)
+        {
+           scanf("%s",Str[i]);
+        }
+        for(i=0;i<N;i++)
+        {
+          if(!strcmp(Str[i],Name)) break;
+        }
+        for(j=0;j<N/2;j++)
+        {
+           i++;
+           if(i>=N) i=0;          
+        }
+        printf("%s\n",Str[i]);
+    }
+    return 0;
+}

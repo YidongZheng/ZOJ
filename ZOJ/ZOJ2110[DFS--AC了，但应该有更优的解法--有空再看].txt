@@ -1,0 +1,79 @@
+#include<iostream>
+#include<cstdio>
+
+using namespace std;
+int N,M,T;
+char Map[10][10];
+bool Visited[10][10];
+void DFS(int nowx, int nowy, int step);
+int ABS(int x){if(x<0)return -x;return x;}
+bool Yes;
+int main()
+{
+    int startx,starty;
+    int endx,endy;
+    int dis;
+    int i,j;
+    while(scanf("%d%d%d",&N,&M,&T)!=EOF)
+    {
+        if(N==0&&M==0&&T==0) break;
+        Yes=false;
+        for(i=0;i<N;i++) scanf("%s",Map[i]);
+        for(i=0;i<N;i++)
+          for(j=0;j<M;j++)
+          {
+            if(Map[i][j]=='S')
+              startx=i,starty=j;
+            if(Map[i][j]=='D')
+              endx=i,endy=j;
+            Visited[i][j]=false;
+          }
+        
+        Visited[startx][starty]=true;
+        dis=ABS(endx-startx)+ABS(endy-starty);
+        if(dis<=T && (T-dis)%2==0)
+        {
+            DFS(startx,starty,0);
+        }
+        if(Yes) printf("YES\n");
+        else printf("NO\n");
+    }
+    return 0;
+}
+
+void DFS(int nowx, int nowy, int step)
+{
+     if(step==T)
+     {
+         if(Map[nowx][nowy]=='D')
+             Yes=true;
+         return;
+     }
+     if(nowx+1<N&&Map[nowx+1][nowy]!='X'&&!Visited[nowx+1][nowy])
+     {
+         Visited[nowx+1][nowy]=true;
+         DFS(nowx+1,nowy,step+1);
+         Visited[nowx+1][nowy]=false;
+     }
+     if(nowx-1>=0&&Map[nowx-1][nowy]!='X'&&!Visited[nowx-1][nowy])
+     {
+         Visited[nowx-1][nowy]=true;
+         DFS(nowx-1,nowy,step+1);
+         Visited[nowx-1][nowy]=false;
+     }
+     if(nowy+1<M&&Map[nowx][nowy+1]!='X'&&!Visited[nowx][nowy+1])
+     {
+         Visited[nowx][nowy+1]=true;
+         DFS(nowx,nowy+1,step+1);
+         Visited[nowx][nowy+1]=false;
+     }
+     if(nowy-1>=0&&Map[nowx][nowy-1]!='X'&&!Visited[nowx][nowy-1])
+     {
+         Visited[nowx][nowy-1]=true;
+         DFS(nowx,nowy-1,step+1);
+         Visited[nowx][nowy-1]=false;
+     }     
+}
+//S.X.
+//..X.
+//...D

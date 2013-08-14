@@ -1,0 +1,100 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<set>
+using namespace std;
+
+bool IsPrime(int x)
+{
+     if(x <= 1) return false;
+     int i;
+     for(i=2;i*i<=x;i++)
+        if(x % i == 0) return false;
+     return true;
+}
+bool IsLeap(int x)
+{
+     if((x%400==0) || (x%4==0 && x%100!=0))
+         return true;
+     return false;
+}
+int month_prime(int month, int year)
+{
+    int ans=0;
+    if(month <= 2) return 0;
+    else if(month == 3) ans=9;
+    else if(month == 4) ans=20;
+    else if(month == 5) ans=20;
+    else if(month == 6) ans=31;
+    else if(month == 7) ans=31;
+    else if(month == 8) ans=42;
+    else if(month == 9) ans=42;
+    else if(month == 10) ans=42;
+    else if(month == 11) ans=42;
+    else if(month == 12) ans=52;
+    if(IsLeap(year))
+       ans++;
+    return ans;
+}
+int day_prime(int day, int month)
+{
+    if(month!=2 && month!=3 && month!=5 && month!=7 && month!=11) return 0;
+    if(day < 2) return 0;
+    if(day < 3) return 1;
+    if(day < 5) return 2;
+    if(day < 7) return 3;
+    if(day < 11) return 4;
+    if(day < 13) return 5;
+    if(day < 17) return 6;
+    if(day < 19) return 7;
+    if(day < 23) return 8;
+    if(day < 29) return 9;
+    if(day < 31) return 10;
+    return 11;
+}
+int main()
+{
+    int i,j,T;
+    int ans=0;
+    int ans1,ans2;
+    int years,months,days,yeare,monthe,daye;
+    int Array[3000];
+    for(j=999;j<2999;j++)
+       if(IsLeap(j))
+           Array[j]=++ans;
+       else
+           Array[j]=ans;
+    //for(i=0;i<100;i++)
+       //printf("%d\n",Array[i+1000]);
+    
+    scanf("%d",&T);
+    //int diff;
+    for(i=0;i<T;i++)
+    {
+    //    diff=0;
+        ans1=ans2=0;
+        scanf("%d%d%d%d%d%d",&years,&months,&days,&yeare,&monthe,&daye);
+        ans1+=52*(yeare-1000)+Array[yeare-1];
+        ans1+=month_prime(monthe,yeare);
+        ans1+=day_prime(daye,monthe);
+        
+        ans2+=52*(years-1000)+Array[years-1];
+        ans2+=month_prime(months,years);
+        ans2+=day_prime(days,months);
+        
+        if(IsPrime(days) && IsPrime(months))
+           ans=ans1-ans2+1;
+        else
+           ans=ans1-ans2;
+        printf("%d\n",ans);
+    }
+    return 0;
+}
+
+//2,3,5,7,11
+//2,3,5,7,11,13,17,19,23,29,31.
+//not leap: 9+11+11+11+10 = 52.
+//leap: 53.
+//1000-01-01 -- yyyy-mm-dd
+//1000-(yyyy-1) 闰年的个数。
+ 

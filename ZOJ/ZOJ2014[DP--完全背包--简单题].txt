@@ -1,0 +1,33 @@
+#include<iostream>
+#include<cstdio>
+#define Infinity 99999999
+using namespace std;
+
+int main()
+{
+    int T,E,F,N,M;
+    int V[502],W[502];
+    int DP[10002];
+    int i,j;
+    scanf("%d",&T);
+    while(T--)
+    {
+        for(i=0;i<=10000;i++) DP[i]=Infinity;
+        DP[0]=0;
+        scanf("%d%d%d",&E,&F,&N);
+        M=F-E;
+        for(i=1;i<=N;++i)
+        {
+            scanf("%d%d",&V[i],&W[i]);
+        }
+        for(i=1;i<=N;i++)
+          for(j=1;j<=M;j++)
+          {
+              if(j>=W[i])
+                  DP[j]=DP[j]<DP[j-W[i]]+V[i]?DP[j]:DP[j-W[i]]+V[i];
+          }
+        if(DP[M]<Infinity) printf("The minimum amount of money in the piggy-bank is %d.\n",DP[M]);
+        else printf("This is impossible.\n");
+    }
+    return 0;
+}

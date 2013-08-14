@@ -1,0 +1,29 @@
+#include<cstdio>
+#include<cstring>
+#include<queue>
+#include<cmath>
+
+using namespace std;
+
+int main()
+{
+    int T;
+    scanf("%d",&T);
+    double H,h,D;
+    double max;
+    while(T--)
+    {
+        scanf("%lf%lf%lf",&H,&h,&D);
+        if(D/(H-h)<=1 || H*sqrt(D/(H-h)) <= D)
+           printf("%.3lf\n",h>h*D/H?h:h*D/H);
+        else
+        {
+            max=h>h*D/H?h:h*D/H;
+            if(max > H+D-2*sqrt(H*D-h*D))
+                printf("%.3lf\n",max);
+            else 
+                printf("%.3lf\n",H+D-2*sqrt(H*D-h*D));
+        }
+    }
+    return 0;
+}

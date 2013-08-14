@@ -1,0 +1,69 @@
+#include<iostream>
+#include<cstdio>
+#include<cmath>
+#include<cstring>
+#include<cstdlib>
+int main()
+{
+    char a[102],ar[102],b[102],br[102],c[102],cr[102];
+    int  an[102],bn[102],cn[102];
+   for(int i=0;i<102;i++)
+           {
+             a[i] = b[i] = c[i] = 0;
+             ar[i] = br[i] = cr[i] = 0;
+             an[i] = bn[i] = cn[i] = 0;
+           }
+    while(scanf("%s%s",a,b)!=EOF)
+    {
+           
+          for(int i=0;i<strlen(a);i++)
+          {
+                  ar[i] = a[strlen(a) - i - 1];
+                  if(ar[i] >= 'a')
+                     an[i] = ar[i] - 'a' + 10;
+                  else
+                     an[i] = ar[i] - 48; 
+          }    
+          for(int i=0;i<strlen(b);i++)
+          {
+                  br[i] = b[strlen(b) - i - 1];
+                  if(br[i] >= 'a')
+                     bn[i] = br[i] - 'a' + 10;
+                  else
+                     bn[i] = br[i] - 48; 
+          }
+          int carry = 0;
+          for(int i= 0;i<(strlen(a)> strlen(b)?strlen(a):strlen(b));i++)
+          {
+                  
+                  cn[i] = an[i] + bn[i] + carry;
+                  if(cn[i]>=20)
+                       {
+                         carry = 1;
+                         cn[i] = cn[i] - 20;
+                       }
+                  else
+                      carry = 0;
+                  if(cn[i] >= 10)
+                       cr[i] = 'a' + cn[i] - 10;
+                  else
+                       cr[i] = '0' + cn[i]; 
+          }
+          if(carry == 1)
+                   cr[(strlen(a)> strlen(b)?strlen(a):strlen(b))] = '1';
+                   
+          for(int i=0;i<strlen(cr);i++)
+          {
+                 c[i] = cr[strlen(cr) - i - 1];
+          }
+          printf("%s\n",c);
+          for(int i=0;i<102;i++)
+           {
+             a[i] = b[i] = c[i] = 0;
+             ar[i] = br[i] = cr[i] = 0;
+             an[i] = bn[i] = cn[i] = 0;
+           }
+    }
+    
+    return 0;
+}

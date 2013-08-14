@@ -1,0 +1,68 @@
+#include<iostream>
+#include<cstdio>
+
+using namespace std;
+bool isPrime(int x)
+{
+    if(x<=1) return false;
+    for(int i=2;i*i<=x;i++)
+        if(x%i==0) return false;
+    return true;
+}
+int main()
+{
+    int Prime[50000];
+    int cnt=0;
+    int factor[100];
+    int numfact[100];
+    int factors[100];
+    /*preprocess   prime array and factor array*/
+    for(int i=2;i<40000;i++)
+        if(isPrime(i))
+        {
+            Prime[cnt++]=i;
+        }
+    int N;
+    while(scanf("%d",&N)!=EOF)
+    {
+        if(N==0) break;
+        if(N==1) {printf("0\n");continue;}
+        int recN=N;
+        int thisPrime=-1;
+        int num=0;
+        for(int j=0;Prime[j]*Prime[j]<=N;)
+        {
+            if(N % Prime[j] == 0)
+            {
+              factor[num] = Prime[j];
+              N /= Prime[j];
+              if(Prime[j]!=thisPrime)
+                  num++,thisPrime=Prime[j];   
+            }
+            else j++;
+           
+        }
+        if(N != 1 && N!=thisPrime)
+            factor[num++] = N;
+        N=recN;
+        int ans = 0;
+        int items = (int)pow(2.0,num);
+        for(int i=1;i<items;i++)
+        {
+            int tempcnt=0;
+            int Product=1;
+            for(int j=1,k=0;j<items;j*=2,k++)
+            {
+                
+                if((i&j)!=0){
+                    tempcnt++;
+                    Product*=factor[k];
+                }
+            }
+            if(tempcnt%2) ans+=(N-1)/Product;
+            else ans-=(N-1)/Product;
+        }
+        printf("%d\n",N-1-ans);
+    }
+    return 0;
+} 

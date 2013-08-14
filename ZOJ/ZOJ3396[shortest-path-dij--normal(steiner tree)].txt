@@ -1,0 +1,76 @@
+//An n-point Steiner tree has at most n-2 Steiner points.
+
+#include <queue>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <utility>
+#define INF (1<<29)
+using namespace std;
+
+vector<pair<int,int> > e[501];
+int main(){
+    int n,m,l;
+    int a[10001];
+    int d[501][501];
+    int cnt=1;
+    while(~scanf("%d%d%d",&n,&m,&l)){
+        printf("Case #%d\n",cnt++);
+        for(int i=1;i<=n;++i){
+            scanf("%d",&a[i]);
+        }
+        for(int i=1;i<=m;++i){
+            e[i].clear();
+        }
+        for(int i=0;i<l;++i){
+            int s,en,C;
+            scanf("%d%d%d",&s,&en,&C);
+            e[s].push_back(make_pair(en,C));
+            e[en].push_back(make_pair(s,C));
+        }
+        for(int i=1;i<=m;++i){
+            fill(d[i]+1,d[i]+m+1,INF);
+            d[i][i]=0;
+            priority_queue<pair<int,int> > q;
+            q.push(make_pair(-d[i][i],i));
+            while(!q.empty()){
+                int y=-q.top().first;
+                int x=q.top().second;
+                q.pop();
+                if(y!=d[i][x]){
+                    continue;
+                }
+                vector<pair<int,int> >::iterator myit;
+                for(myit=e[x].begin();myit!=e[x].end();++myit){
+                    if(d[i][myit->first]>y+myit->second){
+                        d[i][myit->first]=y+myit->second; 
+                        q.push(make_pair(-d[i][myit->first],myit->first));
+                    }
+                }
+            }
+        }
+        int q;
+        scanf("%d",&q);
+        for(int i=1;i<=q;++i){
+            int x,y,z;
+            scanf("%d%d%d",&x,&y,&z);
+            x=a[x];
+            y=a[y];
+            z=a[z];
+            int ans=INF;
+            for(int j=1;j<=m;++j){
+                ans=min(ans,d[x][j]+d[y][j]+d[z][j]);
+            }
+            printf("Line %d: ",i);
+            if(ans==INF){
+                puts("Impossible to connect!");
+            }
+            else{
+                printf("The minimum cost for this line is %d.\n",ans);
+            }
+        }
+
+    }
+    return 0;
+}

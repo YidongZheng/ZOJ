@@ -1,0 +1,44 @@
+/*题目的判断会出很大的数据，所以要先用字符串处理，题目没有说明，是个大缺陷*/
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+using namespace std;
+int DigitSum(int x);
+int main()
+{
+	char sum[1000];
+	scanf("%s",sum);
+	//cin>>x;
+	int x = 0;
+	for(int i=0;i<strlen(sum);i++)
+	{
+		x += (sum[i] - 48);
+	}
+	while(x != 0)
+	{
+		int y = x;
+		y = DigitSum(y);
+		while(y >= 10)
+		{
+			y = DigitSum(y);
+		}
+		printf("%d\n",y);
+		scanf("%s",&sum);
+		x = 0;
+		for(int i=0;i<strlen(sum);i++)
+		{
+			x += (sum[i] - 48);
+		}
+	}
+	return 0;
+}
+int DigitSum(int x)
+{
+	int ans = 0;
+	while(x != 0)
+	{
+		ans += x%10;
+		x /= 10;
+	}
+	return ans;
+}

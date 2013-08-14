@@ -1,0 +1,64 @@
+#include<iostream>
+#include<cstdio>
+int DigitSum(int N);
+bool IsPrime(int n);
+using namespace std;
+int main()
+{
+    int Prim[5000];
+    int Num = 0;
+    for(int i=2;i<10000;i++)
+    {
+        if(IsPrime(i))
+            Prim[Num++] = i;
+    }
+    int N;
+    while(scanf("%d",&N) != EOF)
+    {  
+       if(N == 0) break;
+       for(int i=N+1;i<100010000;i++)
+       {   
+           if(IsPrime(i))
+              continue;
+           int temp = i;
+           int factorsum = 0;
+           int j=0;
+           for(int j=0;Prim[j]*Prim[j]<=temp;)
+           {
+               if(temp % Prim[j] == 0)
+               {
+                 factorsum += DigitSum(Prim[j]);
+                 temp /= Prim[j];             
+               }
+               else j++;
+           }
+           if(temp != 1)
+                   factorsum += DigitSum(temp);
+           if(DigitSum(i) == factorsum)
+              {
+                printf("%d\n",i);
+                break;
+              }
+       }
+    }
+    return 0;
+}
+int DigitSum(int N)
+{
+    int ans = 0;
+    while(N != 0)
+    {
+        ans += N % 10;
+        N /= 10;
+    }
+    return ans;         
+}
+bool IsPrime(int n)
+{
+     if(n == 1 || n == 0)
+        return false;
+     for(int i=2;i*i <= n;i++)
+             if(n % i == 0)
+                  return false;
+     return true;
+}

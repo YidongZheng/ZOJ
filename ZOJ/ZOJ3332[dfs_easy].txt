@@ -1,0 +1,62 @@
+#include <stdio.h>
+#include <string.h>
+
+bool visited[101];
+int map[101][101];
+int path[101];
+int n;
+bool found;
+void dfs(int v,int cnt);
+int main()
+{
+    int T;
+    scanf("%d",&T);
+    while(T--)
+    {
+        //printf("DEBUG 3");
+        found=false;
+        scanf("%d",&n);
+        //printf("DEBUG 3\n");
+        memset(map,0,sizeof(map));
+        int edges=n*(n-1)/2;
+        for(int i=0;i<edges;++i)
+        {
+          //  printf("DEBUG 2");
+            int s,e;
+            scanf("%d%d",&s,&e);
+            map[s][e]=1;
+        }
+        for(int i=1;i<=n&&!found;++i){
+            memset(visited,0,sizeof(visited));
+            path[0]=i;
+            //printf("DEBUG 1");
+            dfs(i,1);
+        }
+    }
+    return 0;
+}
+void dfs(int v,int cnt)
+{
+    if(found)return;
+    if(cnt==n)
+    {
+        printf("%d",path[0]);
+        for(int i=1;i<n;++i)
+            printf(" %d",path[i]);
+        printf("\n");
+        found=true;
+        //printf("DEBUG\n");
+        return;
+    }
+    visited[v]=true;
+    for(int i=1;i<=n;++i)
+    {
+        //printf("DEBUG 5\n");
+        if(!visited[i]&&map[v][i]==1){
+            path[cnt]=i;
+            dfs(i,cnt+1);
+            //printf("DEBUG 4\n");
+        }
+    }
+    visited[v]=false;
+}

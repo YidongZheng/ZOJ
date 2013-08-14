@@ -1,0 +1,47 @@
+/*数据很大，但没有比遍历更好的方法，所以从大的数开始找，所以先排序，如果找到了直接goto，也可以写break,不过要好
+多个，而且挺麻烦。。。*/
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<algorithm>
+#include<cmath>
+using namespace std;
+int main()
+{
+    int N;
+    long int num[1000];
+    scanf("%d",&N);
+    while(N != 0)
+    {
+        for(int i=0;i<N;i++)
+        {
+                scanf("%ld",&num[i]);
+        }
+        sort(num,num+N);
+        long int Max = -536870912;
+      for(int nu=N-1;nu>=0;nu--)
+        {
+               for(int i=0;i<N;i++)
+                   for(int j=i+1;j<N;j++)
+                       for(int k=j+1;k<N;k++)
+            {
+                if(num[nu] == num[i] + num[j] + num[k] && nu != i && nu != j && nu != k)
+                {
+                       Max = num[nu];
+                       goto A;
+                }     
+            }
+        }
+      A:
+        if(Max == -536870912)
+        {
+               printf("no solution\n");
+        }
+        else
+        {
+               printf("%ld\n",Max);
+        }
+        scanf("%d",&N);  
+    }
+    return 0;
+}

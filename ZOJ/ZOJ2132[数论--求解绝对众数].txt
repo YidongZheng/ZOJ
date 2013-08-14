@@ -1,0 +1,19 @@
+/*求解绝对众数的方法*/ 
+#include<stdio.h>
+int main()
+{
+  int L,a,i,ans,k;
+  while(scanf("%d",&L) != EOF)
+  {
+    for(k=0,i=0;i<L;i++)
+    {
+         scanf("%d",&a);
+         if(!k) ans=a,k=1;   //把它当成正确答案。 
+         else if(ans==a)k++; //记录现在认为的正确答案的数量。 
+         else k--;   //k--相当于抵消两个数，或者是两个错误答案，或者是一个错误答案和一个正确答案。
+         //由于正确答案的数量多于错误答案，所以最终总可以得到正确答案。 
+    }
+    printf("%d\n",ans);
+  }
+  return 0;
+}

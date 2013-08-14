@@ -1,0 +1,211 @@
+#include <cstdio>
+#include <queue>
+#include <cstring>
+
+using namespace std;
+
+int m,n;
+int x1,y1,x2,y2,x3,y3,D;
+char ins[51];
+char graph[50][50];
+bool vist[50][50][50];
+struct point{int x,y;int dogse,step;point(int xx,int yy,int d,int s):x(xx),y(yy),dogse(d),step(s){}};
+struct dogpoint{int x,y;char dire;};
+dogpoint dogp[50];
+int ans;
+bool found;
+
+
+bool isSeen(int x, int y, int se){
+	if(dogp[se].x==x)
+	{
+		if(dogp[se].y>=y&&dogp[se].dire=='w')
+		{
+			for(int i=dogp[se].y-1;i>=y;--i)
+			{
+				if(graph[x][i]=='*')
+					return false;
+			}
+			return true;
+		}
+		else if(dogp[se].y<=y&&dogp[se].dire=='e')
+		{
+			for(int i=dogp[se].y+1;i<=y;++i)
+			{
+				if(graph[x][i]=='*')
+					return false;
+			}
+			return true;
+		}
+	}
+	if(dogp[se].y==y)
+	{
+		if(dogp[se].x>=x&&dogp[se].dire=='n')
+		{
+			for(int i=dogp[se].x-1;i>=x;--i)
+			{
+				if(graph[i][y]=='*')
+					return false;
+			}
+			return true;
+		}
+		else if(dogp[se].x<=x&&dogp[se].dire=='s')
+		{
+			for(int i=dogp[se].x+1;i<=x;++i)
+			{
+				if(graph[i][y]=='*')
+					return false;
+			}
+			return true;
+		}
+	}
+	return false;
+}
+
+void bfs()
+{
+	queue<point> mys;
+	mys.push(point(x1,y1,0,0));
+	int tempse=0;
+	int x,y,se,step;
+	while(!mys.empty())
+	{
+		x = mys.front().x;
+		y = mys.front().y;
+		se = mys.front().dogse;
+		if(se == D-1) se=-1;
+		step = mys.front().step;
+		mys.pop();
+		if(x==x2&&y==y2)
+		{
+			found=true;
+			ans = step;
+			break;
+		}
+		vist[x][y][se]=true;
+	if(x+1<m&&graph[x+1][y]!='*'&&!vist[x+1][y][se+1]&&!(x+1==dogp[se+1].x&&y==dogp[se+1].y)&&!isSeen(x+1,y,se+1))
+		{mys.push(point(x+1,y,se+1,step+1));vist[x+1][y][se+1]=true;}
+	if(x-1>=0&&graph[x-1][y]!='*'&&!vist[x-1][y][se+1]&&!(x-1==dogp[se+1].x&&y==dogp[se+1].y)&&!isSeen(x-1,y,se+1))
+		{mys.push(point(x-1,y,se+1,step+1));vist[x-1][y][se+1]=true;}
+	if(y+1<n&&graph[x][y+1]!='*'&&!vist[x][y+1][se+1]&&!(x==dogp[se+1].x&&y+1==dogp[se+1].y)&&!isSeen(x,y+1,se+1))
+		{mys.push(point(x,y+1,se+1,step+1));vist[x][y+1][se+1]=true;}
+	if(y-1>=0&&graph[x][y-1]!='*'&&!vist[x][y-1][se+1]&&!(x==dogp[se+1].x&&y-1==dogp[se+1].y)&&!isSeen(x,y-1,se+1))
+		{mys.push(point(x,y-1,se+1,step+1));vist[x][y-1][se+1]=true;}
+	if(!vist[x][y][se+1]&&!(x==dogp[se+1].x&&y==dogp[se+1].y)&&!isSeen(x,y,se+1))
+		{mys.push(point(x,y,se+1,step+1));vist[x][y][se+1]=true;}
+	}
+}
+void turnr(char& c)
+{
+	if(c=='n')
+		c='e';
+	else if(c=='e')
+		c='s';
+	else if(c=='s')
+		c='w';
+	else
+		c='n';
+	return;
+}
+void turnl(char& c)
+{
+	if(c=='n')
+		c='w';
+	else if(c=='e')
+		c='n';
+	else if(c=='s')
+		c='e';
+	else
+		c='s';
+	return;
+}
+void go(int i)
+{
+	if(dogp[i-1].dire=='n')
+	{
+		dogp[i].x=dogp[i-1].x;
+		dogp[i].y=dogp[i-1].y;
+		dogp[i].dire=dogp[i-1].dire;
+			--dogp[i].x;
+	}
+	else if(dogp[i-1].dire=='s')
+	{
+		dogp[i].x=dogp[i-1].x;
+		dogp[i].y=dogp[i-1].y;
+		dogp[i].dire=dogp[i-1].dire;
+		++dogp[i].x;
+	}
+	else if(dogp[i-1].dire=='e')
+	{
+		dogp[i].x=dogp[i-1].x;
+		dogp[i].y=dogp[i-1].y;
+		dogp[i].dire=dogp[i-1].dire;
+			++dogp[i].y;
+	}
+	else
+	{
+		dogp[i].x=dogp[i-1].x;
+		dogp[i].y=dogp[i-1].y;
+		dogp[i].dire=dogp[i-1].dire;
+			--dogp[i].y;
+	}
+}
+int main()
+{
+	//freopen("in.txt","r",stdin);
+	//freopen("out.txt","w",stdout);
+	int times=1;
+	scanf("%d%d",&m,&n);
+	while(true)	{
+		ans = 0;
+		memset(vist,0,sizeof(vist));
+		found=false;
+		scanf("%d%d%d%d%d%d%d",&x1,&y1,&x2,&y2,&x3,&y3,&D);
+		x1--,y1--,x2--,y2--,x3--,y3--;
+		scanf("%s",ins);
+		dogp[0].x=x3;
+		dogp[0].y=y3;
+		dogp[0].dire='n';
+		for(int i=0;ins[i];++i)
+		{
+			if(ins[i]=='L')
+			{
+				//dogp[i+1].x=dogp[i].x;
+				//dogp[i+1].y=dogp[i].y;
+				//dogp[i+1].dire=dogp[i].dire;
+				dogp[i+1]=dogp[i];
+				turnl(dogp[i+1].dire);
+			}
+			else if(ins[i]=='R')
+			{
+				dogp[i+1]=dogp[i];
+				//dogp[i+1].x=dogp[i].x;
+				//dogp[i+1].y=dogp[i].y;
+				//dogp[i+1].dire=dogp[i].dire;
+				turnr(dogp[i+1].dire);
+			}
+			else
+			{
+				go(i+1);
+			}
+		}
+		for(int i=0;i<m;++i)
+		{
+			scanf("%s",graph[i]);
+		}
+
+		bfs();
+		printf("Case %d:\n",times++);
+		if(found)
+			printf("Minimal time is: %d\n",ans);
+		else
+			printf("No way out\n");
+        if(~scanf("%d%d",&m,&n)&&m&&n)
+			printf("\n");
+		else
+			break;
+	}
+	return 0;
+}
+
+

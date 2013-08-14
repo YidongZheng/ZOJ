@@ -1,0 +1,61 @@
+#include<iostream>
+#include<cstdio>
+
+using namespace std;
+
+int main()
+{
+    int N,P;
+    int blocks;
+    int Min, Max;
+    int i,j,k;
+    int MaxAllGrade[120];
+    int MinAllGrade[120];
+    int Grade[120];
+    int cnt;
+    scanf("%d",&blocks);
+    for(i=0;i<blocks;++i)
+    {
+        cnt=0;
+        scanf("%d%d",&N,&P);
+        for(j=0;j<P;++j)
+        {
+          MaxAllGrade[j]=0;
+          MinAllGrade[j]=0;
+        }
+        for(j=0;j<N;++j)
+        {
+          Min=1500;
+          Max=-1;
+          for(k=0;k<P;++k)
+          {
+              scanf("%d",&Grade[k]);
+              if(Grade[k]<Min) Min=Grade[k];
+              if(Grade[k]>Max) Max=Grade[k];
+          }
+          for(k=0;k<P;++k)
+          {
+              if(Grade[k]==Min)  MinAllGrade[k]++;
+              if(Grade[k]==Max)  MaxAllGrade[k]++;
+          }
+        }
+        for(k=0;k<P;++k)
+          {
+              if(MinAllGrade[k]>N/2 && MaxAllGrade[k]==0)
+                  cnt++;
+          }   
+          if(cnt==0) printf("0\n");
+          else
+          {
+            for(k=0;k<P,cnt>0;++k)
+            {
+              if(cnt>1 && MinAllGrade[k]>N/2 && MaxAllGrade[k]==0)
+                  printf("%d ",k+1),cnt--;
+              else if(MinAllGrade[k]>N/2 && MaxAllGrade[k]==0)
+                  printf("%d\n",k+1),cnt--;
+            }     
+          }       
+        if(i!=blocks-1) printf("\n");
+    }
+    return 0;
+}

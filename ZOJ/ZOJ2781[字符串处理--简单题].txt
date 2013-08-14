@@ -1,0 +1,43 @@
+#include<stdio.h>
+#include<string.h>
+
+int main()
+{
+    int N,len,i,k;
+    scanf("%d",&N);
+    char Str[20];
+    char temp;
+    while(N--)
+    {
+        scanf("%s",Str);
+        len=strlen(Str);
+        for(i=0;i<len/2;i++)
+        {
+            temp=Str[i];
+            Str[i]=Str[len-1-i];
+            Str[len-1-i]=temp;
+        }
+        Str[len]='0';
+        Str[len+1]=0;
+        for(k=1;k<=8;k++)
+        {
+            if(len==k && Str[len-1]>'9')
+                len++;
+            if(len>k)
+            {
+                while(Str[k-1]>'9')
+                {
+                    Str[k]++;
+                    Str[k-1]-=10;
+                }
+                if(Str[k-1]>='5')
+                    Str[k]++;
+                Str[k-1]='0';
+            }
+        }
+        for(i=len-1;i>=0;i--)
+            printf("%c",Str[i]);
+        printf("\n");       
+    }
+    return 0;
+}

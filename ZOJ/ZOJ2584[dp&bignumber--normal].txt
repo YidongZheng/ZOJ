@@ -1,0 +1,183 @@
+/* ZOJ Problem Set - 2584
+ * Computer Transformation
+ * zyd 2013-1-1
+ * DP & Big Integer
+ * normal
+ * using my own Bigint class
+ */
+#include<cstdio>
+#include<cstring>
+#include<iostream>
+#include<string>
+#include<sstream>
+#include<algorithm>
+
+using namespace std;
+
+
+class Bigint
+{
+private:
+    std::string value;
+    bool sign;
+    int size;
+public:
+    static const int ZERO=0;
+    Bigint(int value,int s=400);
+    Bigint(std::string str,int s=400);
+    Bigint(const Bigint& bigi);
+    Bigint();
+    Bigint(std::string value,bool sign,int s=400);
+    std::string toString()const;
+    friend std::ostream& operator<<(std::ostream& out,const Bigint& bigi);
+    /*inline*/const bool isPositive(){return sign;}
+    const Bigint& operator=(const Bigint& bigi);
+    const Bigint& operator=(int a);
+    const Bigint operator+(int a) const;
+    const Bigint operator+(const std::string& str)const;
+    const Bigint operator+(const Bigint& bigi) const;
+    /*inline*/const int getSize(){return size;}
+};
+
+Bigint::Bigint():size(20),value(400,'0')
+{
+    string str="0";
+    reverse(str.begin(),str.end());
+    value.replace(0,str.length(),str);
+}
+/*This construction construct a Bigint through an integer value.*/
+Bigint::Bigint(int a,int s):value(s,'0'),sign(true)
+{
+    std::stringstream stream;
+    std::string str;
+    stream.clear();
+    stream<<a;
+    stream>>str;
+    reverse(str.begin(),str.end());
+    value.replace(0,str.length(),str);
+    reverse(value.begin(),value.end());
+}
+/*This construction construct a Bigint through a string*/
+Bigint::Bigint(string str,int s):value(s,'0'),sign(true)
+{
+    reverse(str.begin(),str.end());
+    value.replace(0,str.length(),str);
+    reverse(value.begin(),value.end());
+}
+/*This function put the number[present by string] to a stream*/
+ostream& operator<<(ostream& out,const Bigint& bigi)
+{
+    return out<<bigi.toString();
+}
+/*This function allow the number to add an integer*/
+const Bigint Bigint::operator+(int a) const
+{
+    std::stringstream stream;
+    std::string str;
+    stream.clear();
+    stream<<a;
+    stream>>str;
+    return *this+str;
+}
+
+/*This function allow the number to add an string*/
+const Bigint Bigint::operator+(const string& str)const
+{
+    string tstr1=str;
+    string tstr2=toString();
+    if(tstr1.length()<tstr2.length()) tstr1.swap(tstr2);
+    int llen=tstr1.length();
+    int slen=tstr2.length();
+#ifdef Bigint_DEBUG
+    cout<<"testing operator+(const string& str)<"<<endl;
+    cout<<"values of arguments"<<endl;
+    cout<<str<<endl;
+    cout<<value<<endl;
+    cout<<"len of short string: "<<slen<<endl;
+    cout<<"len of long string: "<<llen<<endl;
+#endif
+    string tstrsum(400,'0');
+    reverse(tstr1.begin(),tstr1.end());
+    reverse(tstr2.begin(),tstr2.end());
+    int carry=0;
+    char secstr='0';
+    for(int i=0;i<llen;++i)
+    {
+	if(i<slen)
+	    secstr=tstr2[i];
+	else
+	    secstr='0';
+
+	tstrsum[i]=(tstr1[i]-48)+(secstr-48)+carry;
+	if(tstrsum[i]>=10)
+	{
+	    tstrsum[i]=tstr1[i]+secstr+carry-58;
+	    carry=1;
+	}
+	else
+	{
+	    tstrsum[i]=tstr1[i]+secstr+carry-48;
+	    carry=0;
+	}
+    }
+    if(carry!=0) tstrsum[llen]='1';
+    else tstrsum[llen]='0';
+    reverse(tstrsum.begin(),tstrsum.end());
+    return Bigint(tstrsum);
+}
+/*This function allow the Big number add to a Big number*/
+const Bigint Bigint::operator+(const Bigint& bigi) const
+{
+    return Bigint((bigi+value).toString());
+}
+
+/*This function return a string represent the number*/
+string Bigint::toString()const
+{
+    int len=value.length();
+    int i;
+    for(i=0;i<len&&value[i]=='0';++i);
+    if(i<len)
+	return string(value.substr(i,len-i));
+    else
+	return string("0");
+}
+
+/*This function allow assignment of number*/
+const Bigint& Bigint::operator=(const Bigint& bigi)
+{
+    this->value=bigi.value;
+    return *this;
+}
+/*This function allow assignment of integer*/
+const Bigint& Bigint::operator=(int a)
+{
+    std::stringstream stream;
+    std::string str;
+    stream.clear();
+    stream<<a;
+    stream>>str;
+    value.replace(0,str.length(),str);
+    return *this;
+}
+
+
+int main()
+{
+    Bigint F1[1001];
+    Bigint F2[1001];
+    int i,n;
+    F1[1]=0;
+    F2[1]=0;
+    for(i=2;i<=1000;i++)
+    {
+	F1[i]=F1[i-1]+F2[i-1]+(i+1)%2;
+	F2[i]=F2[i-1]+F1[i-1];
+    }
+    while(cin>>n)//scanf("%d",&n)!=EOF)
+    {
+	//printf("%lld\n",F1[n]);
+	cout<<F1[n]<<endl;
+    }
+    return 0;
+}

@@ -1,0 +1,55 @@
+//ZOJ Problem Set - 1596
+//Hamming Problem
+#include<cstdio>
+#include<iostream>
+#include<cmath>
+#include<algorithm>
+
+using namespace std;
+
+int main()
+{
+    //for(int i=0;i<)
+    //double a = 1e18;
+    //double b;
+    int i;
+    long long a, b, c, index;
+    double array[216000];
+    int maxa,maxb,maxc;
+    double temp = 1e18;
+    while(scanf("%lld%lld%lld%lld",&a,&b,&c,&index)!=EOF)
+    {
+        int cnt=0;
+        for(i=0;i<64;i++)
+         if(pow(a*1.0,i)>temp)
+         {
+            maxa=i;
+            break;
+        }
+        for(i=0;i<64;i++)
+             if(pow(b*1.0,i)>temp)
+             {
+                maxb=i;
+                break;
+            }
+        for(i=0;i<64;i++)
+             if(pow(c*1.0,i)>temp)
+             {
+                maxc=i;
+                break;
+            }
+    double ans = 1;
+    for(int j=0;j<maxa;j++)
+        for(int k=0;k<maxb;k++)
+            for(int m=0;m<maxc;m++)
+            {
+                  if(j!=0||k!=0||m!=0)
+                  ans=pow(1.0*a,j)*pow(1.0*b,k)*pow(1.0*c,m);
+                  array[cnt++]=ans;  
+            }
+    sort(array,array+cnt);
+    printf("%.0f\n",array[index]);
+    //getchar();
+}
+    return 0;
+}

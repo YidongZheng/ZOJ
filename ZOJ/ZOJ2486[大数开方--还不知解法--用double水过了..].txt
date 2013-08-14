@@ -1,0 +1,14 @@
+#include<stdio.h>
+#include<math.h>
+
+int main()
+{
+    int n;
+    double p;
+    double ans;
+    while(scanf("%d%lf",&n,&p)!=EOF)
+    {
+        ans=pow(p,1.0/n);
+        printf("%.0lf\n",ans);
+    }
+}

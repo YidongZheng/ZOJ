@@ -1,0 +1,51 @@
+#include<iostream>
+#include<cstdio>
+#include<cmath>
+
+using namespace std;
+
+int main()
+{
+    double N;
+    int r;
+    double k;
+    double Min;
+    double temp,temp2;
+    while(scanf("%lf",&N)!=EOF)
+    {
+        r = 1;
+        k = N-1;
+        Min = N-1;
+        temp = (int)sqrt(N);
+        if(temp*(temp+1)==N && 2*temp<Min)
+            r = 2,k = temp,Min=r*k;
+            
+        for(int j=3;j<=40;j++)
+        {
+            temp2=pow(N,1.0/j); 
+            if(temp2<=2) break;    
+            for(int i=(int)temp2/j;i<=(int)(temp2+1);i++)
+            {
+                if(i>2 && ((i-pow(1.0*i,j+1))/(1-i))== N && j*i<Min)
+                    r=j,k=i,Min=r*k;
+            }
+        }
+        N--;
+        temp = (int)sqrt(N);
+        if(temp*(temp+1)==N && 2*temp<Min)
+            r = 2,k = temp,Min=r*k;
+        
+        for(int j=3;j<=40;j++)
+        {
+            temp2=pow(N,1.0/j);    
+            if(temp2<=2) break;
+            for(int i=(int)temp2/j;i<=(int)(temp2+1);i++)
+            {
+                if(i>2 && ((i-pow(1.0*i,j+1))/(1-i))==N && j*i<Min)
+                    r=j,k=i,Min=r*k;
+            }
+        }
+        printf("%d %.0lf\n",r,k);
+    }
+    return 0;
+}

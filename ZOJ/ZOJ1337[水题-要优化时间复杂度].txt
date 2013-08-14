@@ -1,0 +1,43 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<algorithm>
+#include<cmath>
+int Gcd(long int m, long int n);
+using namespace std;
+int main()
+{
+    int T;
+    int num[50];
+    scanf("%d",&T);
+    while(T != 0)
+    {
+        int count = 0;
+        for(int i=0;i<T;i++)
+        {
+              scanf("%d",&num[i]);
+        }
+        for(int i=0;i<T;i++)
+           for(int j=i;j<T;j++)
+           {
+                   if(Gcd(num[i],num[j]) == 1)
+                               count++;
+           }
+        if(count == 0)
+           printf("No estimate for this data set.\n");
+        else
+           printf("%lf\n",pow((3.0 * T * (T-1)) / (1.0 * count),0.5) );
+        scanf("%d",&T);       
+    }
+    return 0;
+}
+int Gcd(long int m, long int n)
+{
+	int Max = 1;
+	for(int i=1;i<=(m>n?n:m);i++)
+	{
+		if(m % i + n % i == 0)
+			Max = i;
+	}
+	return Max;
+}

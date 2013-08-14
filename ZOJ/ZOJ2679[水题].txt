@@ -1,0 +1,35 @@
+#include<string>
+#include<iostream>
+#include<sstream>
+#include<cstdio>
+using namespace std;
+
+int main()
+{
+    int T;
+    int N,X,Y,Z;
+    int ans;
+    int i,j;
+    bool found;
+    scanf("%d",&T);
+    while(T--)
+    {
+        scanf("%d%d%d%d",&N,&X,&Y,&Z);
+        found=false;
+        for(i=9;i>0;i--)
+        {
+          for(j=9;j>=0;j--)
+          {
+             ans=Z*10+Y*100+X*1000+i*10000+j;
+             if(ans % N == 0)
+             {
+                found=true;break;
+             }
+          }
+          if(found) break;
+        }
+        if(found) printf("%d %d %d\n",i,j,ans/N);
+        else printf("0\n");
+    }
+    return 0;
+}

@@ -1,0 +1,26 @@
+#include <stdio.h>
+int main()
+{
+    int n;
+    bool swin;
+    while(~scanf("%d",&n))
+    {
+	swin=false;
+	int limit=1;
+	//int left=nine(n);
+	//int right=n-1;
+	while(limit<n)
+	{
+	    if(!swin)
+		limit*=9;
+	    else
+		limit*=2;
+	    swin=!swin;
+	}
+	if(swin)
+	    printf("Stan wins.\n");
+	else
+	    printf("Ollie wins.\n");
+    }
+    return 0;
+}

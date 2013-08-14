@@ -1,0 +1,72 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+using namespace std;
+
+char Str1[1005];
+char Str2[1005];
+char Sum[1005];
+
+void Add()//char* Str1, char* Str2, char* Sum)
+{
+     int carry=0;
+     //int len1=strlen(Str1);
+     //int len2=strlen(Str2);
+     //int len=len1>len2?len1:len2;
+     int i;
+     for(i=0;i<1003;i++)
+     {
+         if((Str1[i]-48)+(Str2[i]-48)+carry<10)
+         {
+           Sum[i]=(Str1[i]-48)+Str2[i]+carry;
+           carry=0;
+           //printf("%c %c %c YES\n",Str1[i],Str2[i],Sum[i]);
+         }
+         else
+         {
+            Sum[i]=(Str1[i]-48)+Str2[i]+carry-10;
+            carry=1;
+         }
+     }
+}
+int main()
+{
+   
+    //char* N1=Str1, * N2=Str2, *N3=Sum;
+    
+    int N,i,j;
+    while(scanf("%d",&N) != EOF)
+    {
+        memset(Str1,'0',1004);
+        Str1[1004]=0;
+        Str1[0]='1';
+        memset(Str2,'0',1004);
+        Str2[1004]=0;
+        Str2[0]='1';
+        memset(Sum,'0',1004);
+        Sum[1004]=0;
+        if(N==1 || N==2) printf("1\n");
+        else
+        {
+            for(i=0;i<N-2;i++)
+            {
+                Add();
+                strcpy(Str2,Str1);
+                strcpy(Str1,Sum);
+            }
+            for(i=1003;i>=0 && Sum[i]=='0';i--);
+            //printf("i:%d\n",i);
+            for(;i>=0;i--)
+             printf("%c",Sum[i]);
+            printf("\n");
+            
+        }
+        
+    }
+    return 0;
+}
+
+//1 1 2 3 5 8 
+//F[N]=F[N-1]+F[N-2]
+//F[N-2]=F[N-1]
+//F[N-1]=F[N];

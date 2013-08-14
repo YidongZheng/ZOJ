@@ -1,0 +1,46 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+
+using namespace std;
+
+int main()
+{
+    char ZOJ7[1005];
+    char Ans[1005];
+    int len,i;
+    int nz, no, nj, n7;
+    int cnt;
+    while(scanf("%s",ZOJ7) != EOF)
+    {
+        len = strlen(ZOJ7);
+        nz=no=nj=n7=cnt=0;
+        for(i=0;i<len;i++)
+        {
+            if(ZOJ7[i] == 'Z')
+               nz++;
+            else if(ZOJ7[i] == 'O')
+               no++;
+            else if(ZOJ7[i] == 'J')
+               nj++;
+            else if(ZOJ7[i] == '7')
+               n7++;
+        }
+        for(i=0;i<nz;i++)
+          Ans[cnt++]='Z';
+        for(i=0;i<no;i++)
+          Ans[cnt++]='O';
+        for(i=0;i<nj;i++)
+          Ans[cnt++]='J';
+        for(i=0;i<n7;i++)
+          Ans[cnt++]='7';
+        for(i=0;i<len;i++)
+        {
+            if(ZOJ7[i] != 'Z' && ZOJ7[i] != 'O' && ZOJ7[i] != 'J' && ZOJ7[i] != '7')
+               Ans[cnt++]=ZOJ7[i];
+        }  
+        Ans[cnt]=0;
+        printf("%s\n",Ans);
+    }
+    return 0;
+}

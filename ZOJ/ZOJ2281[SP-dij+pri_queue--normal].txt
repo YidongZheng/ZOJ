@@ -1,0 +1,128 @@
+/********************************************
+  ZOJ 2281   Way to Freedom
+  Shortest-path-like  
+  dijkstra+priority_queue          normal
+  Yidong Zheng, 2013-2-12
+  Sovle:
+  We can solve this problem using the same
+  tactic when we solve shortest path prob-
+  lem.[It's easy to show it works].We use 
+  adjacent list here for the hudge input of
+  the edges.We use a priority queue to speed
+  up the algorithm.The time bound is now
+  O(ElogV)[O(EV) without a queue,which is 
+  unacceptable for this problem].
+**********************************************/
+
+
+
+#include <cstdio>
+#include <cstdlib>
+#include <iostream>
+#include <cstring>
+#include <climits>
+#include <queue>
+#include <list>
+#define MAX 100010
+
+using namespace std;
+
+typedef struct ROOM{
+	int num;
+	int w;
+	//ROOM *next;
+}ROOM;
+typedef struct DIS{
+	int w;
+	int num;
+}DIS;
+
+bool operator<(DIS a,DIS b)
+{
+	return a.w < b.w;
+}
+
+priority_queue<DIS> q;
+
+list<ROOM> r[MAX];
+ROOM /**r[MAX],*/node[MAX*20];//,*head;
+list<ROOM>::iterator head;
+int cou,n,m;
+void init()
+{
+    for(int i=0;i<MAX;++i)
+        r[i].clear();
+	//cou = 0;
+	//memset(r,'\0',sizeof(r));
+	//memset(node,'\0',sizeof(node));
+}
+void Build(int from,int to,int w)
+{
+	node[cou].num = to;
+	node[cou].w = w;
+	//node[cou].next = r[from];
+	//r[from] = &node[cou++];
+    r[from].push_back(node[cou++]);
+}
+int Dijkstra(int s,int to)
+{
+	int used[MAX],now,i,k,num;
+	DIS dis[MAX];
+	for(i=1; i<=n; i++)
+	{
+		used[i] = 0;
+		dis[i].num = i;
+		dis[i].w = 0;
+	}
+	dis[s].w = INT_MAX;
+	now = s;
+	used[s] = 1;
+	for(i=1; i<n; i++)
+	{
+		head = r[now].begin();;
+		while( head != r[now].end() )
+		{
+			num = head->num;
+			int len = dis[now].w < head->w ? dis[now].w : head->w;
+			if( dis[num].w < len )
+			{
+				dis[num].w = len;
+				q.push(dis[num]); 
+			}
+			++head;
+		}		
+		DIS tmp;
+		while( !q.empty() )
+		{
+			tmp = q.top();
+			q.pop();
+			if( used[tmp.num] == 1 )
+				continue;
+			break;
+		}
+		used[tmp.num] = 1;
+		now = tmp.num;
+	}
+	while( !q.empty() )
+		q.pop();
+	return dis[to].w;
+}
+int main()
+{
+	int from,to,a,b,w,ans;
+	while( scanf("%d%d",&n,&m) != EOF )
+	{
+		init();
+		while( m-- )
+		{
+			scanf("%d%d%d",&a,&b,&w);
+			Build(a,b,w);
+			Build(b,a,w);
+		}
+		scanf("%d%d",&from,&to);
+		ans = Dijkstra(from,to);
+		printf("%d\n",ans);
+	}
+return 0;
+}
+

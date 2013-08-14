@@ -1,0 +1,60 @@
+#include<cstdio>
+#include<iostream>
+#include<string>
+#include<algorithm>
+#include<cmath>
+#define Infinity 1000000
+
+using namespace std;
+struct JFP
+    {   int J;
+        int F;
+        double P;
+    };
+bool Compare(struct JFP A, struct JFP B);
+int main()
+{
+    int M,N;
+    
+    struct JFP JFP1[1000];
+    while(scanf("%d%d",&M,&N) !=EOF)
+    {
+        if(M == -1 && N == -1) break;
+        double ans=0;
+        for(int i=0;i<N;i++)
+        {
+            scanf("%d%d",&JFP1[i].J,&JFP1[i].F);
+            JFP1[i].P = (1.0*JFP1[i].J)/(1.0*JFP1[i].F);
+        }
+        sort(JFP1,JFP1+N,Compare);
+        for(int i=N-1;i>=0;i--)
+        {
+            if(M < 0)
+            {
+                    //printf("%lf\n",ans);
+                    ans-=1.0 * (-M) * JFP1[i+1].P;
+                    //printf("%d,%lf\n",M,JFP1[i+1].P);
+                 break;
+            }
+            M-=JFP1[i].F;
+            //printf("%d\n",M);
+            ans+=JFP1[i].J;
+            if(i==0 && M<0)
+            {
+                   // printf("%lf\n",ans);
+                    ans-=1.0 * (-M) * JFP1[i].P;
+                    //printf("%d,%lf\n",M,JFP1[i+1].P);    
+            }
+        }
+        //for(int i=0;i<N;i++){printf("%.3lf\n",JFP1[i].P);}
+        printf("%.3lf\n",ans);
+        
+    }
+    return 0;
+} 
+bool Compare(struct JFP A, struct JFP B)
+{
+     if(A.P<B.P)
+       return true;
+     return false;
+}

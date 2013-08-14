@@ -1,0 +1,40 @@
+/* ZOJ Problem Set - 1543
+ * Stripies
+ * Greedy  每次均选取最大的两个数进行合并。这样可以几乎吞掉所有大的数。
+ * 可以以三个数为例,具体证明未证。 
+ */
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+/*using namespace std;*/
+
+int compare(const void* a,const void* b)
+{
+    return *(double*)a>*(double*)b?1:-1;
+}
+int main()
+{
+    int N,M;
+    double array[101];
+    double ansarray[101];
+    int i,j;
+    while(scanf("%d",&N)!=EOF)
+    {
+        for(i=0;i<N;i++)
+        {
+            scanf("%lf",&array[i]);
+            /*ansarray[i]=array[i];*/
+        }
+        /*sort(array,array+N);*/
+        qsort(array,N,sizeof(double),compare);
+        while(N>1)
+        {
+            array[N-2]= 2*sqrt(array[N-1]*array[N-2]);
+            N--;
+            /*sort(array,array+N);*/
+            qsort(array,N,sizeof(double),compare);
+        }
+        printf("%.3f\n",array[0]);
+    }
+    return 0;
+}

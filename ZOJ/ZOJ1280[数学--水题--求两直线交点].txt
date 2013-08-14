@@ -1,0 +1,63 @@
+
+#include<stdio.h>
+int main()
+{
+    int N;
+    double x1,x2,x3,x4,y1,y2,y3,y4;
+    double k1,k2,b1,b2;
+    double ansx,ansy;
+    while(scanf("%d",&N)!=EOF)
+    {
+        printf("INTERSECTING LINES OUTPUT\n");
+        while(N--)
+        {
+            scanf("%lf%lf%lf%lf%lf%lf%lf%lf",&x1,&y1,&x2,&y2,&x3,&y3,&x4,&y4);
+            if(x1==x2 && x3==x4)
+            {
+                if(x1==x3)
+                    printf("LINE\n");
+                else
+                    printf("NONE\n");
+            }
+            else if(x1==x2 && x3!=x4)
+            {
+                ansx=x1;
+                k2=(y3-y4)/(x3-x4);
+                b2=y3-k2*x3;
+                ansy=k2*x1+b2;
+                printf("POINT %.2lf %.2lf\n",ansx,ansy);
+            }
+            else if(x1!=x2 && x3==x4)
+            {
+                ansx=x3;
+                k1=(y1-y2)/(x1-x2);
+                b1=y1-k1*x1;
+                ansy=k1*x3+b1;
+                printf("POINT %.2lf %.2lf\n",ansx,ansy);
+            }
+            else
+            {
+                k1=(y1-y2)/(x1-x2);
+                k2=(y3-y4)/(x3-x4);
+                b1=y1-k1*x1;
+                b2=y3-k2*x3;
+                if(k1==k2&&b1==b2)
+                {
+                    printf("LINE\n");
+                }
+                else if(k1==k2)
+                {
+                    printf("NONE\n");
+                }
+                else
+                {
+                    ansx=(b1-b2)/(k2-k1);
+                    ansy=k1*ansx+b1;
+                    printf("POINT %.2lf %.2lf\n",ansx,ansy);
+                }
+            }
+        }
+        printf("END OF OUTPUT\n");
+    }
+    return 0;
+}

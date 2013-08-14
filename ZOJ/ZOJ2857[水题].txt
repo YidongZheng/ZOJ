@@ -1,0 +1,36 @@
+#include<iostream>
+#include<cstdio>
+
+using namespace std;
+
+int main()
+{
+    int M,N,i,j,k,temp;
+    int Cnt=1;
+    int Map[100][100];
+    while(scanf("%d%d",&N,&M) != EOF)
+    {
+       if(N==0 && M==0)  break;
+       printf("Case %d:\n",Cnt++);
+       for(i=0;i<N;i++)
+            for(j=0;j<M;j++)
+              Map[i][j]=0;
+        
+        for(k=0;k<3;k++)
+          for(i=0;i<N;i++)
+            for(j=0;j<M;j++)
+            {
+              scanf("%d",&temp);
+              Map[i][j]+=temp;
+            }
+        for(i=0;i<N;i++)
+        {
+            for(j=0;j<M;j++)
+              if(j != M-1)
+                 printf("%d,",Map[i][j]/3);
+              else
+                 printf("%d\n",Map[i][j]/3);
+        }
+    }
+    return 0;
+}

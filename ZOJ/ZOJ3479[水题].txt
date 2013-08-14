@@ -1,0 +1,31 @@
+#include<iostream>
+#include<cstdio>
+
+using namespace std;
+
+int main()
+{
+    int N,T;
+    scanf("%d",&T);
+    while(T--)
+    {
+        scanf("%d",&N);
+        N=N%12;
+        switch(N)
+        {
+            case 0:printf("Dragon\n");break;
+            case 1:printf("Rabbit\n");break;
+            case 2:printf("Tiger\n");break;
+            case 3:printf("Ox\n");break;
+            case 4:printf("Rat\n");break;
+            case 5:printf("Pig\n");break;
+            case 6:printf("Dog\n");break;
+            case 7:printf("Rooster\n");break;
+            case 8:printf("Monkey\n");break;
+            case 9:printf("Ram\n");break;
+            case 10:printf("Horse\n");break;
+            case 11:printf("Snake\n");break;
+        }
+    }
+    return 0;
+}

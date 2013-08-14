@@ -1,0 +1,58 @@
+/******************************/
+/* ZOJ Problem Set - 2042     */
+/* Divisibility               */
+/* Yidong Zheng, 2013-1-30    */
+/* number theory   easy       */
+/******************************/
+
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+
+using namespace std;
+
+int main()
+{
+    int blocks;
+    scanf("%d",&blocks);
+    int n,k;
+    bool remind[10000][101];
+    int array[10001];
+    for(int i=0;i<blocks;++i)
+    {
+	scanf("%d%d",&n,&k);
+	memset(remind,0,sizeof(remind));
+	memset(array,0,sizeof(array));
+	for(int j=0;j<n;++j)
+	{
+	    scanf("%d",&array[j]);
+	    while(array[j]<0)
+		array[j]+=k;
+	    while(array[j]>=k)
+		array[j]-=k;
+	}
+	remind[0][array[0]]=1;
+	for(int m=1;m<n;++m)
+	    for(int j=0;j<k;++j)
+	    {
+		if(remind[m-1][j])
+		{
+		    remind[m][(j+array[m]+k)%k]=true;
+		    remind[m][(j-array[m]+k)%k]=true;
+		}
+	    }
+	if(remind[n-1][0])
+	{
+	    printf("Divisible\n");
+	}
+	else
+	{
+	    printf("Not divisible\n");
+	}
+	if(i!=blocks-1)
+	{
+	    printf("\n");
+	}
+    }
+    return 0;
+}

@@ -1,0 +1,112 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<queue>
+#include<map>
+using namespace std;
+
+class Message
+{
+public:
+       char msg[10];
+       int param;
+       int prio;
+       int times;
+};
+struct Compare
+{
+    bool operator()(Message& A, Message& B)
+    {
+        if(A.prio < B.prio) return false;
+        else if(A.prio == B.prio)
+        {
+             if(A.times < B.times) return false;
+             return true;
+        }
+        return true;
+    }
+};
+int main()
+{
+    int T,i,j,k,N,E;
+    int start,end,cost;
+    int ans;
+    int index;
+    int len;
+    int cnt;
+    char Str[10];
+    Message MyMSG[10];
+    strcpy(MyMSG[0].msg,"Hello");
+    MyMSG[0].prio=1;
+    strcpy(MyMSG[1].msg,"Hi");
+    MyMSG[1].prio=3;
+    strcpy(MyMSG[2].msg,"Nice");
+    MyMSG[2].prio=0;
+    //priority_queue<int> MyQueue;
+    /*MyQueue.push(5);
+    MyQueue.push(6);
+    MyQueue.push(2);
+    MyQueue.push(1);
+    MyQueue.push(999);
+    MyQueue.push(-5);*/
+    priority_queue<Message,vector<Message>, Compare> MyHeap;
+    map<int,int> MyMap;
+    map<int,int>::iterator MyIter;
+    while(scanf("%s",Str) != EOF)
+    {
+        if(!strcmp(Str,"PUT"))
+        {
+            scanf("%s%d%d",MyMSG[5].msg,&MyMSG[5].param,&MyMSG[5].prio);
+            if((MyIter=MyMap.find(MyMSG[5].prio)) == MyMap.end())
+            {
+                MyMap.insert(pair<int,int>(MyMSG[5].prio,0));
+                MyMSG[5].times=0;
+            }
+            else
+            {
+                MyIter->second++;
+                MyMSG[5].times= MyIter->second;
+            }
+            MyHeap.push(MyMSG[5]);
+        }
+        else
+        {
+            if(MyHeap.empty())
+              printf("EMPTY QUEUE!\n");
+            else
+            {
+              printf("%s %d\n",MyHeap.top().msg,MyHeap.top().param);
+              MyHeap.pop();
+            }
+        }
+    }
+    //MyHeap.push(MyMSG[0]);
+    //MyHeap.push(MyMSG[1]);
+    //MyHeap.push(MyMSG[2]);
+    
+    //while(!MyHeap.empty())
+    //{
+    //    printf("%s\n",MyHeap.top().msg);
+    //    MyHeap.pop();
+    //}
+    //getchar();
+    /*char Str[90];
+    char Ans[90];
+    scanf("%d",&T);
+    for(i=0;i<T;i++)
+    {
+        cnt=0;
+        scanf("%d%s",&index,&Str);
+        len=strlen(Str);
+        for(j=0;j<len;j++)
+        {
+            if(j != index-1)
+              Ans[cnt++]=Str[j];
+        }
+        Ans[cnt]=0;
+        printf("%d %s\n",i+1,Ans);
+    }*/
+    
+    return 0;
+}
+

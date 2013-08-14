@@ -1,0 +1,32 @@
+#include<cstdio>
+#include<iostream>
+#include<cmath>
+using namespace std;
+
+int main()
+{
+	double r;
+	int T;
+	int A[16],B[16],C[16];
+	for(int i=0;i<16;i++)
+		scanf("%d%d%d",&A[i],&B[i],&C[i]);
+	int x,y,z;
+	
+	scanf("%d%d%d",&x,&y,&z);
+	while(x!=-1 && y!=-1 && z!=-1)
+	{
+		double distance = (x - A[0])*(x - A[0])+(y-B[0])*(y-B[0])+(z-C[0])*(z-C[0]);
+		int pt = 0;
+		for(int i=0;i<16;i++)
+		{
+			if(((x - A[i])*(x - A[i])+(y-B[i])*(y-B[i])+(z-C[i])*(z-C[i])) < distance)
+			{
+				distance = (x - A[i])*(x - A[i])+(y-B[i])*(y-B[i])+(z-C[i])*(z-C[i]);
+				pt = i;
+			}
+		}
+		printf("(%d,%d,%d) maps to (%d,%d,%d)\n",x,y,z,A[pt],B[pt],C[pt]);
+		scanf("%d%d%d",&x,&y,&z);
+	}
+	return 0;
+}

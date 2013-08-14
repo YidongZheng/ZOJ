@@ -1,0 +1,24 @@
+#include<iostream>
+#include<cstdio>
+//Ë®Ìâ 
+//ZOJ Problem Set - 2172  Symmetric Order      Time Limit: 2 Seconds      Memory Limit: 65536 KB
+using namespace std;
+
+int main()
+{
+    int N;
+    int cnt=1,i;
+    char Str[20][30];
+    while(scanf("%d",&N)!=EOF)
+    {
+        if(N==0) break;
+        printf("SET %d\n",cnt++);
+        for(i=0;i<N;i++)
+           scanf("%s",Str[i]);
+        for(i=0;i<N;i+=2)
+           printf("%s\n",Str[i]);
+        for(i=(N/2)*2-1;i>=0;i-=2)
+           printf("%s\n",Str[i]);
+    }
+    return 0;
+}

@@ -1,0 +1,25 @@
+/* ZOJ Problem Set - 1889
+ * Ones
+ * zyd
+ * 2012-12-27
+ * math--water
+ * (ab+cd) mod n = [(a mod n)*b+cd] mod n
+ * /
+#include<stdio.h>
+
+int main()
+{
+    int n,y,cnt;
+    while(scanf("%d",&n)!=EOF)
+    {
+	cnt=1;
+	y=1;
+	while(y%=n)
+	{
+	    y=y*10+1;
+	    cnt++;
+	}
+	printf("%d\n",cnt);
+    }
+    return 0;
+}

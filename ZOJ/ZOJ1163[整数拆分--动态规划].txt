@@ -1,0 +1,31 @@
+/*DP中的经典，已写成文档*/
+#include<iostream>
+#include<cstdio>
+using namespace std;
+#define MaxN 501
+#define MaxH 501
+long long Q[MaxN][MaxH]; 
+int main()
+{
+    int N;
+    while(scanf("%d",&N) != EOF)
+    {                  
+        if(N == 0)
+           break;
+       printf("%lld\n",P[n][n]);
+     }
+    return 0;
+}
+
+void IntegerDifferentSplit()
+{
+   for(int n=0;n<MaxN;n++)
+     for(int h=0;h<MaxH;h++)
+        {
+           if(n==0 || h==0) P[n][h] =0;
+           else if(n==1 && h==1) P[n][h] =1;
+           else if(n<h)        P[n][h]=P[n][n];
+           else if(n==h)       P[n][h]=P[n][h-1]+1;
+           else P[n][h]=P[n][h-1] + P[n-h][h-1];
+	}
+}

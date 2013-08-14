@@ -1,0 +1,43 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+
+using namespace std;
+
+bool IsVowel(char A)
+{
+    if(A=='a'||A=='e'||A=='i'||A=='o'||A=='u')
+        return true;
+    return false;
+}
+int main()
+{
+    char Str[30];
+    bool Vowel;
+    bool three;
+    bool two;
+    int len;
+    int i;
+    while(scanf("%s",Str)!=EOF)
+    {
+        if(!strcmp(Str,"end")) break;
+        len=strlen(Str);
+        Vowel=false;
+        three=false;
+        two=false;
+        for(i=0;i<len;i++)
+        {
+            if(Str[i]=='a'||Str[i]=='e'||Str[i]=='i'||Str[i]=='o'||Str[i]=='u')
+              Vowel=true;
+            if(i<len-1&&Str[i]==Str[i+1]&&Str[i]!='o'&&Str[i]!='e')
+            {two=true;break;}
+            if(i<len-2&&((!IsVowel(Str[i])&&!IsVowel(Str[i+1])&&!IsVowel(Str[i+2]))||(IsVowel(Str[i])&&IsVowel(Str[i+1])&&IsVowel(Str[i+2]))))
+            {three=true;break;}
+        }
+        if(Vowel&&!two&&!three)
+           printf("<%s> is acceptable.\n",Str);
+        else
+           printf("<%s> is not acceptable.\n",Str);
+    }
+    return 0;
+}

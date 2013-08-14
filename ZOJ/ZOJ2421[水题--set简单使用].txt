@@ -1,0 +1,37 @@
+#include<string>
+#include<iostream>
+#include<sstream>
+#include<cstdio>
+#include<set>
+#include<map>
+using namespace std;
+
+int main()
+{
+    set<int> MySet;
+    int Array[500001];
+    Array[0]=0;
+    MySet.insert(0);
+    int i,temp;
+    for(i=1;i<=500000;i++)
+    {
+        temp=Array[i-1];
+        if(temp-i>0 && MySet.find(temp-i)==MySet.end())
+        {
+           Array[i]=temp-i;
+           MySet.insert(temp-i);
+        }
+        else
+        {
+            Array[i]=temp+i;
+            MySet.insert(temp+i);
+        }
+    }
+    int k;
+    while(scanf("%d",&k) != EOF)
+    {
+        if(k==-1) break;
+        printf("%d\n",Array[k]);
+    }
+    return 0;
+}

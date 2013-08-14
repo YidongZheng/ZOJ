@@ -1,0 +1,59 @@
+#include <set>
+#include <algorithm>
+#include <cstdio>
+#include <cstring>
+#include <utility>
+
+using namespace std;
+int toIndex(char a){
+    switch(a){
+        case 'S':return 1;
+        case 'M':return 2;
+        case 'L':return 3;
+        case 'X':return 4;
+        case 'T':return 5;
+
+    }
+}
+int main(){
+    //freopen("in.txt","r",stdin);
+    //freopen("out.txt","w",stdout);
+    char str[20];
+    pair<int,int> p[20];
+    while(~scanf("%s",str)){
+        if(!strcmp(str,"ENDOFINPUT"))break;
+        int x;
+        scanf("%d",&x);
+        for(int i=0;i<x;++i){
+            scanf("%s",str);
+            int len=strlen(str);
+            p[i].first=toIndex(str[len-1]);
+            p[i].second=toIndex(str[0]);
+        }
+        sort(p,p+x);
+        multiset<int> s;
+        for(int i=1;i<=5;++i){
+            int t;
+            scanf("%d",&t);
+            while(t--)
+                s.insert(i);
+        }
+        scanf("%s",str);
+        int ans=0;
+        for(int i=0;i<x;++i){
+            multiset<int>::iterator myit;
+            myit=s.lower_bound(p[i].second);
+            if(myit!=s.end()&&*myit<=p[i].first){
+                ++ans;
+                s.erase(myit);
+            }
+        }
+        if(ans==x){
+            puts("T-shirts rock!");    
+        }
+        else{
+            puts("I'd rather not wear a shirt anyway...");
+        }
+    }
+    return 0;
+}

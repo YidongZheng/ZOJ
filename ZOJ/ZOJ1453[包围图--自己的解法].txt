@@ -1,0 +1,95 @@
+/*主要是算法的设计，我的想法是从最点左开始沿着右往斜率最大的走一条路走到最右点，再从最左点开始沿着斜率最小的走一条路到最右点，相加即为最小包围环*/
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<cstdlib>
+#include<cmath>
+using namespace std;
+int xc[100],yc[100];
+double tang[100];
+int main()
+{  
+   int N;
+   while(scanf("%d",&N) !=EOF)
+   {
+     if(N==0) break;
+     int leftx,lefty,rightx,righty;
+     int NowLx,NowLy,NextLx,NextLy;
+     double distance=0;
+     
+     for(int i=0;i<N;i++)
+     {
+         scanf("%d%d",&xc[i],&yc[i]);
+         if(i==0)
+         {
+            leftx=rightx=xc[i];
+            lefty=righty=yc[i];
+         }
+         else
+         {
+             if(xc[i] < leftx) {leftx=xc[i];lefty=yc[i];}
+             if(xc[i] > rightx){rightx=xc[i];righty=yc[i];}
+         }    
+     }
+     
+     double tanMax=-50001;
+     NowLx=leftx;
+     NowLy=lefty;
+     int j=0;
+     
+     while((NowLx != rightx || NowLy != righty))// && j++<100)
+     {
+          tanMax=-50001;
+          for(int i=0;i<N;i++)
+          {
+             if(xc[i]<NowLx ||(NowLx == xc[i] && NowLy == yc[i]))
+                continue;
+             if(NowLx == xc[i] && NowLy>yc[i])
+                tang[i] = -50000;
+             else if(NowLx == xc[i] && NowLy<yc[i])
+                tang[i] = 50000;
+             else
+                tang[i] = 1.0 * (NowLy-yc[i]) / (NowLx-xc[i]);
+             if(tang[i] > tanMax)
+                {
+                  tanMax=tang[i];
+                  NextLx=xc[i];
+                  NextLy=yc[i];
+                }      
+          }
+         distance+=pow(( NextLx-NowLx)*(NextLx-NowLx)+( NextLy-NowLy)*( NextLy-NowLy),0.5);
+         NowLx = NextLx;
+         NowLy = NextLy;
+     }
+     double tanMin=50001;
+     NowLx=leftx;
+     NowLy=lefty;
+     j=0;
+     while((NowLx != rightx || NowLy != righty) )//&& j++<100)
+     {
+          tanMin=50001;
+          for(int i=0;i<N;i++)
+          {
+             if(xc[i]<NowLx ||(NowLx == xc[i] && NowLy == yc[i]))
+                continue;
+             if(NowLx == xc[i] && NowLy>yc[i])
+                tang[i] = -50000;
+             else if(NowLx == xc[i] && NowLy<yc[i])
+                tang[i] = 50000;
+             else
+                tang[i] = 1.0 * (NowLy-yc[i]) / (NowLx-xc[i]);
+             if(tang[i] < tanMin)
+                {
+                  tanMin=tang[i];
+                  NextLx=xc[i];
+                  NextLy=yc[i];
+                }      
+          }
+         distance+=pow(( NextLx-NowLx)*(NextLx-NowLx)+( NextLy-NowLy)*( NextLy-NowLy),0.5);
+         NowLx = NextLx;
+         NowLy = NextLy;
+     }
+     printf("%.2lf\n",distance);
+   }
+   return 0;
+}

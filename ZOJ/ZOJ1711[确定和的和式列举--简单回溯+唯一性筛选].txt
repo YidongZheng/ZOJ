@@ -1,0 +1,73 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<cmath>
+#include<cstdlib>
+using namespace std;
+void Sum(int cnt, int temp, int ans[15], int gotn);
+int T,N;
+int ans[15];
+int num[15];
+int tmpa[15];
+bool found;
+int main()
+{
+    int i;
+    while(scanf("%d%d",&T,&N) != EOF)
+    {          
+        if(N == 0) break;
+        found=false;
+        memset(tmpa,0,60);
+        memset(num,0,60);
+        memset(ans,0,60);
+        for(i=0;i<N;i++)
+           scanf("%d",&num[i]);
+        printf("Sums of %d:\n",T);
+        Sum(0,0,ans,0);
+        if(!found)
+          printf("NONE\n");
+    }
+    return 0;
+}
+
+void Sum(int cnt, int temp, int ans[15], int gotn)
+{
+     if(cnt >= N) return;
+     temp+=num[cnt];
+     ans[gotn++]=num[cnt];
+     if(temp == T)
+     {
+       bool same=true;
+       for(int i=0;i<gotn;i++)
+       {
+          if(ans[i] != tmpa[i]) 
+          {
+            same=false;
+            break;
+          }
+       }
+       if(!same)
+       {
+           for(int i=0;i<gotn;i++)
+           {
+             tmpa[i]=ans[i];
+             if(i != gotn-1)
+               printf("%d+",ans[i]);
+             else
+               printf("%d\n",ans[i]);
+           }
+       }
+       found=true;
+     }  
+     if(temp < T)
+     {
+       Sum(cnt+1,temp,ans,gotn);
+     }
+     gotn--;
+     temp-=num[cnt];
+     while(cnt+1<N && num[cnt+1] == num[cnt])
+     {
+         cnt++;
+     }
+     Sum(cnt+1,temp,ans,gotn);
+}

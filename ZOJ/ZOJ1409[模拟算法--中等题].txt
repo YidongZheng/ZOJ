@@ -1,0 +1,84 @@
+#include<iostream>
+#include<cstdio>
+#include<algorithm>
+using namespace std;
+
+class MyDev
+{
+public:
+       int Price;
+       int Band;
+       int nodex;
+       int nodey;     
+}dev[10000];
+
+bool Compare(MyDev A, MyDev B)
+{
+     if(A.Band < B.Band)  return true;
+     return false;
+}
+int main()
+{
+    int T,i,j,k,N;
+    int Devb[100][100];
+    int Devp[100][100];
+    int Visited[100][100];
+    int Mi[100];
+    int cnt,Min,tempcnt;
+    int Price;
+    double tempMax;
+    //freopen("in.txt","r",stdin);
+    //freopen("out.txt","w",stdout);
+    scanf("%d",&T);
+    while(T--)
+    {
+        cnt=0;
+        tempMax=0;
+        scanf("%d",&N);
+        for(i=0;i<N;i++)
+        {
+            scanf("%d",&Mi[i]);
+            for(j=0;j<Mi[i];j++)
+            {
+              scanf("%d%d",&Devb[i][j],&Devp[i][j]);
+              Visited[i][j]=false;
+              dev[cnt].Price=Devp[i][j];
+              dev[cnt].Band=Devb[i][j];
+              dev[cnt].nodex=i;
+              dev[cnt].nodey=j;
+              cnt++;
+            }
+        }
+        sort(dev,dev+cnt,Compare);
+        for(i=0;i<cnt;i++)
+        {
+            Price=dev[i].Price;
+            tempcnt=0;
+            for(j=0;j<N;j++)
+            {
+                if(j!=dev[i].nodex)
+                {
+                    Min=999999;
+                    for(k=0;k<Mi[j];k++)
+                    {
+                         if(!Visited[j][k]&&Min>Devp[j][k])
+                              Min=Devp[j][k];
+                    }
+                    if(Min!=999999)
+                    {
+                        Price+=Min;
+                        tempcnt++;
+                    }
+                    //printf("%d\n",Max);
+                }
+            }
+            if(tempcnt==N-1 && tempMax<1.0*dev[i].Band/Price)
+            {
+                tempMax=1.0*dev[i].Band/Price;
+            }
+            Visited[dev[i].nodex][dev[i].nodey]=true;
+        }
+        printf("%.3lf\n",tempMax);
+    }
+    return 0;
+}

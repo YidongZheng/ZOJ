@@ -1,0 +1,65 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<map>
+#include<string>
+using namespace std;
+
+
+int main()
+{
+    int N,M,i;
+    string Str;
+    int max,maxtemp;
+    map<string,int> Vote;
+    map<string,int>::iterator Iter;
+    map<string,int>::iterator Iter2;
+    map<string,string> Name;
+    map<string,string>::iterator Iter3;
+    char Str1[100];
+    char Str2[100];
+    while(scanf("%d",&N) != EOF)
+    {
+        Vote.clear();
+        Name.clear();
+//太土了，数字后还要跟上字符。
+        while (getchar() != '\n'){}
+        for(i=0;i<N;i++)
+        {
+           gets(Str1);
+           gets(Str2);
+           Name.insert(pair<string,string>(Str1,Str2));
+           Vote.insert(pair<string,int>(Str1,0));
+        }
+        scanf("%d",&M);
+        while (getchar() != '\n'){}
+        for(i=0;i<M;i++)
+        {
+            gets(Str1);
+            if((Iter=Vote.find(Str1)) != Vote.end())
+            {
+               Iter->second++;
+            }
+        }
+        max=0;maxtemp=0;
+        for(Iter=Vote.begin();Iter!=Vote.end();Iter++)
+        {
+            if(max <= Iter->second)
+            {  
+               if(max == Iter->second)
+                 maxtemp=max;
+               max = Iter->second;
+               Str = Iter->first;
+               
+            }
+        }
+        if(maxtemp==max)
+          printf("tie\n");
+        else 
+        {
+               Iter3=Name.find(Str);
+               printf("%s\n",(Iter3->second).c_str());
+        }    
+    }
+    return 0;
+}

@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <string.h>
+
+long long prime[50001];
+bool visited[1000001];
+
+void prime_table(long long n)
+{
+    memset(visited,0,sizeof(visited));
+    int cnt=0;
+    for(long long i=2;i<=n;++i)
+    {
+        if(!visited[i])
+        {
+            prime[cnt++]=i;
+            for(long long j=i*i;j<=n;j+=i)
+                visited[j]=true;
+        }
+    }
+}
+int main()
+{
+    prime_table(47000);
+    long long L,U;
+    bool vis[1000001];
+    int array[100000];
+    //memset(array,0,sizeof(array));
+    while(~scanf("%lld%lld",&L,&U))
+    {
+        int cnt=0;
+        if(L==1) L=2;
+        //memset(array,0,sizeof(array));
+        memset(vis,0,sizeof(vis));
+        for(long long j=0;prime[j]*prime[j]<=U;++j)
+        {
+            long long k=L/prime[j];
+            while(prime[j]*k<L)++k;
+            if(k<2)k=2;
+            for(;prime[j]*k<=U;++k)
+                vis[prime[j]*k-L]=true;
+        }
+        
+        for(int i=0;i<=U-L;++i)
+        {
+            if(!vis[i])
+                array[cnt++]=i+L;
+        }
+        int Min=1<<30,Max=0;
+        int mina,minb,maxa,maxb;
+        for(int i=1;i<cnt;++i)
+        {
+            if(array[i]-array[i-1]<Min)
+            {
+                Min=array[i]-array[i-1];
+                mina=array[i-1];
+                minb=array[i];
+            }
+            if(array[i]-array[i-1]>Max)
+            {
+                Max=array[i]-array[i-1];
+                maxa=array[i-1];
+                maxb=array[i];
+            }
+        }
+        if(cnt<2)
+        {
+            printf("There are no adjacent primes.\n");
+        }
+        else
+        {
+            printf("%d,%d are closest, %d,%d are most distant.\n",mina,minb
+                    ,maxa,maxb);
+        }
+    }
+    
+    return 0;
+}

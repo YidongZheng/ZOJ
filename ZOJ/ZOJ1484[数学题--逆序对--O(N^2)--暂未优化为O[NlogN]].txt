@@ -1,0 +1,92 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+//#include<list>
+using namespace std;
+int ans,tempans;
+int A[10001],lt[5001],inv[10001];
+//void merge_combine(int left,int mid,int right);
+//void merge_sort(int left,int right);
+int main()
+{
+    int N;
+    int temp;
+    int i,j;
+    while(scanf("%d",&N)!=EOF)
+    {
+        ans=0;
+        memset(A,0,sizeof(A));
+        memset(inv,0,sizeof(inv));
+        for(i=0;i<N;++i)
+        {
+            scanf("%d",&A[i]),A[i+N]=A[i];
+        }
+        //merge_sort(0,N-1);
+        for(i=0;i<N;++i)
+          for(j=i+1;j<N;j++)
+             if(A[i]>A[j])
+               inv[i]++;
+        for(i=0;i<N;++i)
+        {
+            ans+=inv[i];
+            //ans+=inv[A[i]];
+            //printf("%d     %d\n",A[i],inv[A[i]]);
+        }
+        for(i=1;i<N;++i)
+        {
+            tempans=0;
+            for(j=i;j<i+N;++j)
+            {
+                if(A[j]>A[i-1])
+                   inv[j]++;
+                tempans+=inv[j];
+            }
+            if(ans>tempans) ans=tempans;
+        }
+        printf("%d\n",ans);
+
+    }
+    return 0;
+}
+/*void merge_sort(int left,int right)
+{
+     int mid;
+     if(left<right)
+     {
+         mid=(left+right)/2;
+         merge_sort(left,mid);
+         merge_sort(mid+1,right);
+         merge_combine(left,mid,right);
+     }
+     return;
+}
+
+void merge_combine(int left,int mid,int right)
+{
+    int l,r;
+    l=left;
+    r=mid+1;
+    int i;
+    for(i=left;i<=right;++i)
+    {
+        if(l<=mid&&(r>right||A[l]<=A[r]))
+        {
+            lt[i]=A[l++];
+        }
+        else
+        {
+            //printf("kankan    %d ",A[l]);
+            //if(r<=right)
+            //printf("%d kankan\n",A[r]);
+            //else
+            //printf("meikankan\n");
+            inv[A[r]]+=mid-l+1;
+            lt[i]=A[r++];
+            //tempans+=mid-l+1;
+        }
+    }
+    for(i=left;i<=right;++i)
+      A[i]=lt[i];
+    return;
+}
+*/

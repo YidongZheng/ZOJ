@@ -1,0 +1,68 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+using namespace std;
+
+class Trie
+{
+public:
+       int Child[2];
+       bool leaf;
+}MyTrie[1000];
+int main()
+{
+    char Str[20];
+    int i,len;
+    int cnt=1;
+    bool Yes=true;
+    int index=0,nowindex=0;
+    //freopen("in.txt","r",stdin);
+    //freopen("out.txt","w",stdout);
+    for(i=0;i<1000;i++)
+    {
+        MyTrie[i].Child[0]=0;
+        MyTrie[i].Child[1]=0;
+        MyTrie[i].leaf=false;
+    }
+    while(scanf("%s",Str)!=EOF)
+    {
+        if(strcmp(Str,"9"))
+        {
+           if(Yes)
+           {
+               nowindex=0;
+               len=strlen(Str);
+               for(i=0;i<len;i++)
+               {
+                   if(MyTrie[nowindex].Child[Str[i]-'0']==0)
+                   {
+                       if(MyTrie[nowindex].leaf==true) 
+                       {
+                           Yes=false;
+                           break;
+                       }
+                       MyTrie[nowindex].Child[Str[i]-'0']=++index;
+                   }
+                   nowindex=MyTrie[nowindex].Child[Str[i]-'0'];
+                   if(i==len-1) MyTrie[nowindex].leaf=true;
+               }
+           } 
+        }
+        else
+        {
+            if(Yes)
+                printf("Set %d is immediately decodable\n",cnt++);
+            else
+                printf("Set %d is not immediately decodable\n",cnt++);
+            for(i=0;i<1000;i++)
+            {
+                MyTrie[i].Child[0]=0;
+                MyTrie[i].Child[1]=0;
+                MyTrie[i].leaf=false;
+            }    
+            index=0;
+            Yes=true;
+        }
+    }
+    return 0;
+}

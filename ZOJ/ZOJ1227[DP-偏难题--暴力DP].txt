@@ -1,0 +1,92 @@
+#include<iostream>
+#include<cstdio>
+
+using namespace std;
+
+int Array[40][4];
+int Ans;
+int N;
+int DP[41][41][41][41];
+int basket[21];
+
+int getCount(int i,int j,int k,int m)
+{
+    int t,cnt=0;
+    for(t=1;t<=20;t++)
+        basket[t]=0;
+    for(t=0;t<i;t++)
+        basket[Array[t][0]]++;
+    for(t=0;t<j;t++)
+        basket[Array[t][1]]++;
+    for(t=0;t<k;t++)
+        basket[Array[t][2]]++;
+    for(t=0;t<m;t++)
+        basket[Array[t][3]]++;
+    for(t=1;t<=20;t++)
+        basket[t]%=2,cnt+=basket[t];
+    return cnt;
+}
+void update(int row,int col,int preans,int i,int j,int k,int m,int cnt)
+{
+    if(basket[Array[row][col]]==0)
+    {
+        if(cnt>4)
+            return;
+        else
+            DP[i][j][k][m]=max(DP[i][j][k][m],preans);
+    }
+    else
+    {
+        DP[i][j][k][m]=max(DP[i][j][k][m],preans+1);
+    }
+}
+int main()
+{
+    int i,j,k,m;
+    int cnt;
+    //freopen("in.txt","r",stdin);
+    //freopen("out.txt","w",stdout);
+    while(scanf("%d",&N)!=EOF)
+    {
+        if(N==0) break;
+        Ans=0;
+        for(i=0;i<N;i++)
+        {
+            for(j=0;j<4;j++)
+            {
+                scanf("%d",&Array[i][j]);
+            }
+        }
+        for(i=0;i<=N;i++)
+            for(j=0;j<=N;j++)
+                for(k=0;k<=N;k++)
+                    for(m=0;m<=N;m++)
+                        DP[i][j][k][m]=-1;
+        DP[0][0][0][0]=0;
+        for(i=0;i<=N;i++)
+        {
+            for(j=0;j<=N;j++)
+            {
+                for(k=0;k<=N;k++)
+                {
+                    for(m=0;m<=N;m++)
+                    {
+                        if(DP[i][j][k][m]==-1) continue;
+                        if(DP[i][j][k][m]>Ans) Ans=DP[i][j][k][m];
+                        if((cnt=getCount(i,j,k,m))>=5) continue;
+                        if(i<40)
+                            update(i,0,DP[i][j][k][m],i+1,j,k,m,cnt);
+                        if(j<40)
+                            update(j,1,DP[i][j][k][m],i,j+1,k,m,cnt);
+                        if(k<40)
+                            update(k,2,DP[i][j][k][m],i,j,k+1,m,cnt);
+                        if(m<40)
+                            update(m,3,DP[i][j][k][m],i,j,k,m+1,cnt);
+                    }
+                }
+            }
+        }
+        printf("%d\n",Ans);
+    }
+    return 0;
+}

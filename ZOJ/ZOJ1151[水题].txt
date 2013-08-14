@@ -1,0 +1,43 @@
+/*题目要求有点纠结，要多读*/
+/*在VC下下面程序结果不正确，用gcc或DEV-c++*/
+#include<iostream>
+#include<sstream>
+#include<algorithm>
+using namespace std;
+int main()
+{
+  int blocks;cin>>blocks;
+  for(int block = 0; block < blocks; block++)
+  {
+    string state;
+    if(block == 0)//仅在第一次的时候有如下两个空行
+    {
+      getline(cin,state);//用getline 吃掉输入blocks之后的回车
+      getline(cin,state);//题目要求的空行
+    }
+    int stateCount;cin>>stateCount;
+    getline(cin, state);
+    while(stateCount--)
+    {
+      getline(cin, state);
+      istringstream is(state);
+      string word;
+      int i = 0;
+      while(is>>word)
+      {
+        reverse(word.begin(), word.end());
+        if(i != 0)
+          cout<<" ";
+        cout<<word;
+        i++;
+      }
+      cout<<endl;
+    }
+    if(block != blocks - 1)//最后一次输出没有空行
+    {
+      cout<<endl;
+    }
+  }
+  
+  return 0;
+}

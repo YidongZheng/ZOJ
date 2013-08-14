@@ -1,0 +1,57 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+int main()
+{
+    int N,i,j,cnt;
+    char Type[2];
+    int Array[50];
+    int Ans[50];
+    while(scanf("%d",&N) != EOF)
+    {
+       if(N == 0) break;
+       scanf("%s",Type);
+       for(i=0;i<N;i++)
+       {
+          Ans[i]=-1;
+          scanf("%d",&Array[i]);
+       }
+       if(!strcmp(Type,"P"))
+       {
+           for(i=0;i<N;i++)
+           {
+              cnt=0;
+              for(j=0;j<i;j++)
+              {
+                  if(Array[j]>Array[i])
+                     cnt++;
+              }
+              Ans[Array[i]-1]=cnt;
+           }
+       }
+       else
+       {
+           for(i=0;i<N;i++)
+           {
+               cnt=0;
+               for(j=0;j<N;j++)
+               {
+                   if(cnt == Array[i] && Ans[j]==-1)
+                   {Ans[j]=i+1;break;}
+                   if(Ans[j]>i+1 || Ans[j]==-1)
+                      cnt++;                  
+                   else if(cnt == Array[i] && Ans[j+1]==-1)
+                      {Ans[j+1]=i+1;break;}
+               }
+           }
+       }
+      // printf("%d\n",Array[0]);
+      // printf("%d\n",Ans[2]);
+       for(i=0;i<N;i++)
+       {
+         if(i!=N-1) printf("%d ",Ans[i]);
+         else printf("%d\n",Ans[i]);
+       }
+    }
+    return 0;
+}

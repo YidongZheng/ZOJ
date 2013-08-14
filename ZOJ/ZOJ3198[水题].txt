@@ -1,0 +1,30 @@
+#include<iostream>
+#include<cstdio>
+#include<set>
+
+using namespace std;
+
+int main()
+{
+    int T,S1,S2,temp,i,j;
+    set<int> MySet;
+    scanf("%d",&T);
+    while(T--)
+    {
+        MySet.clear();
+        scanf("%d",&S2);
+        for(i=0;i<S2;i++)
+        {
+          scanf("%d",&temp);
+          MySet.insert(temp);
+        }
+        scanf("%d",&S1);
+        for(i=0;i<S1;i++)
+        {
+          scanf("%d",&temp);
+          MySet.insert(temp);
+        }
+        printf("%d\n",S1+S2-MySet.size());
+    }
+    return 0;
+}

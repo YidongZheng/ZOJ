@@ -1,0 +1,35 @@
+#include <set>
+#include <cstdio>
+#include <utility>
+#include <algorithm>
+
+using namespace std;
+
+pair<int,int> p[2500];
+int main()
+{
+    int n,m;
+    while(~scanf("%d%d",&n,&m)){
+        multiset<int> myset;
+        for(int i=0;i<n;++i){
+            scanf("%d %d",&p[i].second,&p[i].first);
+        }
+        sort(p,p+n);
+        for(int i=0;i<m;++i){
+            int t;
+            scanf("%d",&t);
+            myset.insert(t);
+        }
+        int ans=0;
+        for(int i=0;i<n;++i){
+            multiset<int>::iterator myit;
+            myit=myset.lower_bound(p[i].second);
+            if(myit!=myset.end()&&*myit<=p[i].first){
+                ++ans;
+                myset.erase(myit);
+            }
+        }
+        printf("%d\n",ans);
+    }
+    return 0;
+}

@@ -1,0 +1,43 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<set>
+using namespace std;
+
+int GCD(int a, int b)
+{
+    int r;
+    int cnt=0;
+    int temp;
+    int ans=1;
+    while(b>0)
+    {
+        r=a%b;
+        if(a>b && a/b==1) ans=-ans;
+        else if(a/b != 0) break;
+        a=b;
+        b=r;
+        //printf("%d %d\n",a,b);
+    }
+    //printf("%d\n",cnt);
+    return ans;
+}
+int main()
+{   
+    int M,N,sum,ans;
+    int i;
+    while(scanf("%d%d",&M,&N) != EOF)
+    {
+        if(M==0&&N==0) break;
+        if(GCD(M,N)==1)
+          printf("Stan wins\n");
+        else
+        {
+          printf("Ollie wins\n");
+        }
+    }
+    return 0;
+}
+
+//1 1 1
+//24=15+9   15=9+6   9=6+3  6=2*3

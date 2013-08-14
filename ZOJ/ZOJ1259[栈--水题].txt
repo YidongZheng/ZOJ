@@ -1,0 +1,75 @@
+#include<iostream>
+#include<cstdio>
+#include<stack>
+using namespace std;
+
+int main()
+{
+    int N;
+    int Array[1005];
+    int temp,i;
+    bool Found;
+    //freopen("in.txt","r",stdin);
+    //freopen("out.txt","w",stdout);
+    stack<int> MyStack1;
+    stack<int> MyStack2;
+    scanf("%d",&N);
+    while(true)
+    {
+        if(N==0) break;
+        while(scanf("%d",&Array[0])!=EOF)
+        {
+            if(Array[0]==0) break;
+            for(i=1;i<N;i++)
+                scanf("%d",&Array[i]);
+            while(!MyStack1.empty())
+                MyStack1.pop();
+            while(!MyStack2.empty())
+                MyStack2.pop();
+            for(i=N;i>=1;i--)
+                MyStack1.push(i);
+            for(i=0;i<N;i++)
+            {
+                //printf("what:    %d\n",MyStack1.top());printf("%d\n",Array[i]);
+                Found=false;
+                if(!MyStack2.empty())
+                {
+                    if(MyStack2.top()==Array[i])
+                    {
+                        Found=true;
+                        MyStack2.pop();
+                    }
+                }
+                temp=-1;
+                while(!Found && (!MyStack1.empty()) && ((temp=MyStack1.top())!=Array[i]))
+                {
+                    //printf("pop1:    %d\n",MyStack1.top());
+                    MyStack1.pop();
+                    
+                    MyStack2.push(temp);
+                }
+                if(temp==Array[i])
+                {
+                    Found=true;
+                    //printf("pop2:    %d\n",MyStack1.top());
+                    MyStack1.pop();
+                    
+                }
+                //printf("what:    %d\n",MyStack1.top());printf("%d\n",Array[i]);
+                if(!Found) {break;}
+            }
+            
+            //for(i=0;i<N;i++)
+                //printf("%d ",Array[i]);
+            //printf("\n");
+            if(!Found) printf("No\n");
+            else printf("Yes\n");
+        }
+        printf("\n");
+        scanf("%d",&N);
+        if(N==0) break;
+        
+    }
+    
+    return 0;
+}

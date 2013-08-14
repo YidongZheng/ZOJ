@@ -1,0 +1,67 @@
+#include <stdio.h>
+#include <string.h>
+#define UP 0
+#define DOWN 1
+#define LEFT 2
+#define RIGHT 3
+char edge[50][51];
+bool visited[50][50];
+int m,n;
+void dfs(int x, int y);
+int conn[11][4];
+bool isconn[11][11][4];
+int main(){
+    memset(conn,0,sizeof(conn));
+    conn[0][LEFT]=conn[0][UP]=1;
+    conn[1][UP]=conn[1][RIGHT]=1;
+    conn[2][LEFT]=conn[2][DOWN]=1;
+    conn[3][DOWN]=conn[3][RIGHT]=1;
+    conn[4][UP]=conn[4][DOWN]=1;
+    conn[5][LEFT]=conn[5][RIGHT]=1;
+    conn[6][UP]=conn[6][RIGHT]=conn[6][LEFT]=1;
+    conn[7][DOWN]=conn[7][UP]=conn[7][LEFT]=1;
+    conn[8][LEFT]=conn[8][RIGHT]=conn[8][DOWN]=1;
+    conn[9][UP]=conn[9][DOWN]=conn[9][RIGHT]=1;
+    conn[10][LEFT]=conn[10][RIGHT]=conn[10][UP]=conn[10][DOWN]=1;
+    memset(isconn,0,sizeof(isconn));
+    for(int i=0;i<11;++i)
+        for(int j=0;j<11;++j)
+            for(int k=0;k<4;++k){
+                if(conn[i][LEFT]&&conn[j][RIGHT])isconn[i][j][LEFT]=true;
+                if(conn[i][UP]&&conn[j][DOWN])isconn[i][j][UP]=true;
+                if(conn[i][RIGHT]&&conn[j][LEFT])isconn[i][j][RIGHT]=true;
+                if(conn[i][DOWN]&&conn[j][UP])isconn[i][j][DOWN]=true;
+            }
+    while(~scanf("%d%d",&m,&n)&&(~m&&~n)){
+        memset(edge,0,sizeof(0));
+        memset(visited,0,sizeof(visited));
+        for(int i=0;i<m;++i){
+            scanf("%s",edge[i]);
+        }
+        int ans=0;
+        for(int i=0;i<m;++i)
+            for(int j=0;j<n;++j){
+                if(!visited[i][j]){
+                    dfs(i,j);
+                    ++ans;
+                }
+            }
+        printf("%d\n",ans);
+    }
+    return 0;
+}
+void dfs(int x, int y){
+    visited[x][y]=true;
+    if(x-1>=0&&!visited[x-1][y]&&isconn[edge[x][y]-'A'][edge[x-1][y]-'A'][UP]){
+        dfs(x-1,y);
+    }
+    if(y-1>=0&&!visited[x][y-1]&&isconn[edge[x][y]-'A'][edge[x][y-1]-'A'][LEFT]){
+        dfs(x,y-1);
+    }
+    if(x+1<m&&!visited[x+1][y]&&isconn[edge[x][y]-'A'][edge[x+1][y]-'A'][DOWN]){
+        dfs(x+1,y);
+    }
+    if(y+1<n&&!visited[x][y+1]&&isconn[edge[x][y]-'A'][edge[x][y+1]-'A'][RIGHT]){
+        dfs(x,y+1);
+    }
+}

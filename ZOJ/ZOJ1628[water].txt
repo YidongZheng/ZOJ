@@ -1,0 +1,70 @@
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+
+int main()
+{
+    char str[8][9];
+    int r1,c1,r2,c2;
+    while(~scanf("%s",str[0]))
+    {
+	bool isok=false;
+	for(int i=1;i<8;++i)
+	    scanf("%s",str[i]);
+	scanf("%d%d%d%d",&r1,&c1,&r2,&c2);
+	--r1,--c1,--r2,--c2;
+	if(r1==r2&&(abs(c1-c2)==1) ||
+	    c1==c2&&(abs(r1-r2)==1))
+	{
+	    char temp=str[r1][c1];
+	    str[r1][c1]=str[r2][c2];
+	    str[r2][c2]=temp;
+	    if(r1>1&&str[r1-1][c1]==str[r1][c1]
+		&&str[r1-1][c1]==str[r1-2][c1])
+		isok=true;
+	    if(r1>0&&r1<7&&str[r1-1][c1]==str[r1][c1]
+		&&str[r1+1][c1]==str[r1][c1])
+		isok=true;
+	    if(r1<6&&str[r1+1][c1]==str[r1][c1]
+		&&str[r1+2][c1]==str[r1][c1])
+		isok=true;
+	    if(c1>1&&str[r1][c1-1]==str[r1][c1]
+		&&str[r1][c1-1]==str[r1][c1-2])
+		isok=true;
+	    if(c1>0&&c1<7&&str[r1][c1-1]==str[r1][c1]
+		&&str[r1][c1+1]==str[r1][c1])
+		isok=true;
+	    if(c1<6&&str[r1][c1+1]==str[r1][c1]
+		&&str[r1][c1+2]==str[r1][c1])
+		isok=true;
+
+	    if(r2>1&&str[r2-1][c2]==str[r2][c2]
+		&&str[r2-1][c2]==str[r2-2][c2])
+		isok=true;
+	    if(r2>0&&r2<7&&str[r2-1][c2]==str[r2][c2]
+		&&str[r2+1][c2]==str[r2][c2])
+		isok=true;
+	    if(r2<6&&str[r2+1][c2]==str[r2][c2]
+		&&str[r2+2][c2]==str[r2][c2])
+		isok=true;
+	    if(c2>1&&str[r2][c2-1]==str[r2][c2]
+		&&str[r2][c2-1]==str[r2][c2-2])
+		isok=true;
+	    if(c2>0&&c2<7&&str[r2][c2-1]==str[r2][c2]
+		&&str[r2][c2+1]==str[r2][c2])
+		isok=true;
+	    if(c2<6&&str[r2][c2+1]==str[r2][c2]
+		&&str[r2][c2+2]==str[r2][c2])
+		isok=true;
+	    if(isok)
+		printf("Ok!\n");
+	    else
+		printf("Illegal move!\n");
+    	}
+	else
+	{
+	    printf("Illegal move!\n");
+	}
+    }
+    return 0;
+}

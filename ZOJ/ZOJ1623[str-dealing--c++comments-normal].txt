@@ -1,0 +1,71 @@
+#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    /*freopen("in.txt","r",stdin);*/
+    /*freopen("out.txt","w",stdout);*/
+    char str[2000001]="";
+    char temp[201];
+    int T;
+    int n;
+    int len;
+    scanf("%d",&T);
+    int state;
+    int count;
+    int i,j;
+    char *a;
+    char *b;
+    char *c;
+    while(T--)
+    {
+	count=0;
+	memset(str,0,sizeof(str));
+	scanf("%d",&n);
+	gets(temp);
+	for(i=0;i<n;++i)
+	{
+	    gets(temp);
+	    strcat(str,temp);
+	    strcat(str,"\n");
+	}
+	state=0;
+	
+	for(i=0;str[i];)
+	{
+	    a = strstr(str+i,"//");
+	    b = strstr(str+i,"/*");
+	    if(a==NULL&&b==NULL) break;
+	    else if(a!=NULL && (a<b||b==NULL))
+	    {
+		for(j=0;(a[j]!='\n'||(a[j]=='\n'&&a[j-1]=='\\'))&&a[j];++j)
+		{
+		    if(a[j]>='a'&&a[j]<='z')
+			a[j]=a[j]-'a'+'A';
+		}
+		i=a-str+j;
+		++count;
+	    }
+	    else if(b!=NULL && (b<a||a==NULL))
+	    {
+		c = strstr(b+2,"*/");
+		if(c==NULL)
+		    break;
+		else
+		{
+		    for(j=0;b+j<c+2;++j)
+		    {
+			if(b[j]>='a'&&b[j]<='z')
+			    b[j]=b[j]-'a'+'A';
+		    }
+		    i=b-str+j;
+		}
+		count++;
+	    }
+	}
+	printf("%d\n",count);
+	printf("%s\n",str);
+    }
+    return 0;
+}
+

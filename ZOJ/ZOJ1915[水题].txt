@@ -1,0 +1,28 @@
+#include<iostream>
+#include<algorithm>
+#include<cstdio>
+using namespace std;
+int main()
+{
+    int C,i,j,M,num,avg;
+    int A[1000];
+    scanf("%d",&C);
+    for(i=0;i<C;i++)
+    {
+        avg=num=0;
+        scanf("%d",&M);
+        for(j=0;j<M;j++)
+        {
+           scanf("%d",&A[j]);
+           avg+=A[j];
+        }
+        avg/=M;
+        for(j=0;j<M;j++)
+        {
+           if(A[j]>avg)
+             num++;
+        } 
+        printf("%.3lf%%\n",100.0*num/M);
+    }
+    return 0;
+}

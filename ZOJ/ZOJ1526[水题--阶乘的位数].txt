@@ -1,0 +1,26 @@
+/*使用double来保存数据即可，double可精确到15到16位，一般情况下够了*/
+#include<iostream>
+#include<cstdio>
+#include<cmath>
+
+using namespace std;
+
+int main()
+{
+    int M,N,cnt,i,j;
+    double ans;
+    scanf("%d",&M);
+    for(j=0;j<M;j++)
+    {
+        scanf("%d",&N);
+        cnt=ans=1;
+        for(i=1;i<=N;i++)
+        {
+           ans*=i;
+           while(ans > 10)
+              ans/=10,cnt++;
+        }
+        printf("%d\n",cnt);
+    }
+    return 0;
+}

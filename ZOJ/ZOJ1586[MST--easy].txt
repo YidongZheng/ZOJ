@@ -1,0 +1,62 @@
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#define Infinity 10000
+
+short Map[1000][1000];
+bool known[1000];
+short minVertex[1000];
+int n;
+
+int MST_Prim()
+{
+    int minLength=0;
+    int tempMin;
+    minVertex[0]=0;
+    for(int j=0;j<n;++j)
+    {
+	tempMin=-1;
+	for(int i=0;i<n;++i)
+	{
+	    if(!known[i]&&(tempMin==-1||minVertex[i]<minVertex[tempMin]))
+		tempMin=i;
+	}
+	known[tempMin]=true;
+	minLength+=minVertex[tempMin];
+
+	for(int i=0;i<n;++i)
+	{
+	    if(!known[i]&&(Map[tempMin][i]<minVertex[i]))
+		minVertex[i]=Map[tempMin][i];
+	}
+    }
+    return minLength;
+}
+int main()
+{
+    int T;
+    short int price[1000];
+    scanf("%d",&T);
+    while(T--)
+    {
+	memset(known,0,sizeof(known));
+	scanf("%d",&n);
+	for(int i=0;i<n;++i){
+	    scanf("%d",&price[i]);
+	    minVertex[i]=Infinity;
+	}
+	for(int i=0;i<n;++i){
+	    for(int j=0;j<n;++j)
+	    {
+		scanf("%d",&Map[i][j]);
+		Map[i][j]+=(price[i]+price[j]);
+		//printf("%d ",Map[i][j]);
+	    }
+	    //printf("\n");
+	}
+	
+	int ans=MST_Prim();
+	printf("%d\n",ans);
+    }
+    return 0;
+}

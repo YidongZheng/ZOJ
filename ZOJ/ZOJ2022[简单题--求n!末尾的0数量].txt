@@ -1,0 +1,20 @@
+/*一道简单题，但一开始一直没想到方法，阶乘由于是连续的，所以它的0均由5的数量构成
+所以先算5的倍数，再算25的倍数，再。。。即可*/
+#include<stdio.h>
+int main()
+{
+    int N,M,i,ans,k;
+    scanf("%d",&N);
+    for(i=0;i<N;++i)
+    {
+        ans=0,k=5;
+        scanf("%d",&M);
+        while(k<=M);
+        {
+           ans+=M/k;
+           k*=5;
+        }
+        printf("%d\n",ans);
+    }
+    return 0;
+}

@@ -1,0 +1,54 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+using namespace std;
+
+int main()
+{
+    char Key[20];
+    bool Used[20];
+    char Encrypted[150];
+    char Ans[20][120];
+    int keylen,cnt,encrylen,perlen;
+    int Min;
+    int i,j;
+    //freopen("in.txt","r",stdin);
+    //freopen("out.txt","w",stdout);
+    while(scanf("%s",Key)!=EOF)
+    {
+        if(!strcmp(Key,"THEEND")) break;
+        keylen=strlen(Key);
+        memset(Used,0,sizeof(Used));
+        scanf("%s",Encrypted);
+        encrylen=strlen(Encrypted);
+        perlen=encrylen/keylen;
+        //printf("per   %d\n",perlen);
+        cnt=0;
+        while(true)
+        {
+            Min=-1;
+            if(cnt==keylen) break;
+            for(i=0;i<keylen;i++)
+            {
+                if(!Used[i]&&(Min==-1||Key[Min]>Key[i]))
+                    Min=i;
+            }
+            Used[Min]=true;
+            for(j=0;j<perlen;j++)
+            {
+                Ans[Min][j]=Encrypted[cnt*perlen+j];
+            }
+            Ans[Min][j]=0;
+            cnt++;
+            //printf("%s\n",Ans[Min]);
+        }
+        for(j=0;j<perlen;j++)
+          for(i=0;i<cnt;i++)
+          {
+             printf("%c",Ans[i][j]);
+          }
+        printf("\n");
+    }
+    
+    return 0;
+}

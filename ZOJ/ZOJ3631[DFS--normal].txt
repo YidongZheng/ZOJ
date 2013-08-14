@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <algorithm>
+#include <iostream>
+
+using namespace std;
+
+int Max = 0;
+int m;
+int cnt;
+int w[30];
+bool cmp(const int& a,const int& b){return a>b;}
+void dfs(int sum, int n)
+{
+	if(sum>m) return;
+	if(sum>=Max) Max=sum;
+	if(Max==m) return;
+	if(n>=cnt)return;
+	int temp=sum;
+	for(int i=n;i<cnt;++i)
+		temp+=w[i];
+	if(temp<Max) return;
+	dfs(sum+w[n],n+1);
+	dfs(sum,n+1);
+}
+
+int main()
+{
+	int tmp;
+	int n;
+	while(~scanf("%d%d",&n,&m))
+	{
+		Max = 0;
+		cnt=0;
+		int sum = 0;
+		for(int i=0;i<n;++i){
+			scanf("%d",&tmp);
+			if(tmp<=m){
+				w[cnt++]=tmp;
+				sum+=tmp;	
+			}	
+		}
+		sort(w,w+cnt,cmp);
+		if(sum<=m) {printf("%d\n",sum);continue;}
+		else
+		{
+			dfs(0,0);
+			printf("%d\n",Max);
+		}
+	}
+	return 0;
+}
+

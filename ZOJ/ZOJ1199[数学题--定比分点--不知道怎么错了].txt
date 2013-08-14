@@ -1,0 +1,33 @@
+#include<iostream>
+#include<cstdio>
+#include<cmath>
+using namespace std;
+
+double Dis(double x1, double x2, double y1, double y2)
+{
+        return sqrt(pow(x1-x2, 2) + pow(y1-y2, 2));
+}
+
+int main()
+{
+    int T;
+    double x1,y1,r1;
+    double x2,y2,r2;
+    double x3,y3;
+    double k,temp;
+    scanf("%d",&T);
+    while(T--)
+    {
+        scanf("%lf%lf%lf",&x1,&y1,&r1);
+        scanf("%lf%lf%lf",&x2,&y2,&r2);
+        if(Dis(x1,x2,y1,y2)<=abs(r1-r2) || r1==r2) printf("Impossible.\n");
+        else
+        {
+            x3 = (r1*x2-r2*x1)/(r1-r2);
+            y3 = (r1*y2-r2*y1)/(r1-r2);
+            printf("%.2lf %.2lf\n",x3,y3);
+        }
+        //printf("%lf\n",Dis(0,1,0,1));
+    }
+    return 0;
+}

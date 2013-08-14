@@ -1,0 +1,22 @@
+#include<stdio.h>
+#include<math.h>
+
+int main()
+{
+    int k,n;
+    double ans1, ans2;
+    while(scanf("%d",&k)!=EOF)
+    {
+        if(k==0) break;
+        k = 2+(k-1960)/10;
+        ans2 = pow(2.0,k);
+        ans1=0;
+        n=1;
+        while(ans1<ans2)
+        {
+            ans1+=log10(n++)/log10(2);
+        }
+        printf("%d\n",n-2);
+    }
+    return 0;
+}

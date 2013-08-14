@@ -1,0 +1,38 @@
+#include<iostream>
+using namespace std;
+unsigned int gcd(unsigned int numl,unsigned int numr)
+{
+    unsigned int temp;
+    if(numl<numr)
+    {
+        swap(numl,numr);
+        }
+    while(numr)
+    {
+    temp=numl%numr;
+    numl=numr;
+    numr=temp;
+        }
+    return numl;
+    }
+    
+int main()
+{
+    unsigned int cases;
+    cin>>cases;
+    for(int j=0;j<cases;j++)
+    {
+        int n,num1,num2;
+        cin>>n;
+        cin>>num1;
+        for(int i=1;i<n;i++)
+        {
+            cin>>num2;
+            int tlcm=num1/gcd(num1,num2)*num2;
+            num1=tlcm;
+            }
+        cout<<num1<<endl;
+        }
+    //system("pause");
+    return 0;
+    }

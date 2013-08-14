@@ -1,0 +1,72 @@
+/*ZOJ1006*/
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+using namespace std;
+
+int Trans(char ch);
+char DisTrans(int code);
+int main()
+{
+	int i;
+	char plaintext[100];
+	int plaincode[100];
+	int ciphercode[100];
+	int n;
+	char ciphertext[100];
+	int key;
+	for(i=0;i<100;i++)
+	{
+		plaintext[i] = 0;
+		ciphertext[i] = 0;
+		plaincode[i] = 0;
+		ciphercode[i] = 0;
+	}
+	while(scanf("%d",&key) != EOF)
+	{
+		if(key == 0)
+			return 0;
+		scanf("%s", ciphertext);
+		n = strlen(ciphertext);
+		for(i=0;i < n;i++)
+		{
+			ciphercode[i] = Trans(ciphertext[i]);
+		}
+		ciphertext[n] = 0;
+		plaincode[i] = ciphercode[i] + i ;
+		for(i=0;i < n;i++)
+		{
+			while((ciphercode[i] + i) < 0) ciphercode[i] += 28;
+			plaincode[key*i % n] = (ciphercode[i] + i) % 28;
+		}
+		for(i=0;i < n;i++)
+		{
+			plaintext[i] = DisTrans(plaincode[i]);
+		}
+		plaintext[n] = 0;
+		printf("%s\n",plaintext);
+		for(i=0;i<n;i++)
+		{
+
+		}
+	} //ciphercode[i] = (plaincode[ki mod n] - i) mod 28.
+	return 0;
+}
+int Trans(char ch)
+{
+	if(ch == '_')
+		return 0;
+	if(ch == '.')
+		return 27;
+	if(ch >= 'a' && ch <= 'z')
+		return ch - 'a' + 1;
+}
+char DisTrans(int code)
+{
+	if(code == 0)
+		return '_';
+	if(code == 27)
+		return '.';
+	if(code > 0 && code < 27)
+		return code + 'a' - 1;
+}

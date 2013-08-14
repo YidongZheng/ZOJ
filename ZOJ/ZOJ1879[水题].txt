@@ -1,0 +1,39 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<cstdlib>
+//int Father[100000];
+//int Strength[100000];
+//char Array[256];
+//int Meadow[10][10];
+int ABS(int x){return x>0?x:-x;}
+bool Array[3000];
+bool jolly;
+int main()
+{
+    int N,i,temp1,temp2;
+    while(scanf("%d",&N) != EOF)
+    {
+        jolly=true;
+        memset(Array,false,sizeof(Array));
+        scanf("%d",&temp1);
+        for(i=0;i<N-1;i++)
+        {
+            scanf("%d",&temp2);
+            Array[ABS(temp1-temp2)]=true;
+            temp1=temp2;
+        }
+        for(i=1;i<N;i++)
+        {
+            if(Array[i] == false)
+                {jolly=false;break;}
+        }
+        //printf("%d\n",i);
+        if(jolly)
+          printf("Jolly\n");
+        else
+          printf("Not jolly\n");
+    }
+
+    return 0;
+}

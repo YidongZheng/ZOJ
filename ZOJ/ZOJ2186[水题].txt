@@ -1,0 +1,22 @@
+#include<iostream>
+#include<cstdio>
+//Ë®Ìâ 
+//ZOJ Problem Set - 2186  Keep on Truckin'      Time Limit: 2 Seconds      Memory Limit: 65536 KB
+using namespace std;
+
+int main()
+{
+    int A,B,C;
+    while(scanf("%d%d%d",&A,&B,&C)!=EOF)
+    {
+        if(A<=168)
+           printf("CRASH %d\n",A);
+        else if(B<=168)
+           printf("CRASH %d\n",B);
+        else if(C<=168)
+           printf("CRASH %d\n",C);
+        else
+           printf("NO CRASH\n");
+    }
+    return 0;
+}

@@ -1,0 +1,106 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+char Fib[1002],Add1[1002],Add2[1002];
+int main()
+{
+    int N,len,i;
+    while(gets(Fib) != NULL)
+    {
+        len=strlen(Fib);
+        for(i=0;i<len;i++)
+        {
+           switch(Fib[i])
+           {
+             case '1':
+                 Fib[i]='`';break;
+             case '2':
+                 Fib[i]='1';break;
+             case '3':
+                 Fib[i]='2';break;
+             case '4':
+                 Fib[i]='3';break;
+             case '5':
+                 Fib[i]='4';break;
+             case '6':
+                 Fib[i]='5';break;
+             case '7':
+                 Fib[i]='6';break;
+             case '8':
+                 Fib[i]='7';break;
+             case '9':
+                 Fib[i]='8';break;
+             case '0':
+                 Fib[i]='9';break;
+             case '-':
+                 Fib[i]='0';break;
+             case '=':
+                 Fib[i]='-';break;
+             case 'B':
+                 Fib[i]='V';break;
+             case 'C':
+                 Fib[i]='X';break;
+             case 'D':
+                 Fib[i]='S';break;
+             case 'E':
+                 Fib[i]='W';break;
+             case 'F':
+                 Fib[i]='D';break;
+             case 'G':
+                 Fib[i]='F';break;
+             case 'H':
+                 Fib[i]='G';break;
+             case 'I':
+                 Fib[i]='U';break;
+             case 'J':
+                 Fib[i]='H';break;
+             case 'K':
+                 Fib[i]='J';break;
+             case 'L':
+                 Fib[i]='K';break;
+             case 'M':
+                 Fib[i]='N';break;
+             case 'N':
+                 Fib[i]='B';break;
+             case 'O':
+                 Fib[i]='I';break;
+             case 'P':
+                 Fib[i]='O';break;
+             case 'R':
+                 Fib[i]='E';break;
+             case 'S':
+                 Fib[i]='A';break;
+             case 'T':
+                 Fib[i]='R';break;
+             case 'U':
+                 Fib[i]='Y';break;
+             case 'V':
+                 Fib[i]='C';break;
+             case 'W':
+                 Fib[i]='Q';break;
+             case 'X':
+                 Fib[i]='Z';break;
+             case 'Y':
+                 Fib[i]='T';break;
+             case '[':
+                 Fib[i]='P';break;
+             case ']':
+                 Fib[i]='[';break;
+             case '\\':
+                 Fib[i]=']';break;
+             case ';':
+                 Fib[i]='L';break;
+             case '\'':
+                 Fib[i]=';';break;
+             case ',':
+                 Fib[i]='M';break;
+             case '.':
+                 Fib[i]=',';break;
+             case '/':
+                 Fib[i]='.';break;
+           }
+        }
+        printf("%s\n",Fib);
+    }
+    return 0;
+}

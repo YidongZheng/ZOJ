@@ -1,0 +1,50 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<cstdlib>
+using namespace std;
+
+int main()
+{
+    int a,b,c,d;
+    int temp;
+    int N;
+    int A[32770];
+    memset(A,0,sizeof(A));
+    for(a=1;a<=181;a++)
+      for(b=a;b<=181;b++)
+        for(c=b;c<=181;c++)
+          for(d=c;d<=181;d++)
+          {             
+             temp=a*a+b*b+c*c+d*d;
+             if(temp>=32768) break;
+             A[temp]++;      
+          }
+    for(a=1;a<=181;a++)
+      for(b=a;b<=181;b++)
+        for(c=b;c<=181;c++)
+        {             
+             temp=a*a+b*b+c*c;
+             if(temp>=32768) break;
+             A[temp]++;      
+        }
+    for(a=1;a<=181;a++)
+      for(b=a;b<=181;b++)
+      {             
+          temp=a*a+b*b;
+          if(temp>=32768) break;
+          A[temp]++;      
+      }
+    for(a=1;a<=181;a++)
+    {             
+        temp=a*a;
+        if(temp>=32768) break;
+        A[temp]++;      
+    }
+    while(scanf("%d",&N) != EOF)
+    {
+        if(N == 0) break;
+        printf("%d\n",A[N]);
+    }
+    return 0;
+}

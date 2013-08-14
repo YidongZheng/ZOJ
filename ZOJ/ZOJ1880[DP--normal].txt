@@ -1,0 +1,89 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+bool dp[51][22501];
+int main()
+{
+    int n;
+    int sum;
+    int w[100];
+    int half;
+    while(~scanf("%d",&n))
+    {
+        sum=0;
+        memset(dp,0,sizeof(dp));
+        int halfn=(n+1)/2;
+        for(int i=0;i<n;++i)
+        {
+            if(i<=halfn)
+            dp[i][0]=true;
+            scanf("%d",&w[i]);
+            sum+=w[i];
+        }
+        half=sum>>1;
+       
+        for(int i=0;i<n;++i)
+        {
+            for(int j=0;j<halfn;++j)
+            {
+                for(int k=0;k+w[i]<=half;++k)
+                {
+                    if(dp[j][k]&&!dp[j+1][k+w[i]])
+                    dp[j+1][k+w[i]]=true;
+                }
+            }
+        }
+        int max1,max2;
+        //if(n%2==0)
+        //{
+            for(int i=half;i>=0;--i)
+            {
+                if(dp[halfn][i])
+                {
+                    if(i>half)
+                        printf("%d %d\n",sum-i,i);
+                    else
+                        printf("%d %d\n",i,sum-i);
+                    break;
+                }
+            }
+        //}
+        /*
+        else
+        {
+            for(int i=half;i>=0;--i)
+            {
+                if(dp[halfn][i])
+                {
+                    max1=i;
+                    break;
+                }
+            }
+            max2=0;
+            for(int i=half;halfn-1>=0&&i>=0;--i)
+            {
+                if(dp[halfn-1][i])
+                {
+                    max2=i;
+                    break;
+                }
+            }
+            int final;
+            if(abs(sum-max1-max1)<abs(sum-max2-max2))
+            {
+                final=max1;
+            }
+            else
+            {
+                final=max2;
+            }
+            if(final>half)
+                printf("%d %d\n",sum-final,final);
+            else
+                printf("%d %d\n",final,sum-final);
+        }
+        */
+    }
+    return 0;
+}

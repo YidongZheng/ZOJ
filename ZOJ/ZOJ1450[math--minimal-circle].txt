@@ -1,0 +1,100 @@
+#include <iostream>
+#include <cstdio>
+#include <algorithm>
+#include <cmath>
+
+using namespace std;
+
+struct point{double x,y;};
+point p[100];
+int n;
+
+//#define undef (point(1e10,1e10))
+/* The function l2l_ins() returns the 
+ * insection point of two lines present
+ * by two end points.If the two lines are 
+ * parrellel or overlapped,the function
+ * returns "undef".
+ */
+point l2l_ins(point u1,point u2,point v1,point v2)  
+{  
+    point ans = u1;
+	double tmp1 = ((u1.x - u2.x)*(v1.y - v2.y) - (u1.y - u2.y)*(v1.x - v2.x));  
+    /*if(tmp1==0) return undef;*/  /*uncomment this statement when use C++*/
+	double tmp2 = ((u1.x - v1.x)*(v1.y - v2.y) - (u1.y - v1.y)*(v1.x - v2.x))/tmp1;
+    ans.x += (u2.x - u1.x)*tmp2;  
+    ans.y += (u2.y - u1.y)*tmp2;  
+    return ans;  
+}
+
+double dist(point a, point b)
+{
+	return sqrt((a.x-b.x)*(a.x-b.x)+(a.y-b.y)*(a.y-b.y));
+}
+/*This function returns the center of 
+  the circle detemined by three points
+  which are not collinear.*/
+
+point circle_center(point a,point b,point c)  
+{  
+    point ua,ub,va,vb;  
+    ua.x = ( a.x + b.x )/2;  
+    ua.y = ( a.y + b.y )/2;  
+    ub.x = ua.x - a.y + b.y;/*any points on the line is ok,though*/ 
+    ub.y = ua.y + a.x - b.x;  
+    va.x = ( a.x + c.x )/2;  
+    va.y = ( a.y + c.y )/2;  
+    vb.x = va.x - a.y + c.y;  
+    vb.y = va.y + a.x - c.x;  
+    return l2l_ins(ua,ub,va,vb);  
+}
+#define eps 1e-9
+bool gt(double x,double y)  {   return x > y + eps;}          // x > y   
+bool lt(double x,double y)  {   return x < y - eps;}          // x < y   
+bool ge(double x,double y)  {   return x > y - eps;}          // x >= y   
+bool le(double x,double y)  {   return x < y + eps;}          // x <= y   
+bool eq(double x,double y)  {   return fabs( x - y ) < eps;}  // x == y  
+
+void min_circle(double& r, point& cen)
+{
+	random_shuffle(p,p+n);
+	cen=p[0];r=0;
+	for(int i=1;i<n;++i)
+	{
+		if(gt(dist(cen,p[i]),r))
+		{
+			cen=p[i];r=0;
+			for(int j=0;j<i;++j)
+			{
+				if(gt(dist(cen,p[j]),r))
+				{
+					cen.x=(p[i].x+p[j].x)/2;
+					cen.y=(p[i].y+p[j].y)/2;
+					r=dist(cen,p[j]);
+					for(int k=0;k<j;++k)
+					{
+						if(gt(dist(cen,p[k]),r))
+						{
+							cen=circle_center(p[i],p[j],p[k]);
+							r=dist(cen,p[i]);
+						}
+					}
+				}
+			}
+		}
+	}
+}
+int main()
+{
+	point cen;
+	double r;
+	while(~scanf("%d",&n)&&n)
+	{
+		for(int i=0;i<n;++i)
+			scanf("%lf%lf",&p[i].x,&p[i].y);
+		min_circle(r,cen);
+		printf("%.2lf %.2lf %.2lf\n",cen.x,cen.y,r);
+	}
+	return 0;
+}
+

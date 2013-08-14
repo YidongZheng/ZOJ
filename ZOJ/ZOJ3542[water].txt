@@ -1,0 +1,67 @@
+#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    //freopen("in.txt","r",stdin);
+    //freopen("out.txt","w",stdout);
+    char str[4100];
+    int line;
+    int len;
+    int num;
+    int rem;
+    while(gets(str))
+    {
+	line=0;
+	len=strlen(str);
+	num=len/16;
+	rem=len%16;
+	//printf("%d %d\n",num,rem);
+	for(int i=0;i<num;++i)
+	{
+	    printf("%04x: ",line);
+	    for(int j=0;j<16;++j)
+	    {
+		printf("%x",str[16*i+j]);
+		if(j%2) printf(" ");
+	    }
+	    for(int j=0;j<16;++j)
+	    {
+		if(str[16*i+j]>='A'&&str[16*i+j]<='Z')
+		    printf("%c",str[16*i+j]-'A'+'a');
+		else if(str[16*i+j]>='a'&&str[16*i+j]<='z')
+		    printf("%c",str[16*i+j]-'a'+'A');
+		else
+		    printf("%c",str[16*i+j]);
+	    }
+	    printf("\n");
+	    line+=16;
+	}
+	if(rem)
+	{
+	    printf("%04x: ",line);
+	    for(int i=0;i<rem;++i){
+		printf("%x",str[16*num+i]);
+		if(i%2)
+		    printf(" ");
+	    }
+	    for(int i=rem;i<16;++i)
+	    {
+		printf("  ");
+		if(i%2)
+		    printf(" ");
+	    }
+	    for(int i=0;i<rem;++i)
+	    {
+		if(str[16*num+i]>='A'&&str[16*num+i]<='Z')
+		    printf("%c",str[16*num+i]-'A'+'a');
+		else if(str[16*num+i]>='a'&&str[16*num+i]<='z')
+		    printf("%c",str[16*num+i]-'a'+'A');
+		else
+		    printf("%c",str[16*num+i]);
+	    }
+	    printf("\n");
+	}
+    }
+    return 0;
+}

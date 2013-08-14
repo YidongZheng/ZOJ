@@ -1,0 +1,17 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+//int Father[100000];
+//int Strength[100000];
+//char Array[256];
+//int Meadow[10][10];
+int main()
+{
+    int N;
+    while(scanf("%d",&N) != EOF)
+    {
+        if(N == 0) break;
+        printf("%d\n",N/2);
+    }
+    return 0;
+}

@@ -1,0 +1,98 @@
+#include<iostream>
+#include<cstdio>
+using namespace std;
+int Inverse(int a, int m, int q[]);
+ int gcdEuclid(int a, int b);
+int main()
+{
+    
+    int T;
+    int q[2000];
+    scanf("%d",&T);
+    //scanf("\n");
+    int a,m;
+    for(int i=0;i<T;i++)
+    {
+        /*int Case = 1;
+        while(scanf("%d%d%d%d",&p,&e,&i,&d) != EOF)
+        {
+             if(p==-1 && e==-1 && i==-1 && d==-1) break;
+             
+        }
+        if(i != T-1)
+           printf("\n");*/
+           scanf("%d%d",&a,&m);
+           if(m == 1 || a == 1)
+             printf("%d\n",1);
+           else if(gcdEuclid(a,m) != 1)
+              printf("Not Exist\n");
+           else
+              printf("%d\n",Inverse(a,m,q));
+    }
+    return 0;
+}
+
+int Inverse(int a, int m, int q[])
+{
+    int r;
+    int temp;
+    int n = 0;
+    int s,t;
+    int tempa = a;
+    int tempm = m;
+    if(tempa < tempm)
+    {
+         temp = tempa;
+         tempa = tempm;
+         tempm = temp;
+    }
+    while(tempm > 0)
+    {
+       q[n++] = tempa / tempm;
+       r = tempa % tempm;
+       tempa = tempm;
+       tempm = r;
+    }
+    n--;
+    s = 1;
+    t = -q[n-1];
+    //printf("%d\n",q[0]);
+    //printf("%d\n",q[1]);
+    //printf("%d\n",q[2]);
+    //printf("%d\n",q[3]);
+    for(int i=n-1;i>0;i--)
+    {
+        temp = s;
+        s = t;
+        t = temp - q[i-1] * t; 
+    } 
+    if(a > m)
+     {
+       while(s < 0)
+          s += m;
+       while(s > m)
+          s -= m;
+       return s;
+       }
+     else
+     {
+        while(t < 0)
+          t += m;
+        while(t > m)
+          t -= m;  
+        return t;
+     }
+     
+
+ }
+ int gcdEuclid(int a, int b)
+{
+    int r;
+    while(b > 0)
+    {
+       r = a % b;
+       a = b;
+       b = r;
+    }
+    return a;
+ }

@@ -1,0 +1,99 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<map>
+#include<string>
+
+using namespace std;
+
+int main()
+{
+    /*map<string, int> MyMap;
+    map<string, int>::iterator Myiter;
+    MyMap.insert(pair<string, int>("Hello",1));
+    MyMap.insert(pair<string, int>("Aello",1));
+    MyMap.insert(pair<string, int>("Bello",1));
+    MyMap.insert(pair<string, int>("Cello",1));
+    MyMap.insert(pair<string, int>("Eello",1));
+    MyMap.insert(pair<string, int>("Fello",1));
+    Myiter=MyMap.begin();
+    for(;Myiter != MyMap.end();Myiter++)
+    {
+        cout<<Myiter->first<<"    "<<Myiter->second<<"  "<<endl;
+    }
+    int N;
+    scanf("%d",&N);*/
+    map<string, int> MyMap;
+    map<string, int>::iterator Myiter;
+    int N,i,j,k;
+    int blocks;
+    int len,cnt;
+    char tempchar;
+    char Dealed[10];
+    char Temp[100];
+    Dealed[3]='-';
+    Dealed[8]=0;
+    bool found;
+    scanf("%d",&blocks);
+    for(k=0;k<blocks;k++)
+    {
+            found=false;
+            scanf("%d",&N);
+            for(i=0;i<N;i++)
+            {
+               scanf("%s",Temp);
+               len=strlen(Temp);
+               cnt=0;
+               for(j=0;j<len;j++)
+               {
+                  if(Temp[j]>='0' && Temp[j] <='9')
+                      tempchar=Temp[j];
+                  else if(Temp[j]>= 'A' && Temp[j] <= 'C')
+                      tempchar='2';
+                  else if(Temp[j]>= 'D' && Temp[j] <= 'F')         
+                      tempchar='3';
+                  else if(Temp[j]>= 'G' && Temp[j] <= 'I')         
+                      tempchar='4';
+                  else if(Temp[j]>= 'J' && Temp[j] <= 'L')         
+                      tempchar='5';
+                  else if(Temp[j]>= 'M' && Temp[j] <= 'O')         
+                      tempchar='6';
+                  else if(Temp[j]== 'P' || Temp[j] == 'S' || Temp[j] == 'R')         
+                      tempchar='7';
+                  else if(Temp[j]>= 'T' && Temp[j] <= 'V')         
+                      tempchar='8';
+                  else if(Temp[j]>= 'W' && Temp[j] <= 'Y')         
+                      tempchar='9';
+                  //printf("tempj::%c temp::%c\n",Temp[j],tempchar);
+                  if(Temp[j] != '-')
+                  {
+                      if(cnt != 3)
+                        Dealed[cnt++]=tempchar;
+                      else
+                        {Dealed[cnt+1]=tempchar;cnt=5;}
+                  }
+               }
+               if((Myiter=MyMap.find(Dealed)) == MyMap.end())
+               {
+                   MyMap.insert(pair<string, int>(Dealed,1));
+               }
+               else
+               {
+                  Myiter->second+=1;
+               }
+            }
+            
+            Myiter=MyMap.begin();
+            for(;Myiter != MyMap.end();Myiter++)
+            {
+                if(Myiter->second != 1)
+                    {cout<<Myiter->first<<" "<<Myiter->second<<endl;found=true;}
+            }
+            if(!found)
+               printf("No duplicates.\n");
+            if(k != blocks-1)
+               printf("\n");
+            MyMap.clear();
+    }
+    return 0;
+}

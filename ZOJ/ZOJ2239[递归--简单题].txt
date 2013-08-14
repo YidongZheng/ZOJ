@@ -1,0 +1,25 @@
+#include<stdio.h>
+#include<string.h>
+int Func(int N)
+{
+    if(N==1) return 1;
+    if(N%2==0) return 2*Func(N/2)-1;
+    else return 2*Func((N-1)/2)+1;
+    
+}
+int main()
+{
+    char Str[10];
+    int N,z,i;
+    while(scanf("%s",Str)!=EOF)
+    {
+        if(!strcmp(Str,"00e0")) break;
+        z=Str[3]-48;
+        N=1;
+        for(i=0;i<z;i++)
+            N*=10;
+        N*=(Str[0]-48)*10+(Str[1]-48);
+        printf("%d\n",Func(N));
+    }
+    return 0;
+}

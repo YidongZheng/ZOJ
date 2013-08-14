@@ -1,0 +1,47 @@
+#include<iostream>
+#include<cstdio>
+
+using namespace std;
+
+int main()
+{
+    int T;
+    int i,j;
+    int DP1[5003];
+    int Array[10];
+    double ans;
+    int Max;
+    scanf("%d",&T);
+    while(T--)
+    {
+        ans=Max=0;
+        for(i=1;i<=5000;++i)
+            DP1[i]=100;
+        for(i=0;i<6;i++)
+        {    
+            scanf("%d",&Array[i]);
+            DP1[Array[i]]=1;
+        }
+        for(i=2;i<=5000;i++)
+           for(j=1;j<i;j++)
+           {
+               if(DP1[i]>DP1[j]+DP1[i-j])
+                  DP1[i]=DP1[j]+DP1[i-j];
+           }
+        for(i=2;i<=100;i++)
+           for(j=5000;j>i;j--)
+           {
+               if(DP1[i]>DP1[j]+DP1[j-i])
+                  DP1[i]=DP1[j]+DP1[j-i];
+           }     
+        for(i=1;i<=100;i++)
+        {
+            ans+=DP1[i];
+            if(Max<DP1[i]) Max=DP1[i];
+        }
+        ans/=100;
+        printf("%.2lf %d\n",ans,Max);
+        
+    }
+    return 0;
+}

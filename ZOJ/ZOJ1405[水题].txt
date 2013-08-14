@@ -1,0 +1,41 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<map>
+#include<string>
+
+using namespace std;
+
+int main()
+{
+    int N;
+    int cleft,i,len,walked;
+    char Str[100];
+    char Num[26];
+    while(scanf("%d",&N) != EOF)
+    {
+        if(N == 0) break;
+        scanf("%s",Str);
+        cleft = N;
+        walked=0;
+        memset(Num,0,26);
+        len = strlen(Str);
+        for(i=0;i<len;i++)
+        {
+            if(cleft>0 && Num[Str[i]-'A'] == 0)
+                Num[Str[i]-'A'] = 1,cleft--;
+            else if(Num[Str[i]-'A'] == 1)
+                Num[Str[i]-'A'] = 0,cleft++;
+            else if(Num[Str[i]-'A'] == 0)
+                Num[Str[i]-'A'] = 5;
+            else if(Num[Str[i]-'A'] == 5)
+                walked++;
+        }
+        if(walked==0)
+           printf("All customers tanned successfully.\n");
+        else
+           printf("%d customer(s) walked away.\n",walked);
+        
+    }  
+    return 0;
+}

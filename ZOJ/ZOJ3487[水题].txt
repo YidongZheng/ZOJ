@@ -1,0 +1,28 @@
+#include<iostream>
+#include<cstdio>
+//Ë®Ìâ 
+//ZOJ Problem Set - 3487  Ordinal Numbers      Time Limit: 2 Seconds      Memory Limit: 65536 KB
+using namespace std;
+
+int main()
+{
+    int N,T;
+    scanf("%d",&T);
+    
+    while(T--)
+    {
+        scanf("%d",&N);
+        if((N%100)/10==1)
+           printf("%dth\n",N);
+        else if(N%10==1)
+           printf("%dst\n",N);
+        else if(N%10==2)
+           printf("%dnd\n",N);
+        else if(N%10==3)
+           printf("%drd\n",N);
+        else 
+           printf("%dth\n",N);
+    }
+    
+    return 0;
+}

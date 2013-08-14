@@ -1,0 +1,36 @@
+#include<iostream>
+#include<cstdio>
+int main()
+{
+    //char Wide[]="Wide Receiver";
+    //char Line[]="Lineman";
+    //char Quar[]="Quarterback";
+    int cnt;
+    double a1,a2,a3;
+    while(scanf("%lf%lf%lf",&a1,&a2,&a3)!=EOF)
+    {
+        cnt=0;
+        if(a1 == 0 && a2 == 0 && a3 == 0) break;
+        if(a1 <= 4.5 && a2 >= 150 && a3>=200)
+           {printf("Wide Receiver");cnt++;}
+        if(a1 <= 6.0 && a2 >= 300 && a3>=500)
+        {
+            if(cnt)
+              printf(" ");
+            printf("Lineman");
+            cnt++;
+        }
+        if(a1 <= 5.0 && a2 >= 200 && a3>=300)
+        {
+            if(cnt)
+              printf(" ");
+            printf("Quarterback");
+            cnt++;  
+        }
+        if(!cnt)
+         printf("No positions");
+        printf("\n");
+    }
+    
+    return 0;
+}

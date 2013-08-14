@@ -1,0 +1,41 @@
+#include<stdio.h>
+#include<string.h>
+
+int main()
+{
+    char str[10001];
+    char ans[10001];
+    int i,j,k,len;
+    int num;
+    int T;
+    scanf("%d",&T);
+    while(T--)
+    {
+        scanf("%s",str);
+        len = strlen(str);
+        strcpy(ans,str);
+        num=1;
+        for(i=1;i<len;i++)
+        {
+            for(j=0;j<len;j++)
+            {
+                if(ans[j]<str[(i+j)%len])
+                {
+                    break;
+                }
+                else if(ans[j]==str[(i+j)%len]) continue;
+                else
+                {
+                    for(k=0;k<len;k++)
+                    {
+                        ans[k]=str[(i+k)%len];
+                    }
+                    num=i+1;
+                    break;
+                }
+            }
+        }
+        printf("%d\n",num);
+    }
+    return 0;
+}

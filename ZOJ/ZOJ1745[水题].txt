@@ -1,0 +1,49 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<cstdlib>
+using namespace std;
+
+int ABS(int x){if(x<0)return -x;return x;}
+int main()
+{
+    int Cookie;
+    int dist;
+    int current;
+    int dest;
+    //freopen("in.txt","r",stdin);
+    //freopen("out.txt","w",stdout);
+    scanf("%d",&Cookie);
+    while(true)
+    {
+        if(Cookie==5280)
+        {
+           while(scanf("%d",&Cookie) != EOF);
+           break;
+        }
+        dist=ABS(Cookie);
+        current=0;
+        while(scanf("%d",&dest) != EOF)
+        {
+            if(dest==Cookie)
+            {
+                printf("Moving from %d to %d: found it!\n",current,dest);
+                break;
+            }
+            if(ABS(dest-Cookie)>dist)
+                printf("Moving from %d to %d: colder.\n",current,dest);
+            else if(ABS(dest-Cookie)<dist)
+                printf("Moving from %d to %d: warmer.\n",current,dest);
+            else
+                printf("Moving from %d to %d: same.\n",current,dest);
+            current=dest;
+            dist=ABS(current-Cookie);
+        }
+        scanf("%d",&Cookie);
+        if(Cookie != 5280)
+        {
+           printf("\n");
+        }
+    }
+    return 0;
+}

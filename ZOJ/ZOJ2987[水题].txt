@@ -1,0 +1,33 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+using namespace std;
+
+int main()
+{
+    int T,i,j,k,N,E;
+    int start,end,cost;
+    int ans;
+    int index;
+    int len;
+    int cnt;
+    char Str[90];
+    char Ans[90];
+    scanf("%d",&T);
+    for(i=0;i<T;i++)
+    {
+        cnt=0;
+        scanf("%d%s",&index,&Str);
+        len=strlen(Str);
+        for(j=0;j<len;j++)
+        {
+            if(j != index-1)
+              Ans[cnt++]=Str[j];
+        }
+        Ans[cnt]=0;
+        printf("%d %s\n",i+1,Ans);
+    }
+    
+    return 0;
+}
+

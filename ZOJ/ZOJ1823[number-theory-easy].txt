@@ -1,0 +1,30 @@
+/* ZOJ Problem Set - 1823  */
+/* Factoring Large Numbers */
+/* Yidong Zheng 2013-1-29  */
+/* number theory easy      */
+
+#include <stdio.h>
+int main()
+{
+    long long a = 1;
+    long long b = a<<32;
+    while(scanf("%lld",&a)!=EOF)
+    {
+	if(a<0) break;
+	while(a%2==0)
+	{
+	    printf("2\n");
+	    a/=2;
+	}
+	for(long long i=3;i*i<=a;i+=2)
+	{
+	    while(a%i==0)
+	    {
+		printf("%lld\n",i);
+		a/=i;
+	    }
+	}
+	if(a!=1) printf("%lld\n",a);
+    }
+    return 0;
+}

@@ -1,0 +1,37 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<map>
+using namespace std;
+
+int main()
+{
+    int i;
+    map<char,char> MyMap;
+    map<char,char>::iterator MyIter;
+    double D,T;
+    double dis,speed;
+    int cnt=1;
+    int len;
+    char Plain[70];
+    char Cypher[70];
+    char Lines[70];
+    gets(Plain);
+    gets(Cypher);
+    len=strlen(Plain);
+    printf("%s\n",Cypher);
+    printf("%s\n",Plain);
+    for(i=0;i<len;i++)
+      MyMap.insert(pair<char,char>(Plain[i],Cypher[i]));
+    while(gets(Lines) != NULL)
+    {
+        len=strlen(Lines);
+        for(i=0;i<len;i++)
+        {
+            if((MyIter=MyMap.find(Lines[i])) != MyMap.end())
+               Lines[i]= MyIter->second;
+        }
+        printf("%s\n",Lines);
+    }
+    return 0;
+}

@@ -1,0 +1,70 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+using namespace std;
+
+char Product[10000];
+char Multip[10000];
+char Multicand[10000];
+void Multiple()
+{
+     int pro;
+     int i,j,k;
+     int lenp,lend;
+     lenp=strlen(Multip);
+     lend=strlen(Multicand);
+     for(k=0;k<lenp;k++)
+     {
+         for(j=0;j<lend;j++)
+         {
+             pro=(Multicand[j]-48)*(Multip[k]-48);
+             Product[j+k]+=pro%10;
+             while(Product[j+k]>'9')
+             {
+                 Product[j+k]-=10;
+                 Product[j+k+1]++;
+             }
+             Product[j+k+1]+=pro/10;
+         }
+     }
+     i=9998;
+     while(i>=0&&Product[i]=='0')
+        i--;
+     if(i<0)
+     {
+         Product[0]='0';
+         Product[1]=0;
+     }
+     else
+         Product[i+1]=0;
+}
+int main()
+{
+    int i,len,j,k,lenm;
+    char temp;
+    while(scanf("%d%s",&k,Multip)!=EOF)
+    {
+        memset(Product,'0',sizeof(Product));
+        Product[9999]=0;
+        lenm=strlen(Multip);
+        for(i=0;i<lenm/2;i++)
+        {
+            temp=Multip[i];
+            Multip[i]=Multip[lenm-1-i];
+            Multip[lenm-1-i]=temp;
+        }
+        Multip[lenm]=0;
+        strcpy(Multicand,"1");
+        for(j=1;j<=100;j++)
+        {
+            
+            Multiple();
+            strcpy(Multicand,Product);
+            memset(Product,'0',sizeof(Product));
+            Product[9999]=0;
+            if(strlen(Multicand)>=k && Multicand[k-1]=='7') break;
+        }
+        printf("%d\n",j);   
+    }
+    return 0;
+}

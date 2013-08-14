@@ -1,0 +1,127 @@
+/* ZOJ Problem Set - 2859
+ * Matrix Searching
+ * ZYD 2012-12-20
+ * segment-tree[2D]
+ */
+#include<iostream>
+#include<cstdio>
+#define MAX 300
+#define Infinity (1<<30)
+using namespace std;
+
+int ans;
+int N,m;
+struct stree
+{
+    int l,r;
+    int val;
+};
+
+struct ftree
+{
+    int l,r;
+    //stree subtree[5*MAX+1];
+    stree* subtree;
+    ftree(){subtree = new stree[4*MAX+1];}
+    void sbuild(int i,int l,int r)
+    {
+	if(l>r) return;
+	subtree[i].l=l;
+	subtree[i].r=r;
+	subtree[i].val=Infinity;
+	if(l==r)return;
+	int mid=(l+r)/2;
+	sbuild(2*i,l,mid);
+	sbuild(2*i+1,mid+1,r);
+    }
+    void sfind(int i,int l,int r)
+    {
+	if(subtree[i].l>r||subtree[i].r<l) return;
+	if(subtree[i].l>=l&&subtree[i].r<=r)
+	{
+	    ans=min(subtree[i].val,ans);
+	    return;
+	}
+	sfind(2*i,l,r);
+	sfind(2*i+1,l,r);
+    }
+    void supdate(int i,int l,int r,int val)
+    {
+	if(subtree[i].l>r||subtree[i].r<l) return;
+	if(subtree[i].l>=l&&subtree[i].r<=r)
+	{
+	    subtree[i].val=min(subtree[i].val,val);
+	    return;
+	}
+	supdate(2*i,l,r,val);
+	supdate(2*i+1,l,r,val);
+	subtree[i].val=min(subtree[2*i].val,subtree[2*i+1].val);
+    }
+};//fattree[5*MAX+1];
+ftree *fattree;
+void find(int i,int l,int r,int c1,int c2)
+{
+    if(fattree[i].l>r||fattree[i].r<l) return;
+    if(fattree[i].l>=l&&fattree[i].r<=r)
+    {
+	fattree[i].sfind(1,c1,c2);
+	return;
+    }
+    find(2*i,l,r,c1,c2);
+    find(2*i+1,l,r,c1,c2);
+}
+
+void build(int i,int l,int r,int n)
+{
+    if(l>r) return;
+    fattree[i].l=l;
+    fattree[i].r=r;
+    fattree[i].sbuild(1,1,n);
+    if(l==r)return;
+    int mid=(l+r)/2;
+    build(2*i,l,mid,n);
+    build(2*i+1,mid+1,r,n);
+}
+void update(int i,int l,int r,int val,int c1,int c2)
+{
+    if(fattree[i].l>r||fattree[i].r<l) return;
+    if(fattree[i].l>=l&&fattree[i].r<=r)
+    {
+	fattree[i].supdate(1,c1,c2,val);
+	return;
+    }
+    update(2*i,l,r,val,c1,c2);
+    update(2*i+1,l,r,val,c1,c2);
+    for(int j=1;j<4*N+1;j++)
+	fattree[i].subtree[j].val=min(fattree[2*i].subtree[j].val,fattree[2*i+1].subtree[j].val);
+}
+
+int main()
+{
+    fattree = new ftree[4*MAX+1];
+    int r1,r2,c1,c2;
+    int value;
+    int T;
+    scanf("%d",&T);
+    while(T--)
+    {
+	scanf("%d",&N);
+	build(1,1,N,N);
+	for(int i=1;i<=N;i++)
+	    for(int j=1;j<=N;j++)
+	    {
+		scanf("%d",&value);
+		update(1,i,i,value,j,j);
+	    }
+	scanf("%d",&m);
+	for(int i=1;i<=m;i++)
+	{
+	    ans=Infinity;
+	    scanf("%d%d%d%d",&r1,&c1,&r2,&c2);
+	    find(1,r1,r2,c1,c2);
+	    printf("%d\n",ans);
+	}
+    
+    }
+    return 0;
+}

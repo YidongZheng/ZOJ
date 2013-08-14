@@ -1,0 +1,39 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+using namespace std;
+int main()
+{
+    int T,i,j,k,N;
+    char temp[15];
+    int Ans[26],tempAns[26];
+    scanf("%d",&T);
+    for(i=0;i<T;i++)
+    {
+        memset(Ans,0,sizeof(Ans));
+        scanf("%d",&N);
+        scanf("%s",temp);
+        for(j=0;j<12;j++)
+        {
+            Ans[temp[j]-'A']++;
+        }
+        for(k=0;k<N-1;k++)
+        {
+            scanf("%s",temp);
+            memset(tempAns,0,sizeof(tempAns));
+            for(j=0;j<12;j++)
+            {
+              tempAns[temp[j]-'A']++;
+            }
+            for(j=0;j<26;j++)
+              if(tempAns[j] < Ans[j])
+                 Ans[j]=tempAns[j];
+        }
+        for(k=0;k<26;k++)
+          for(j=0;j<Ans[k];j++)
+              printf("%c",k+'A');
+        printf("\n");
+        
+    }
+    return 0;
+}

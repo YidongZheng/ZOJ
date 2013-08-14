@@ -1,0 +1,71 @@
+//ZOJ Problem Set - 2704
+//Brackets
+//simulate & stack-using
+//O(N^2)
+//need to improve to O(N)
+#include<iostream>
+#include<cstdio>
+#include<stack>
+#include<cstring>
+
+using namespace std;
+
+int main()
+{
+    char str[100001];
+    int num[100001];
+    while(scanf("%s",str)!=EOF)
+    {
+        int len = strlen(str);
+        int cnt;
+        stack<int> myStack;
+        for(int i=0;i<len;i++)
+            num[i]=0;
+        for(int i=0;i<len;i++)
+        {
+            if(str[i]=='('||str[i]=='[')
+            {
+                myStack.push(i);
+            }
+            else
+            {
+                if(!myStack.empty()&& str[i]==')'&&str[myStack.top()]=='(')
+                {
+                    num[myStack.top()]=i-myStack.top()+1;
+                    myStack.pop();
+                }
+                else if(!myStack.empty()&&str[i]==']'&&str[myStack.top()]=='[')
+                {
+                    num[myStack.top()]=i-myStack.top()+1;
+                    myStack.pop();
+                }
+                else
+                {
+                    while(!myStack.empty())
+                        myStack.pop();
+                }
+            }
+        }
+        int Max = 0;
+        int temp=0;
+        int tempans=0;
+        int maxS=0,maxE=0;
+        for(int i=0;i<len;i++)
+        {
+	    if(num[i]==0) continue;
+            temp=i;
+            tempans=0;
+            while(temp<len && num[temp]!=0)
+            {
+                tempans+=num[temp];
+                temp+=num[temp];
+            }
+            if(tempans>Max) Max = tempans,maxS=i,maxE=temp;
+            if(Max >=len-i) break;
+	    i+=num[i]-1;
+        }
+        str[maxE]=0;
+        printf("%s\n\n",str+maxS);
+    }
+    return 0;
+}

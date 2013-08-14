@@ -1,0 +1,84 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<map>
+#include<string>
+
+/*int NtoTen(int number, int N)
+{
+	int sum=0;
+	int k=1;
+	while(number != 0)
+	{
+		sum+=(number%10)*k;
+		k *= N;
+		number /= 10;
+	}
+	return sum;
+	
+}*/
+/*从N进制转化为10进制，N<=10,字符版*/
+int NtoTen(char number[], int N)
+{
+	int sum=0;
+	int k=1;
+	for(int i=strlen(number)-1;i>=0;i--)
+	{
+       if(number[i] >= '0' && number[i] <= '9')
+		 sum+=(number[i]-48) * k;
+	   else if(number[i] >= 'A' && number[i] <= 'F')
+	     sum+=(number[i]-'A'+ 10) * k;
+		k *= N;
+	}
+	return sum;	
+}
+/*从十进制转为N进制，返回值为转换后的位数。*/
+int TenToN(int N, int radix, int ans[20])
+{
+     int j;
+
+     for(j=0;j<20;j++) ans[j]=0;
+     ans[0] = N % radix; 
+     j=1;
+     while((N /= radix)!=0)
+     {
+	ans[j] = N % radix;
+	j++;
+     }  
+     return j;
+}
+
+using namespace std;
+
+int main()
+{
+    int basef,baset,i;
+    int ans[20];
+    char Ans[20];
+    char num[20];
+    int j,k;
+    //printf("%d\n",NtoTen("1A",15));
+    //getchar();
+    //getchar();
+    while(scanf("%s%d%d",&num,&basef,&baset) != EOF)
+    {
+        j=TenToN(NtoTen(num,basef),baset,ans);
+        if(j>7)
+           printf("  ERROR\n");
+        else
+        {
+           
+           for(k=0,i=j-1;i>=0;k++,i--)
+           {
+             if(ans[i] >= 0 && ans[i] <=9)
+               Ans[k]=ans[i]+48;
+             else if(ans[i] >= 10)
+               Ans[k]='A'+ans[i]-10;
+           }
+           Ans[k]=0;
+           printf("%7s\n",Ans);
+        }
+           
+    }
+    return 0;
+}

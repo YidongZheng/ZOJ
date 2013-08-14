@@ -1,0 +1,54 @@
+#include<iostream>
+#include<cstdio>
+#include<cmath>
+using namespace std;
+
+int main()
+{
+    int N;
+    int Max,srow,erow,tempMax;
+    int Map[100][100];
+    int Sum[100][100];
+    int i,j;
+    while(scanf("%d",&N)!=EOF)
+    {
+        for(i=0;i<N;i++)
+          for(j=0;j<N;j++)
+            scanf("%d",&Map[i][j]);
+        
+        for(i=0;i<N;i++)
+          for(j=0;j<N;j++)
+            Sum[i][j]=0;
+        
+        for(i=0;i<N;i++)
+        {
+          Sum[i][0]=Map[i][0];
+          for(j=1;j<N;j++)
+              Sum[i][j]=Sum[i][j-1]+Map[i][j];
+        }
+        //for(i=0;i<N;i++)
+        //{
+        //  for(j=0;j<N;j++)
+            //printf("%d ",Sum[i][j]);
+          //printf("\n");
+        //}
+        Max=-99999;
+        for(srow=0;srow<N;srow++)
+        //srow=1;
+        //erow=1;
+          for(erow=srow;erow<N;erow++)
+          {
+            tempMax=0;
+            for(i=0;i<N;i++)
+            {
+                tempMax+=Sum[i][erow]-Sum[i][srow]+Map[i][srow];
+                //printf("temp:    %d\n",tempMax);
+                 //printf("temp:%d %d %d  %d  %d  %d\n",Sum[i][erow],Sum[i][srow],Map[i][srow],tempMax);
+                if(Max<tempMax) Max=tempMax;
+                if(tempMax<0) tempMax=0;
+            }
+          }
+        printf("%d\n",Max);
+    }
+    return 0;
+}

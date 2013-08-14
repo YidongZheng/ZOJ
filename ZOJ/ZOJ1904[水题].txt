@@ -1,0 +1,15 @@
+#include<iostream>
+#include<cstdio>
+#include<cmath>
+using namespace std;
+
+int main()
+{
+    int D,V;
+    while(scanf("%d%d",&D,&V)!=EOF)
+    {
+        if(D==0 && V==0) break;
+        printf("%.3lf\n",pow(D*D*D-6.0*V/3.1415926,1.0/3));
+    }
+    return 0;
+}

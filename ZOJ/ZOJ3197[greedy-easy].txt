@@ -1,0 +1,49 @@
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+
+using namespace std;
+
+struct Seg{
+    int s;
+    int e;
+friend bool operator<(Seg a, Seg b)
+{
+    if(a.s==b.s) return a.e<b.e;
+    else return a.s<b.s;
+}
+}segs[5000];
+
+int main()
+{
+    int T;
+    scanf("%d",&T);
+    while(T--)
+    {
+        int n;
+        scanf("%d",&n);
+        int s=1,e=n;
+        for(int i=0;i<n;++i)
+        {
+            scanf("%d%d",&segs[i].s,&segs[i].e);
+        }
+        sort(segs,segs+n);
+        int cnt=0;
+        int i=0;
+        while(s<=e)
+        {
+            int maxi=-1;
+            int mymax=-1;
+            for(;segs[i].s<=s;++i)
+            {
+                if(segs[i].e>mymax)
+                    mymax=segs[i].e,maxi=i;
+            }
+            s=mymax+1;
+            ++cnt;
+        }
+        printf("%d\n",cnt);
+    }
+    return 0;
+}

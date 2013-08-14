@@ -1,0 +1,33 @@
+#include<iostream>
+#include<cstdio>
+#include<cmath>
+using namespace std;
+
+int main()
+{
+    int N;
+    int x,y;
+    double Max,temp;
+    while(scanf("%d",&N)!=EOF)
+    {
+        if(N==0) break;
+        Max=99999999;
+        while(N--)
+        {
+            scanf("%d%d",&x,&y);
+            if(y>=0)
+            {
+                //if(16200%x==0)
+                  temp=y+4.5*3600/x;
+                //else
+                  //temp=y+16200/x+1;
+                if(Max>temp) Max=temp;
+            }
+        }
+        if(Max>(int)Max)
+           printf("%d\n",(int)Max+1);
+        else
+           printf("%d\n",(int)Max);
+    }
+    return 0;
+}

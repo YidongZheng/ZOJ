@@ -1,0 +1,15 @@
+#include<stdio.h>
+int main()
+{
+    int A,B,N,i;
+    scanf("%d",&N);
+    for(i=0;i<N;i++)
+    {
+        scanf("%d%d",&A,&B);
+        if(A>=B)
+            printf("MMM BRAINS\n");
+        else
+            printf("NO BRAINS\n");
+    }
+    return 0;
+}

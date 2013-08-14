@@ -1,0 +1,52 @@
+#include<iostream>
+#include<cstdio>
+#include<cmath>
+#include<set>
+using namespace std;
+
+int main()
+{
+    //freopen("in.txt","r",stdin);
+    //freopen("out.txt","w",stdout);
+    //set<int> mySet;
+    int ans[5843];
+    double temp;
+    int cnt=1;
+    set<double> mySet;
+    for(int i=0;i<=31;i++)
+        for(int j=0;j<=20;j++)
+            for(int k=0;k<=14;k++)
+                for(int m=0;m<=12;m++)
+                {
+                    temp=pow(2.0,1.0*i)*pow(3.0,1.0*j)*pow(5.0,1.0*k)*pow(7.0,1.0*m);
+                    mySet.insert(temp);
+                }
+    set<double>::iterator myiter=mySet.begin();
+    for(int i=1;i<=5842;i++,myiter++)
+        ans[cnt++]=(int)*myiter;
+    
+    /*
+    for(int i=1;i<=2000000000;i++)
+    {
+        temp=i;
+        while(temp%2==0) temp/=2;
+        while(temp%3==0) temp/=3;
+        while(temp%5==0) temp/=5;
+        while(temp%7==0) temp/=7;
+        if(temp==1)
+        {
+            ans[cnt++]=i;
+        }
+    }*/
+    int N;
+    while(scanf("%d",&N)!=EOF)
+    {
+        if(N==0) break;
+        if(N%100>=10 && N%100<=20) printf("The %dth humble number is %d.\n",N,ans[N]);
+        else if(N%10==1) printf("The %dst humble number is %d.\n",N,ans[N]);
+        else if(N%10==2) printf("The %dnd humble number is %d.\n",N,ans[N]);
+        else if(N%10==3) printf("The %drd humble number is %d.\n",N,ans[N]);
+        else printf("The %dth humble number is %d.\n",N,ans[N]);
+    }
+    return 0;
+}

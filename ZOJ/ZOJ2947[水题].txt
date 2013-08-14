@@ -1,0 +1,44 @@
+#include<iostream>
+#include<cstdio>
+
+using namespace std;
+
+int main()
+{
+    int T,i,j,N1,N2;
+    scanf("%d",&T);
+    char Array[20];
+    int Str1[10];
+    int Str2[10];
+    int cnt1,cnt2;
+    bool NoEqual;
+    for(j=0;j<T;j++)
+    {
+        cnt1=cnt2=0;
+        NoEqual=false;
+        scanf("%d",&N1);
+        for(i=0;i<N1;i++)
+        {
+          scanf("%s",Array);
+          Str1[cnt1++]=Array[0];
+        }
+        scanf("%d",&N2);
+        for(i=0;i<N2;i++)
+        {
+          scanf("%s",Array);
+          Str2[cnt2++]=Array[0];
+        }
+        
+        if(N1 != N2) {printf("DIFFERENT\n");continue;}
+        for(i=0;i<N1;i++)
+        {
+          if(Str1[i] != Str2[i])
+              {NoEqual=true;break;}
+        }
+        if(NoEqual)
+          printf("DIFFERENT\n");
+        else
+          printf("SAME\n");
+    }
+    return 0;
+}

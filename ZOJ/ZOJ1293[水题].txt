@@ -1,0 +1,21 @@
+#include<stdio.h>
+
+int main()
+{
+    int S;
+    int ans;
+    int cnt=1;
+    while(scanf("%d",&S)!=EOF)
+    {
+        if(S==0) break;
+        S=S/2+S%2;
+        S=S+S/2+S%2;
+        
+        ans=S/(30000*62);
+        if(S%(30000*62) != 0)
+            ans++;
+        printf("File #%d\n",cnt++);
+        printf("John needs %d floppies.\n\n",ans);
+    }
+    return 0;
+}

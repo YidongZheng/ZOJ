@@ -1,0 +1,23 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+
+int main()
+{
+    
+    int num;
+    printf("# Cards  Overhang\n");
+    while(scanf("%d",&num) != EOF)
+    {
+         double sum = 0;
+         int i;
+         for(i=1;i<=num;i++)
+         {
+             sum += 0.5 / i;
+         }
+         //if(num <= 10)
+              //  printf("    ");
+         printf("%5d     %.3lf\n",num,sum);
+    }
+    return 0;
+}

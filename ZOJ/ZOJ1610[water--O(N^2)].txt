@@ -1,0 +1,35 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+using namespace std;
+
+int main()
+{
+    int N,i,j;
+    int Seg[8000];
+    int Color[8000];
+    int x,y,z;
+    while(scanf("%d",&N) != EOF)
+   {
+        memset(Color,0,32000);
+        memset(Seg,-1,32000);
+        for(i=0;i<N;i++)
+        {
+           scanf("%d%d%d",&x,&y,&z);
+           for(j=x;j<y;j++)
+               Seg[j]=z;
+        }
+        for(i=0;i<8000;i++)
+        {
+            if(Seg[i] != -1 && (i==0 || Seg[i] != Seg[i-1]))
+               Color[Seg[i]]++;
+        }
+        for(i=0;i<8000;i++)
+        {
+            if(Color[i] != 0)
+                printf("%d %d\n",i,Color[i]);
+        }
+        printf("\n");
+    }
+    return 0;
+}

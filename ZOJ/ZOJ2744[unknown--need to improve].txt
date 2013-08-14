@@ -1,0 +1,55 @@
+//ZOJ Problem Set - 2744
+//Palindromes
+//not a good algorithm,need improve
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+
+using namespace std;
+
+char str[5001];
+bool isP(int start,int end)
+{
+    for(int i=start;i<=(end+start)/2;i++)
+    {
+        if(str[i]!=str[end+start-i])
+            return false;
+    }
+    return true;   
+}
+int main()
+{
+    
+    int len;
+    char *isFind[5000];
+    for(int i=0;i<5000;i++)
+        isFind[i] = new char[5000];
+    while(scanf("%s",str)!=EOF)
+    {
+         for(int i=0;i<5000;i++)
+            for(int j=0;j<5000;j++)
+            {
+                isFind[i][j]=0;
+            }
+        len = strlen(str);
+        for(int i=0;i<len;i++)
+            for(int j=i;j<len;j++)
+            {
+                if(isFind[i][j]==0)
+                {
+                    if(isP(i,j))
+                    {
+                        for(int k=0;(j-k)-(i+k)>=0;k++)
+                            isFind[i+k][j-k]=true;
+                    }
+                }
+            }
+        int cnt=0;
+        for(int i=0;i<len;i++)
+            for(int j=i;j<len;j++){
+                if(isFind[i][j]!=0) {cnt++;}
+        }
+        printf("%d\n",cnt);
+    }
+    return 0;
+}

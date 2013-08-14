@@ -1,0 +1,98 @@
+/*ZOJ1002*/
+#include<iostream>
+#include<cstdio>
+using namespace std;
+char ch[4][5];
+int MaxCount;
+bool IsMoveable(int row, int col, int n);
+void BackTrace(int pos, int count, int n);
+int main()
+{
+	int n;
+	ch[3][4] = 0;
+	ch[2][4] = 0;
+	ch[1][4] = 0;
+	ch[0][4] = 0;
+	while(scanf("%d",&n) != EOF)
+	{
+		MaxCount = 0;
+		if(n <= 0 || n > 4)
+			break;
+		if(n <=4 && n >= 1)
+		{
+			scanf("%s",ch[0]);
+			if(n >= 2 )
+			scanf("%s",ch[1]);
+			if(n >= 3)
+				scanf("%s",ch[2]);
+			if(n == 4)	
+				scanf("%s",ch[3]);
+			BackTrace(0,0,n);
+			printf("%d\n",MaxCount);
+			
+		}
+	}
+  return 0;
+}
+
+bool IsMoveable(int row, int col, int n)
+{
+	int a,b;
+	if(ch[row][col] == 'X')
+		return false;
+	for(b=col-1;b>=0;b--)
+	{
+		if(ch[row][b] == 'X')
+			break;
+		else if(ch[row][b] == '0')
+			return false;
+	}
+	
+	for(b=col+1;b<n;b++)
+	{
+		if(ch[row][b] == 'X')
+			break;
+		else if(ch[row][b] == '0')
+			return false;
+
+	}
+	for(a=row-1;a>=0;a--)
+	{
+		if(ch[a][col] == 'X')
+			break;
+		else if(ch[a][col] == '0')
+			return false;
+	}
+	
+	/*for(a=row+1;a<n;a++)
+	{
+		if(ch[a][col] == 'X')
+			break;
+		else if(ch[a][col] == '0')
+			return false;
+
+	}
+	*/
+	return true;
+}
+
+void BackTrace(int pos,int count,int n)
+{
+	int row,col;
+	if(MaxCount <= count)
+		MaxCount = count;
+	if(pos >= n*n)
+	{
+		return;
+	}
+
+	row = pos / n;
+	col = pos % n;
+	if(IsMoveable(row,col,n))
+	{
+		ch[row][col] = '0';
+		BackTrace(pos+1,count+1,n);
+		ch[row][col] = '.';
+	}
+	BackTrace(pos+1,count,n);	
+}

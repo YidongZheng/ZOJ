@@ -1,0 +1,95 @@
+#include<iostream>
+#include<cstdio>
+#include<queue>
+using namespace std;
+int BFS(int cstart,int nstart,int cend,int nend);
+class Point
+{
+public:
+    int x;
+    int y;
+    int step;
+    bool Visited;
+}MyPoint[8][8];
+int main()
+{
+    char start[4],end[4];
+    int cstart,nstart,cend,nend;
+    int ans;
+    int i,j;
+    for(i=0;i<8;i++)
+      for(j=0;j<8;j++)
+        {MyPoint[i][j].x=i,MyPoint[i][j].y=j;}
+    while(scanf("%s%s",start,end) != EOF)
+    {
+        for(i=0;i<8;i++)
+          for(j=0;j<8;j++)
+            MyPoint[i][j].Visited=false,MyPoint[i][j].step=0;
+        //BFS(cstart,nstart,cend,nend);
+        cstart=start[0]-'a';
+        nstart=start[1]-'1';
+        cend=end[0]-'a';
+        nend=end[1]-'1';
+        //printf("%c %c %c %c\n",start[0],start[1],end[0],end[1]);
+        //printf("%d %d %d %d\n",cstart,nstart,cend,nend);
+        int ans=BFS(cstart,nstart,cend,nend);
+        printf("To get from %s to %s takes %d knight moves.\n",start,end,ans);
+    }
+    return 0;
+}
+
+int BFS(int cstart,int nstart,int cend,int nend)
+{
+    queue<Point> MyQueue;
+    int x, y;
+    MyQueue.push(MyPoint[cstart][nstart]);
+    while(!MyQueue.empty())
+    {
+      x=MyQueue.front().x;
+      y=MyQueue.front().y;
+      MyQueue.pop();
+      MyPoint[x][y].Visited=true;
+      if(x == cend && y == nend)
+         return MyPoint[x][y].step;
+      if(x-2>=0&&y-1>=0 && !MyPoint[x-2][y-1].Visited)
+      {
+          MyPoint[x-2][y-1].step=MyPoint[x][y].step+1;
+          MyQueue.push(MyPoint[x-2][y-1]);
+      }
+      if(x-2>=0&&y+1<8 && !MyPoint[x-2][y+1].Visited)
+      {
+          MyPoint[x-2][y+1].step=MyPoint[x][y].step+1;
+          MyQueue.push(MyPoint[x-2][y+1]);
+      }
+      if(x-1>=0&&y+2<8 && !MyPoint[x-1][y+2].Visited)
+      {
+          MyPoint[x-1][y+2].step=MyPoint[x][y].step+1;
+          MyQueue.push(MyPoint[x-1][y+2]);
+      }
+      if(x-1>=0&&y-2>=0 && !MyPoint[x-1][y-2].Visited)
+      {
+          MyPoint[x-1][y-2].step=MyPoint[x][y].step+1;
+          MyQueue.push(MyPoint[x-1][y-2]);
+      }
+      if(x+2<8&&y+1<8 && !MyPoint[x+2][y+1].Visited)
+      {
+          MyPoint[x+2][y+1].step=MyPoint[x][y].step+1;
+          MyQueue.push(MyPoint[x+2][y+1]);
+      }
+      if(x+2<8&&y-1>=0 && !MyPoint[x+2][y-1].Visited)
+      {
+          MyPoint[x+2][y-1].step=MyPoint[x][y].step+1;
+          MyQueue.push(MyPoint[x+2][y-1]);
+      }
+      if(x+1<8&&y-2>=0 && !MyPoint[x+1][y-2].Visited)
+      {
+          MyPoint[x+1][y-2].step=MyPoint[x][y].step+1;
+          MyQueue.push(MyPoint[x+1][y-2]);
+      }
+      if(x+1<8&&y+2<8 && !MyPoint[x+1][y+2].Visited)
+      {
+          MyPoint[x+1][y+2].step=MyPoint[x][y].step+1;
+          MyQueue.push(MyPoint[x+1][y+2]);
+      }
+    }
+}

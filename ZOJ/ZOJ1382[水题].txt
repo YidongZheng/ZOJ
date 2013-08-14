@@ -1,0 +1,24 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+using namespace std;
+int main()
+{
+    
+    int num;
+    int T;
+    scanf("%d",&T); 
+    for(int c=0;c<T;c++)
+    {
+       scanf("%d",&num);
+       int i=0;  
+       while(num % 2 == 0)
+        {
+         i++;
+         num /= 2;
+        }
+       printf("%d %d\n",num,i);
+            
+    }
+    return 0;
+}

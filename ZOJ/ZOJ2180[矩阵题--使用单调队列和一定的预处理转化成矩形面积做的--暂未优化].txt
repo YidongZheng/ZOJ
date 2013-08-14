@@ -1,0 +1,85 @@
+#include<iostream>
+#include<cstdio>
+
+using namespace std;
+
+int Rect[1000][1003];
+char Map[1000][1000];
+int MQ[1003],Left[1003],Right[1003];
+int main()
+{
+    int K,i,j;
+    int m,n;
+    int cnt;
+    char Str[5];
+    int tail;
+    int Max;
+    int temp;
+    scanf("%d",&K);
+    while(K--)
+    {
+        scanf("%d%d",&m,&n);
+        for(i=0;i<m;++i)
+          for(j=0;j<n;++j)
+          {
+              scanf("%s",Str);
+              Map[i][j]=Str[0];
+          }
+        for(j=0;j<n;++j)
+        {
+          cnt=0;
+          for(i=0;i<m;++i)
+          {
+              if(Map[i][j]=='F')
+                 Rect[i][j+1]=++cnt;
+              else
+                 Rect[i][j+1]=(cnt=0);
+          }
+        }
+        for(i=0;i<m;++i)
+        {
+          Rect[i][0]=-1;
+          Rect[i][n+1]=-1;
+        }
+        //for(i=0;i<m;++i)
+        //{
+        //  for(j=0;j<n;++j)
+        //  {
+              //scanf("%s",Str);
+              //Map[i][j]=Str[0];
+        //      printf("%d ",Rect[i][j]);
+        //  }
+        //  printf("\n");
+        //}
+        Max=0;
+        for(i=0;i<m;++i)
+        {
+        //单调队列处理：右边第一个比它小的数 
+            tail=0;
+            MQ[0]=0;
+            for(j=1;j<=n+1;++j)
+            {
+                while(tail>=0 && Rect[i][MQ[tail]]>Rect[i][j])
+                       Right[MQ[tail--]]=j;
+                MQ[++tail]=j;
+            }
+        //单调队列处理：左边第一个比它小的数 
+            tail=0;
+            MQ[0]=0;
+            for(j=n;j>=0;--j)
+            {
+                while(tail>=0 && Rect[i][MQ[tail]]>Rect[i][j])
+                       Left[MQ[tail--]]=j;
+                MQ[++tail]=j;
+            }
+            
+            for(j=1;j<=n;++j)
+            {
+                temp=Rect[i][j]*(Right[j]-Left[j]-1);
+                if(Max<temp) Max=temp;
+            }
+        }
+        printf("%d\n",3*Max);
+    }
+    return 0;
+}

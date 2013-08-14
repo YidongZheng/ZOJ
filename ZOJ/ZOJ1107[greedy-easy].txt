@@ -1,0 +1,97 @@
+#include <iostream>
+#include <cstdio>
+#include <queue>
+#include <cstring>
+#include <algorithm>
+
+using namespace std;
+
+int DP[100][100];
+int cheese[100][100];
+bool avail[100][100];
+bool visited[100][100];
+
+class Point
+{
+public:
+    int x;
+    int y;
+    bool operator<(const Point& p)const
+    {
+	return cheese[x][y]<cheese[p.x][p.y];
+    }
+};
+
+void BFS(int n, int k);
+    
+int main()
+{
+    //freopen("in.txt","r",stdin);
+    //freopen("out.txt","w",stdout);
+    int n,k;
+    int x,y;
+    Point p[10000];
+    int cnt;
+    while(scanf("%d%d",&n,&k)!=EOF)
+    {
+	if(n==-1&&k==-1)break;
+	cnt=0;
+	memset(DP,0,sizeof(DP));
+	memset(visited,0,sizeof(visited));
+	memset(avail,0,sizeof(avail));
+	for(int i=0;i<n;++i)
+	    for(int j=0;j<n;++j)
+	    {
+		scanf("%d",&cheese[i][j]);
+		p[cnt].x=i;
+		p[cnt].y=j;
+		//printf("%d %d\n",p[cnt].x,p[cnt].y);
+		++cnt;
+	    }
+	//printf("cnt:  %d\n",cnt);
+	sort(p,p+cnt);
+	DP[0][0]=cheese[0][0];
+	avail[0][0]=true;
+	
+	for(int z=0;z<cnt;++z)
+	{
+            
+	    int x = p[z].x;
+	    int y = p[z].y;
+	    if(avail[x][y]&&!visited[x][y])
+	    {
+		//printf("mark: %d %d\n",p[z].x,p[z].y);
+		visited[x][y]=true;
+		for(int i=1;i<=k;++i)
+		{
+		    if(x+i<n&&!visited[x+i][y]&&cheese[x+i][y]>cheese[x][y]){
+			    if(DP[x+i][y]<DP[x][y]+cheese[x+i][y])
+				DP[x+i][y]=DP[x][y]+cheese[x+i][y];
+			    avail[x+i][y]=true;	
+			    }
+		    if(x-i>=0&&!visited[x-i][y]&&cheese[x-i][y]>cheese[x][y]){
+			    if(DP[x-i][y]<DP[x][y]+cheese[x-i][y])
+				DP[x-i][y]=DP[x][y]+cheese[x-i][y];
+			    avail[x-i][y]=true;
+			}
+		    if(y+i<n&&!visited[x][y+i]&&cheese[x][y+i]>cheese[x][y]){
+			    if(DP[x][y+i]<DP[x][y]+cheese[x][y+i])
+				DP[x][y+i]=DP[x][y]+cheese[x][y+i];
+			    avail[x][y+i]=true;
+			}
+		     if(y-i>=0&&!visited[x][y-i]&&cheese[x][y-i]>cheese[x][y]){
+			    if(DP[x][y-i]<DP[x][y]+cheese[x][y-i])
+				DP[x][y-i]=DP[x][y]+cheese[x][y-i];
+			    avail[x][y-i]=true;
+			}
+		}
+	    }
+	}
+	int Max=0;
+	for(int i=0;i<n;++i)
+	    for(int j=0;j<n;++j)
+		if(DP[i][j]>Max) Max=DP[i][j];
+	printf("%d\n",Max);
+    }
+    return 0;
+}

@@ -1,0 +1,45 @@
+#include<iostream>
+#include<cstdio>
+#include<set>
+#include<map>
+using namespace std;
+
+int main()
+{
+    int startp,endp;
+    int cnt=1;
+    int edgenum;
+    //freopen("in.txt","r",stdin);
+    //freopen("out.txt","w",stdout);
+    while(scanf("%d%d",&startp,&endp)!=EOF)
+    {
+        if(startp==-1&&endp==-1) break;
+        if(startp==0&&endp==0)
+        { 
+            edgenum=0;
+            printf("Case %d is a tree.\n",cnt++);
+        }
+        else
+        {
+            edgenum=1;
+            set<int> MySet;
+            map<int,int> MyMap;
+            MySet.insert(startp);
+            MySet.insert(endp);
+            MyMap.insert(pair<int,int>(endp,startp));
+            while(scanf("%d%d",&startp,&endp)!=EOF)
+            {
+                if(startp==0&&endp==0) break;
+                MySet.insert(startp);
+                MySet.insert(endp);
+                MyMap.insert(pair<int,int>(endp,startp));
+                edgenum++;
+            }
+        if((edgenum==MySet.size()-1 && MySet.size()-1==MyMap.size()) || edgenum==0)
+            printf("Case %d is a tree.\n",cnt++);
+        else
+            printf("Case %d is not a tree.\n",cnt++);
+        }
+    }
+    return 0;
+}

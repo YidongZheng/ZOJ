@@ -1,0 +1,29 @@
+#include<iostream>
+#include<cstdio>
+#include<algorithm>
+//Ë®Ìâ 
+//ZOJ Problem Set - 3499  Median      Time Limit: 2 Seconds      Memory Limit: 65536 KB
+using namespace std;
+
+int main()
+{
+    int N,T,i;
+    double Array[500];
+    scanf("%d",&T);
+    
+    while(T--)
+    {
+        scanf("%d",&N);
+        for(i=0;i<N;i++)
+        {
+            scanf("%lf",&Array[i]);
+        }
+        sort(Array,Array+N);
+        if(N%2==0)
+          printf("%.3lf\n",(Array[N/2-1]+Array[N/2])/2);
+        else
+          printf("%.3lf\n",Array[N/2]);
+    }
+    
+    return 0;
+}

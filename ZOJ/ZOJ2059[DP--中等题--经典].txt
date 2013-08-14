@@ -1,0 +1,68 @@
+#include<iostream>
+#include<cstdio>
+
+using namespace std;
+
+int MyMax(int a, int b, int c)
+{
+    return (a>(b>c?b:c)?a:(b>c?b:c));
+}
+int main()
+{
+    int DP[101][2001];
+    int Array[101];
+    int N;
+    int t1,t2,t3;
+    int sum;
+    int i,j;
+    while(scanf("%d",&N) != EOF)
+    {
+        if(N<0) break;
+        sum=0;
+        for(i=1;i<=N;i++)
+        {
+           scanf("%d",&Array[i]);
+           sum+=Array[i];
+        }
+        for(j=0;j<=sum;j++)
+           DP[0][j]=-9999;
+        DP[0][0]=0;
+        
+        //printf("Ans:   %d\n",sum);
+        for(i=1;i<=N;i++)
+          for(j=0;j<=sum;j++)
+          {
+              //if(DP[0][111]==11)
+              //printf("Ans:   %d %d %d\n",i,j,Array[i]);
+              t1=DP[i-1][j];
+              if(j-Array[i]>=0)
+              {
+                 if(DP[i-1][j-Array[i]]!=(-99999999))
+                     t2=DP[i-1][j-Array[i]]+Array[i];
+                 else 
+                     t2=-99999999;
+              }
+              else
+              {
+                 if(DP[i-1][Array[i]-j]!=(-99999999))
+                     t2=DP[i-1][Array[i]-j]+j;
+                 else
+                     t2=-99999999;
+              }
+              if(j+Array[i]<=sum)
+                  t3=DP[i-1][j+Array[i]];
+              else
+                  t3=-99999999;
+              //if(i!=0)
+              DP[i][j]=MyMax(t1,t2,t3);
+          }
+          //for(i=1;i<=N;i++)
+          if(DP[N][0]>0)
+             printf("%d\n",DP[N][0]);
+          else
+             printf("Sorry\n");
+          //printf("Ans:   %d\n",DP[0][111]);
+          //printf("Ans:   %d\n",DP[1][111]);
+    }
+    return 0;
+}

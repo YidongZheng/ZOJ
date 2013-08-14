@@ -1,0 +1,21 @@
+/*使用对数转换*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+int main(void)
+{
+	long long n;
+	double x,y,z;
+	while(scanf("%lld",&n)!=EOF)
+	{
+		x = n * log10(n);
+		y = x - (long long)x;
+		z = pow(10,y);
+		while( (int)z == 0 )
+		{
+			z *= 10;
+		}
+		printf("%d\n",(int)z);
+	}
+return 0;
+}

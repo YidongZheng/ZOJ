@@ -1,0 +1,22 @@
+#include<iostream>
+#include<cstdio>
+
+using namespace std;
+
+int Func(int N)
+{
+    if(N==1) return 1;
+    else return 1+Func(N/2);
+}
+int main()
+{
+    int N;
+    int T;
+    scanf("%d",&T);
+    while(T--)
+    {
+        scanf("%d",&N);
+        printf("%d\n",Func(N));
+    }
+    return 0;
+}

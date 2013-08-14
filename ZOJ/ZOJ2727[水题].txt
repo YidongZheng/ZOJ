@@ -1,0 +1,77 @@
+#include<iostream>
+#include<cstdio>
+#include<algorithm>
+#include<cstring>
+using namespace std;
+class Book
+{
+public:
+       char title[100];
+       int  year;
+       int  price;
+}MyBook[100];
+
+bool Compare1(Book A, Book B)
+{
+     if(strcmp(A.title,B.title)<0)
+         return true;
+     else if(strcmp(A.title,B.title)>0)
+         return false;
+     if(A.year<B.year) return true;
+     else if(A.year>B.year) return false;
+     if(A.price<B.price) return true;
+     else return false;
+}
+
+bool Compare2(Book A, Book B)
+{
+     if(A.year<B.year) return true;
+     else if(A.year>B.year) return false;
+     if(strcmp(A.title,B.title)<0)
+         return true;
+     else if(strcmp(A.title,B.title)>0)
+         return false;
+     if(A.price<B.price) return true;
+     else return false;
+}
+
+bool Compare3(Book A, Book B)
+{
+     if(A.price<B.price) return true;
+     else if(A.price > B.price) return false;
+     if(A.year<B.year) return true;
+     else if(A.year>B.year) return false;
+     if(strcmp(A.title,B.title)<0)
+         return true;
+     else return false;
+     
+}
+int main()
+{
+    int N,i;
+    char Type[10];
+    scanf("%d",&N);
+    while(true)
+    {
+        if(N == 0) break;
+        for(i=0;i<N;i++)
+        {
+            scanf("%s%d%d",MyBook[i].title,&MyBook[i].year,&MyBook[i].price);
+        }
+        scanf("%s",Type);
+        if(!strcmp(Type,"Name"))
+            sort(MyBook,MyBook+N,Compare1);
+        else if(!strcmp(Type,"Year"))
+            sort(MyBook,MyBook+N,Compare2);
+        else
+            sort(MyBook,MyBook+N,Compare3);
+        for(i=0;i<N;i++)
+        {
+            printf("%s %d %d\n",MyBook[i].title,MyBook[i].year,MyBook[i].price);
+        }
+        scanf("%d",&N);
+        if(N!=0)
+          printf("\n");  
+    }
+    return 0;
+}

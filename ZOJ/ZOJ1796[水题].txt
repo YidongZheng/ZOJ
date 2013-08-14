@@ -1,0 +1,15 @@
+#include<iostream>
+#include<cstdio>
+using namespace std;
+int main()
+{
+    int a1,a2,b1,b2,c1,c2,x,y;
+    while(scanf("%d%d%d%d%d%d",&a1,&a2,&b1,&b2,&c1,&c2) != EOF)
+    {
+        if(!a1&&!a2&&!b1&&!b2&&!c1&&!c2)  break;
+        x=(a1+2*a2+b2+c2-a1-b1-c1)/2;
+        y=a1+a2-x;
+        printf("Anna's won-loss record is %d-%d.\n",x,y);
+    }
+    return 0;
+}

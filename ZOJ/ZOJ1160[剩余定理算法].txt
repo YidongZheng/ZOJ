@@ -1,0 +1,64 @@
+int ReminderAlgorithm(int a[], int m[], int n) /*传入对应的余数数组和模数组和数组大小*/
+{
+      int mAll = 1;
+      int ans = 0;
+      int* M = new int[n];
+      int* y = new int[n];
+      int* q = new int[n];
+      for(int i=0;i<n;i++)
+         mAll *= m[i];
+      for(int i=0;i<n;i++)
+      {
+        M[i] = mAll / m[i];
+        y[i] = Inverse(M[i],m[i],q);
+        ans += a[i] * M[i] * y[i];
+      }
+      while(ans <0)
+         ans += mAll;
+      while(ans > mAll)
+         ans -= mAll;
+      delete []M;
+      delete []y;
+      delete []q;
+      return ans;                           
+}
+int Inverse(int a, int m, int q[]) /*q[]作为参数传入，大小取a和m中较小的那个（实际上>=log10(min(a,m))+1即可）*/
+{
+    if(a==1 || m==1)
+      return 1;
+    int temp,tempa = a,tempm = m;
+    if(tempa < tempm)
+    {
+         temp = tempa;
+         tempa = tempm;
+         tempm = temp;
+    }
+    int r, n = 0;
+    while(tempm > 0)
+    {
+       q[n++] = tempa / tempm;
+       r = tempa % tempm;
+       tempa = tempm;
+       tempm = r;
+    }
+    n--;
+    int s = 1;
+    int t = -q[n-1];
+    for(int i=n-1;i>0;i--)
+    {
+        temp = s;
+        s = t;
+        t = temp - q[i-1] * t; 
+    } 
+    if(a < m)
+     {
+        temp = s;
+        s = t;
+        t = temp;
+     }
+    while(s < 0)
+      s += m;
+    while(s > m)
+      s -= m;
+    return s;
+ }

@@ -1,0 +1,28 @@
+#include<iostream>
+#include<cstdio>
+#include<set>
+#include<cmath>
+using namespace std;
+
+int main()
+{
+    //double ans[10000];
+    set<double> MySet;
+    int i,j;
+    set<double>::iterator MyIter;
+    double Lim=pow(2.0,31);
+    for(i=2;i<46341;i++)
+      for(j=2;j<31;j++)
+      {
+          if(pow(1.0*i,j)>=Lim) break;
+          MySet.insert(pow(1.0*i,j));
+      }
+    MyIter=MySet.begin();
+    for(;MyIter!=MySet.end();MyIter++)
+       printf("%.0lf\n",*MyIter);
+    //printf("%d\n",MySet.size());
+    getchar();
+    return 0;
+}
+
+//46341

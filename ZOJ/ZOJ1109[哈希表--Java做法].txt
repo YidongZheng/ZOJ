@@ -1,0 +1,44 @@
+import java.util.*;
+public class Main
+{
+	public static void main(String[] args)
+	{
+		 Scanner read = new Scanner(System.in);
+		 String[] str = new String[100006];
+		 String[] big = new String[100006];
+		 int i=0;
+		 while(read.hasNextLine())
+		 		{
+		 			String temp = new String();
+		 			temp = read.nextLine();
+		 			if(!temp.equals(""))
+		 			{
+		 				str[i] = temp.substring(0,temp.indexOf(' '));
+		 				big[i] = temp.substring(temp.indexOf(' ')+1);
+					i++;
+					}
+					else
+						break;
+				}	 	
+			HashMap has = new HashMap(100005);
+			for(int j=0;j<i;j++)
+			{
+				has.put(big[j],str[j]);
+			}
+			while(read.hasNextLine())
+		 		{
+		 			String temp = new String();
+		 			temp = read.nextLine();
+		 			if(!temp.equals(""))
+		 			{
+		 				String ans = new String();
+		 				if((ans = (String)has.get(temp)) != null)
+		 						System.out.println(ans);
+		 				else
+		 						System.out.println("eh");
+					}
+					else
+						break;
+				}	 		
+	}
+}

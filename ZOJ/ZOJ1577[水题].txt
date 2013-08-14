@@ -1,0 +1,38 @@
+#include<iostream>
+#include<cstdio>
+#include<cmath>
+using namespace std;
+int Gcd(long int m,long int n);
+int main()
+{
+	int x;
+	int y;
+	while(scanf("%d%d",&x,&y)!=EOF)
+	{
+		double count = 0;
+		long int temp = (x * y); 
+		for(int i=1;i<= pow(temp,0.5);i++)
+			{	
+				if(temp % i == 0 && Gcd(i,temp / i) == x)
+				{
+					if(i != (temp/i))
+						count++;
+					else
+						count+=0.5;
+				}
+			}
+		printf("%.0lf\n",2 * count);
+	}
+	return 0;
+}
+
+int Gcd(long int m, long int n)
+{
+	int Max = 1;
+	for(int i=1;i<=(m>n?n:m);i++)
+	{
+		if(m % i + n % i == 0)
+			Max = i;
+	}
+	return Max;
+}

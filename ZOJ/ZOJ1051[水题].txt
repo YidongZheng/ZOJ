@@ -1,0 +1,69 @@
+//ZOJ Problem Set - 1051
+//A New Growth Industry
+#include<iostream>
+#include<cstdio>
+
+using namespace std;
+
+int main()
+{
+    int day;
+    int D[20];
+    int Map[25][25];
+    int Out[25][25];
+    int blocks;
+    char charOut[25][25];
+    //freopen("in.txt","r",stdin);
+    //freopen("out.txt","w",stdout);
+    scanf("%d",&blocks);
+    for(int m=0;m<blocks;m++)
+    {
+        scanf("%d",&day);
+        for(int i=0;i<16;i++)
+            scanf("%d",&D[i]);
+        for(int i=0;i<20;i++){
+            for(int j=0;j<20;j++){
+                scanf("%d",&Map[i][j]);
+                //printf("%d ",Map[i][j]);
+                }
+            //printf("\n");
+            }
+        
+        for(int k=0;k<day;k++)
+        {
+            for(int i=0;i<20;i++)
+                for(int j=0;j<20;j++)
+                {
+                    int sum=Map[i][j];
+                    if(i>0)
+                        sum+=Map[i-1][j];
+                    if(i+1<20)
+                        sum+=Map[i+1][j];
+                    if(j>0)
+                        sum+=Map[i][j-1];
+                    if(j+1<20)
+                        sum+=Map[i][j+1];
+                    Out[i][j]=Map[i][j]+D[sum];
+                    if(Out[i][j]<0) Out[i][j]=0;
+                    if(Out[i][j]>3) Out[i][j]=3;
+                }
+            for(int i=0;i<20;i++)
+                for(int j=0;j<20;j++)
+                    Map[i][j]=Out[i][j];
+        }
+        for(int i=0;i<20;i++)
+        {
+            for(int j=0;j<20;j++)
+            {
+                if(Out[i][j]==0) charOut[i][j]='.';
+                if(Out[i][j]==1) charOut[i][j]='!';
+                if(Out[i][j]==2) charOut[i][j]='X';
+                if(Out[i][j]==3) charOut[i][j]='#';
+            }
+            charOut[i][20]=0;
+            printf("%s\n",charOut[i]);
+        }
+        if(m!=blocks-1) printf("\n");
+    }
+    return 0;
+}

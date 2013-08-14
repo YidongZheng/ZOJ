@@ -1,0 +1,44 @@
+/*ZOJ1090*/
+#include<iostream>
+#include<cstdio>
+#include<cmath>
+using namespace std;
+
+int main()
+{
+	double x1,y1,x2,y2,x3,y3;
+	double midpointx1,midpointy1,midpointx2,midpointy2;
+	double slope1,slope2;
+	double centerx,centery;
+	double circumference;
+	while(scanf("%lf%lf%lf%lf%lf%lf",&x1,&y1,&x2,&y2,&x3,&y3) != EOF)
+	{	
+		midpointx1 = (x1 + x2) / 2.0;
+		midpointy1 = (y1 + y2) / 2.0;
+		midpointx2 = (x1 + x3) / 2.0;
+		midpointy2 = (y1 + y3) / 2.0;
+
+		if(y1 != y2 && y1 != y3) 
+		{
+			slope1 = -(x1 - x2) / (y1 - y2);
+			slope2 = -(x1 - x3) / (y1 - y3);
+			centerx = (midpointy2 - midpointy1 + slope1 * midpointx1 - slope2 * midpointx2) / (slope1 - slope2);
+			centery = slope1 * (centerx - midpointx1) + midpointy1;
+		}
+		else if(y1 == y2)
+		{
+				slope2 = -(x1 - x3) / (y1 - y3);
+				centerx = midpointx1;
+				centery = slope2 * (centerx - midpointx2) + midpointy2;
+
+		}
+		else if (y1 == y3)
+		{	slope1 = -(x1 - x2) / (y1 - y2);
+			centerx = midpointx2;
+			centery = slope1 * (centerx - midpointx1) + midpointy1;
+		}
+		circumference = 2 * pow((centerx - x1) * (centerx - x1) + (centery - y1) * (centery - y1),0.5) * 3.141592653589793;
+		printf("%.2lf\n",circumference);
+	}
+		return 0;
+}

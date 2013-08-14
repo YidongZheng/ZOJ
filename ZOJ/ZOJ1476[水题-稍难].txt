@@ -1,0 +1,27 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<cstdlib>
+
+using namespace std;
+int main()
+{   
+   int s,d;
+   while(scanf("%d%d",&s,&d) != EOF)
+   {
+       if(s==0 && d==0) break;
+       bool ans=false;
+       for(int i=1;i<=60;i++)
+       {
+            if(((s=((s+d*s) % 60))) == 0)
+               {
+                 printf("%d\n",i);
+                 ans=true;
+                 break;
+               }
+       }
+       if(!ans)
+         printf("Impossible\n");      
+   }
+   return 0;
+}

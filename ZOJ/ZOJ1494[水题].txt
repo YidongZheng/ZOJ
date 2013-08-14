@@ -1,0 +1,25 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<cstdlib>
+
+using namespace std;
+bool IsPrime(int N);
+int main()
+{   
+   int n,u,d;
+   while(scanf("%d%d%d",&n,&u,&d) != EOF)
+   {
+       if(n == 0) break;
+       int ans=0;
+       int time=0;
+       while(ans + u < n)
+       {
+            ans+=(u-d);
+            time+=2;
+       }
+       printf("%d\n",++time);
+       
+   }
+   return 0;
+}

@@ -1,0 +1,53 @@
+#include<cstdio>
+#include<iostream>
+#include<cstring>
+using namespace std;
+
+int main()
+{
+    int N;
+    char Str1[100],Str2[100];
+    int t1,s1,t2,s2,t3,s3,t4,s4;
+    int penalty,temppen,cnt,tempcnt;
+    //freopen("in.txt","r",stdin);
+    //freopen("out.txt","w",stdout);
+    while(scanf("%d",&N)!=EOF)
+    {
+        scanf("%s",Str1);
+        scanf("%d%d%d%d%d%d%d%d",&t1,&s1,&t2,&s2,&t3,&s3,&t4,&s4);
+        penalty=0;
+        cnt=0;
+        if(s1!=0)
+          penalty+=(t1-1)*20+s1,cnt++;
+        if(s2!=0)
+          penalty+=(t2-1)*20+s2,cnt++;
+        if(s3!=0)
+          penalty+=(t3-1)*20+s3,cnt++;
+        if(s4!=0)
+          penalty+=(t4-1)*20+s4,cnt++;
+        N--;
+        while(N--)
+        {
+            scanf("%s",Str2);
+            scanf("%d%d%d%d%d%d%d%d",&t1,&s1,&t2,&s2,&t3,&s3,&t4,&s4); 
+            temppen=0;
+            tempcnt=0;
+            if(s1!=0)
+              temppen+=(t1-1)*20+s1,tempcnt++;
+            if(s2!=0)
+              temppen+=(t2-1)*20+s2,tempcnt++;
+            if(s3!=0)
+              temppen+=(t3-1)*20+s3,tempcnt++;
+            if(s4!=0)
+              temppen+=(t4-1)*20+s4,tempcnt++;
+            if(tempcnt>cnt || (tempcnt==cnt && temppen<penalty)) 
+            {
+                cnt=tempcnt;
+                strcpy(Str1,Str2);
+                penalty=temppen;
+            }
+        }
+        printf("%s %d %d\n",Str1,cnt,penalty);
+    }
+    return 0;
+}

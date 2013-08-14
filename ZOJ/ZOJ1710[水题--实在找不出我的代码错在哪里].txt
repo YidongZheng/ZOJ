@@ -1,0 +1,95 @@
+#include<iostream>
+#include<cstdio>
+using namespace std;int main() 
+{
+
+  double h,u,d,f;
+  while(scanf("%lf %lf %lf %lf",&h,&u,&d,&f)!=EOF) {
+   if(h==0) break;
+   double inh,tmh,k;
+   inh = 0 , k = 0 ;
+   int ff = 0,cnt=0;
+   while(true) {
+    cnt++;
+
+    if(k>=100) ff=-1;
+    if(ff==0) {
+     
+     tmh = inh + u*((100.0-k)/100.0);
+     if(tmh>h) { break; }
+     k += f;
+     inh = tmh - d;
+     if(inh<0) 
+     { 
+         ff=-1; 
+         break; 
+     }
+    }
+    else if(ff==-1) {
+     int res = (int)(inh/d);
+     //cout<<inh<<endl;
+     cnt+=res; break;
+    }
+   }
+   if(ff==0) { printf("success on day %d\n",cnt); }
+   else { printf("failure on day %d\n",cnt); }
+}
+return 0;
+}
+
+
+
+
+/*我的WA的代码。。。。。。。。。。。。*/
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+#include<map>
+#include<string>
+using namespace std;
+
+
+int main()
+{
+    int H,U,D,F;
+    bool Arrive;
+    int day;
+    double cutoff;
+    double disday,distotal;
+    while(scanf("%d%d%d%d",&H,&U,&D,&F) != EOF)
+    {
+        if(H == 0) break;
+        day=1;
+        disday=U;
+        distotal=0;
+        cutoff=0.01 * F * U;
+        while(1)
+        {
+            if(disday > 0)
+              distotal = distotal + disday;
+            if(distotal > H)
+            {
+               Arrive = true;
+               break;
+            }
+            if(disday>=0)
+                disday = disday - cutoff;
+                
+            distotal = distotal - D;
+
+            if(distotal < 0)
+            {
+               Arrive = false;
+               break;
+            }
+            day++;
+        }
+        if(Arrive)
+          printf("success on day %d\n",day);
+        else
+          printf("failure on day %d\n",day);
+        
+    }
+    return 0;
+}
+

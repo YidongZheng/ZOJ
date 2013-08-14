@@ -1,0 +1,39 @@
+#include<iostream>
+#include<cstdio>
+int POW(int x, int y)
+{
+    int i,ans=1;
+    for(i=0;i<y;i++)
+       ans*=x;
+    return ans;
+}
+int TenToN(int N, int radix, int ans[20])
+{
+     memset(ans,0,sizeof(ans));
+     ans[0] = N % radix;
+	 int j = 1;
+	 while((N /= radix)!=0)
+	 {
+		ans[j] = N % radix;
+		j++;
+	 }  
+	 return j;
+}
+
+int main()
+{
+    int ans[20];
+    int i,cnt,N;
+    while(scanf("%d",&N) != EOF)
+    {
+        if(N == 0 ) break;
+        cnt=TenToN(N,2,ans);
+        for(i=0;i<cnt;i++)
+            if(ans[i] == 1)
+               break;
+         printf("%d\n",POW(2,i));
+    }
+   
+    getchar();
+    return 0;
+}

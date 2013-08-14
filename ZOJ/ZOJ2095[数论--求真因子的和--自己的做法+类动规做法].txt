@@ -1,0 +1,140 @@
+/*ZOJ2095 求解一个数的所有真因子的和，我采用了非常麻烦的做法，先用O(N^0.5)[由于是素数，所以其实小于这个复杂度]
+求出所有的素因数及对应数量，再通过素因数组合出所有真因数，再相加，使用了set和一个类回溯的递归。*/
+/*上述方法比较麻烦，其实有比较简单的方法，我们只要从2到n^0.5次方找因数即可，可以用除法得到
+对应的另一个因数，时间复杂度为O(N^0.5)，应该比我们这个算法稍慢点，但我也说不准GetAllFactor生成所需的时间，
+但可以知道最多的执行数量为2^7=128次。*/
+
+#include<iostream>
+#include<cstdio>
+#include<set>
+using namespace std;
+bool IsPrime(int N);
+int Power(int a, int i);
+int Prime[710],cnt;
+int cnt2=0;
+int ans;
+int K[1000];
+struct Factor
+{
+   int f;
+   int num;
+   
+}F[20];
+void GetAllFactor(struct Factor F[], int num, int K[], int count, int ans);
+int main()
+{
+    cnt=0;
+    for(int i=0;i<710;i++)
+    if(IsPrime(i))
+       Prime[cnt++]=i;
+    int N,M;
+    int num=0;
+    scanf("%d",&N);
+    for(int i=0;i<N;i++)
+    {
+        scanf("%d",&M);
+        num=0;
+        cnt2=0;
+        bool NotEqual = true;
+        for(int j=0;Prime[j]*Prime[j]<=M;)
+        {
+              if(M % Prime[j] == 0)
+              {
+                 if(NotEqual)
+                    {
+                      F[++num].f=Prime[j];
+                      F[num].num=1;
+                    }
+                 else
+                      F[num].num++;
+                      
+                 M/=Prime[j];
+                 NotEqual = false;
+              }      
+              else
+              {
+                    j++;
+                    NotEqual = true;
+              }
+        }
+        
+        if(M != 1)
+        {
+            if(M == F[num].f)
+               F[num].num++;
+            else
+               {
+                 F[++num].f=M;
+                 F[num].num=1;
+               }
+        }
+        GetAllFactor(F,num,K,1,1);
+        int sum=0;
+        set <int> fac;
+        set <int> ::iterator cp;
+        for(int j=0;j<cnt2-1;j++)
+           fac.insert(K[j]);
+        cp=fac.begin();
+        for(cp=fac.begin();cp!=fac.end();cp++)
+        {
+             sum=sum+(*cp);
+        }
+        printf("%d\n",sum);
+    }
+    return 0;
+} 
+void GetAllFactor(struct Factor F[], int num, int K[], int count, int ans)
+{
+     if(count>num) return;
+     for(int i=0;i<=F[count].num;i++)
+     {
+        K[cnt2++]=ans*Power(F[count].f,i);
+        GetAllFactor(F,num,K,count+1,K[cnt2-1]);
+     }    
+}
+bool IsPrime(int N)
+{
+     if(N == 0 || N == 1)
+        return false;
+     for(int i=2;i*i<=N;i++)
+         if(N % i == 0)
+           return false;
+     return true;
+}
+int Power(int a, int i)
+{
+    int ans=1;
+    for(int j=0;j<i;j++)
+    {
+        ans=ans*a;
+    }
+    return ans;
+}
+
+/*实在无法想像这样也可以AC[以下代码已经由我从O(n^2)到O(n)]，而且速度还很快，主要是因为测试的数据很多，所以全算出来和对应地算的差并不大
+这样的话以下的代码则可以达到最快的时间，因为它可以忽略测试数据量这个参数，而我们的算法针对每一个数据来
+算，实际上达到了O(N^0.5)再乘以数据量，由于数据量差不多达到了500000[可以以为它把所有的数据都测了~]，所以
+一个相对可行的算法变得低效了。这是对于大量数据处理时的一种方法：预处理。*/
+ 
+#include<stdio.h>
+#include<string.h>
+int a[500005];
+int main()
+{
+ int i,j,m,n;
+ memset(a,0,sizeof(a));
+ //算是动态规划了，把所有可能的解都求出来了。 
+ for(i=2;i<=707;i++)
+  for(j=i+1;j*i<=500000;j++)
+   a[j*i]+=(i+j);      //对于i和j所有可能产生的结果对应的索引的值加上i，表示它的约数。
+ for(i=2;i*i<=500000;i++)
+     a[i*i]+=i;
+ scanf("%d",&n);
+ while(n--)
+ {
+  scanf("%d",&m);
+  if(m==1) printf("0\n");
+  else printf("%d\n",a[m]+1);//a[m];
+ }
+ return 0;
+}

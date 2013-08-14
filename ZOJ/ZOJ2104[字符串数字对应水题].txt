@@ -1,0 +1,51 @@
+#include<cstdio>
+#include<iostream>
+#include<string>
+
+using namespace std;
+
+int main()
+{
+    int N;
+    string str[1000];
+    int count[1000];
+    string temp;
+    bool found=false;
+    while(scanf("%d",&N) != EOF)
+    {
+     
+         if(N == 0) break;
+         int j=0;
+         for(int i=0;i<N;i++)
+         {   
+             found=false;
+             cin>>temp;
+             for(int k=0;k<j;k++)
+             {
+               if(str[k] == temp)
+                 {
+                      (count[k])++;
+                       found=true;
+                       break;
+                 }
+             }
+             if(!found)
+             {
+                 str[j]=temp;
+                 count[j++]=1;
+             }
+         }
+         int Max=count[0];
+         int maxor=0;
+         for(int c=0;c<j;c++)
+         {
+                 if(count[c]>Max)
+                   {
+                     Max = count[c];
+                     maxor = c;
+                   }
+         }
+         cout<<(str[maxor])<<endl;
+    }
+    return 0;
+}

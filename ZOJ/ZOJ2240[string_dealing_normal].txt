@@ -1,0 +1,96 @@
+#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    char str[10000];
+    char ans[20000];
+    while(gets(str))
+    {
+        int curpos=0;
+        int cnt=1;
+        int curansp=0;
+        int len=strlen(str);
+        int tmpc;//=str[0];
+        bool haschar=false;
+        bool inone=false;
+        for(int i=0;i<len;++i)
+        {
+            if(!haschar)
+            {
+                tmpc=str[i];
+                haschar=true;
+                if(i==len-1)
+                {
+                    printf("1");
+                    if(tmpc=='1')
+                        printf("11");
+                    else
+                        printf("%c",tmpc);
+                    printf("1");
+                }
+                continue;
+            }
+            else if(inone)
+            {
+                if(str[i]==tmpc)
+                {
+                    printf("1");
+                    inone=false;
+                    --i;
+                }
+                else
+                {
+                    if(tmpc=='1')
+                        printf("11");
+                    else
+                        printf("%c",tmpc);
+                    if(i==len-1)
+                    {
+                        if(str[i]=='1')
+                            printf("11");
+                        else
+                            printf("%c",str[i]);
+                        printf("1");
+                    }
+                    tmpc=str[i];
+                }
+            }
+            else
+            {
+                while(i<len&&str[i]==tmpc&&cnt<9)
+                {
+                    ++cnt;
+                    ++i;
+                }
+                if(cnt==1)
+                {
+                    printf("1");
+                    if(tmpc=='1')
+                        printf("11");
+                    else
+                        printf("%c",tmpc);
+                    inone=true;
+                    tmpc=str[i];
+                    if(i==len-1)
+                    {
+                        if(tmpc=='1')
+                            printf("11");
+                        else
+                            printf("%c",tmpc);
+                            printf("1");
+                    }
+                }
+                else
+                {
+                    printf("%d%c",cnt,tmpc);
+                    --i;
+                    haschar=false;
+                    cnt=1;
+                }
+            }
+        }
+        printf("\n");
+    }
+    return 0;
+}

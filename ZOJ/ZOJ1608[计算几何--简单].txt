@@ -1,0 +1,21 @@
+#include <stdio.h>
+#include <math.h>
+
+int main()
+{
+    double a,b,r1,r2;
+    while(~scanf("%lf%lf%lf%lf",&a,&b,&r1,&r2))
+    {
+	double A=1;
+	double B=-2*(a+b);
+	double C=a*a+b*b;
+	double Max = (-B-sqrt(B*B-4*A*C))/(2*A);
+	if(r1+r2-Max<0.01)
+	{
+	    printf("Yes\n");
+	}
+	else
+	    printf("No\n");
+    }
+    return 0;
+}

@@ -1,0 +1,56 @@
+#include <stdio.h>
+#include <string.h>
+
+int main(){
+    int n;
+    int p[500];
+    bool slash[500];
+    int mark[500];
+    scanf("%d",&n);
+    while(n--){
+        memset(slash,0,sizeof(slash));
+        int m,k;
+        scanf("%d%d",&m,&k);
+        int low=0,up=0;
+        for(int i=0;i<m;++i){
+            scanf("%d",&p[i]);
+            if(p[i]>low)low=p[i];
+            up+=p[i];
+        }
+        low=up/k>low?up/k:low;
+        while(low<=up){
+            int i,j;
+            int mid=(low+up)/2;
+            for(i=m-1,j=k;i>=0&&j>0;j--){
+                int num=0;
+                while(num+p[i]<=mid&&i>=j-1){
+                    num+=p[i--];
+                }
+
+            }
+            if(i>=0)low=mid+1;
+            else up=mid-1;
+        }
+        
+        for(int i=m-1,j=k;i>=0&&j>0;j--){
+            int num=0;
+            while(num+p[i]<=low&&i>=j-1){
+                num+=p[i--];
+            }
+            if(i>=0)
+                slash[i]=true;
+        }
+        for(int i=0;i<m;++i){
+            if(i==0){
+                printf("%d",p[i]);
+                if(slash[i])printf(" /");
+            }
+            else{
+                printf(" %d",p[i]);
+                if(slash[i])printf(" /");
+            }
+        }
+        printf("\n");
+    }
+    return 0;
+}

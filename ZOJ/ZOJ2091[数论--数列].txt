@@ -1,0 +1,36 @@
+/* ZOJ Problem Set - 2091
+*  Mean of Subsequence
+* 可以证明，最大值必定为从 某个 i 到 n 的最大值
+* 如果不是，那么设[i,t]为最大值，那么对于所有t<j<=n,都有[i,j]>[i,t]，那么显然 [t,j]>[i,t]
+* 那么显然 从t开始的任何值会比[i,t]来得大,矛盾。 
+*/
+#include<stdio.h>
+
+int main()
+{
+    int N;
+    int array[100000];
+    int sum[100000];
+    int i;
+    double Min;
+    int tempsum;
+    double totalMax;
+    while(scanf("%d",&N)!=EOF)
+    {
+        tempsum=0;
+        totalMax=-99999999;
+        for(i=0;i<N;i++)
+        {
+            scanf("%d",&array[i]);
+            tempsum+=array[i];
+            sum[i]=tempsum;
+        }
+        for(i=0;i<N;i++)
+        {
+            Min = 1.0*(sum[N-1]-sum[i]+array[i])/(N-i);
+            if(totalMax<Min) totalMax=Min;
+        }
+        printf("%.6f\n",totalMax);
+    }
+    return 0;
+}

@@ -1,0 +1,41 @@
+#include<iostream>
+#include<cstdio>
+#include<cmath>
+using namespace std;
+
+double Distance(double ax, double ay, double bx, double by)
+{
+    return sqrt(1.0*((ax-bx)*(ax-bx)+(ay-by)*(ay-by)));
+}
+int main()
+{
+    int T,i;
+    double ax,ay,bx,by,cx,cy,dx,dy;
+    scanf("%d",&T);
+    bool Yes;
+    for(i=1;i<=T;++i)
+    {
+        Yes=false;
+        scanf("%lf%lf%lf%lf%lf%lf%lf%lf",&ax,&ay,&bx,&by,&cx,&cy,&dx,&dy);
+        if(Distance(ax,ay,bx,by)==Distance(bx,by,cx,cy)&&
+           Distance(bx,by,cx,cy)==Distance(cx,cy,dx,dy)&&
+           Distance(ax,ay,dx,dy)==Distance(cx,cy,dx,dy)&&
+           Distance(ax,ay,cx,cy)==Distance(bx,by,dx,dy))
+           Yes=true;
+        if(Distance(ax,ay,cx,cy)==Distance(bx,by,cx,cy)&&
+           Distance(bx,by,cx,cy)==Distance(bx,by,dx,dy)&&
+           Distance(ax,ay,dx,dy)==Distance(bx,by,dx,dy)&&
+           Distance(ax,ay,bx,by)==Distance(cx,cy,dx,dy))
+           Yes=true;
+        if(Distance(ax,ay,cx,cy)==Distance(dx,dy,cx,cy)&&
+           Distance(bx,by,dx,dy)==Distance(cx,cy,dx,dy)&&
+           Distance(ax,ay,bx,by)==Distance(bx,by,dx,dy)&&
+           Distance(ax,ay,dx,dy)==Distance(bx,by,cx,cy))
+           Yes=true;
+        printf("Case %d:\n",i);
+        if(Yes) printf("Yes\n");
+        else printf("No\n");
+        if(i!=T) printf("\n");
+    }
+    return 0;
+}

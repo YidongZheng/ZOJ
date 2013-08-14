@@ -1,0 +1,92 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+
+using namespace std;
+
+int main()
+{
+    int N;
+    int len,i,j,k,len1;
+    char Str1[20],Str2[50],tempStr[50];
+    //freopen("in.txt","r",stdin);
+    //freopen("out.txt","w",stdout);
+    scanf("%d",&N);
+    while(N--)
+    {
+        scanf("%s%s",Str1,Str2);
+        len1=strlen(Str1);
+        len=strlen(Str2);
+        for(i=len1-1;i>=0;--i)
+        {
+            
+            switch(Str1[i])
+            {
+                case 'A':
+                     for(j=len-1;j>=0;j--)
+                        tempStr[len-1-j]=Str2[j];
+                     break;
+                case 'C':
+                     tempStr[len-1]=Str2[0];
+                     for(j=1;j<len;++j)
+                         tempStr[j-1]=Str2[j];
+                     break;
+                case 'E':
+                     //0 1 2 3 4 5 6
+                     if(len%2==1)
+                     {
+                         k=0;
+                         for(j=(len+1)/2;j<len;++j)
+                             tempStr[k++]=Str2[j];
+                         tempStr[len/2]=Str2[len/2];
+                         k++;
+                         for(j=0;j<len/2;++j)
+                             tempStr[k++]=Str2[j];
+                         
+                     }
+                     else
+                     {
+                         k=0;
+                         for(j=len/2;j<len;++j)
+                             tempStr[k++]=Str2[j];
+                         for(j=0;j<len/2;++j)
+                             tempStr[k++]=Str2[j];
+                     }
+                     break;
+                case 'J':
+                     tempStr[0]=Str2[len-1];
+                     for(j=0;j<len-1;++j)
+                        tempStr[j+1]=Str2[j];
+                     break;
+                case 'M':
+                     for(j=0;j<len;++j)
+                     {
+                         if(Str2[j]>='0'&&Str2[j]<'9')
+                             tempStr[j]=Str2[j]+1;
+                         else if(Str2[j]=='9')
+                             tempStr[j]='0';
+                         else
+                             tempStr[j]=Str2[j];
+                     }
+                     break;
+                case 'P':
+                     for(j=0;j<len;++j)
+                     {
+                         if(Str2[j]>'0'&&Str2[j]<='9')
+                             tempStr[j]=Str2[j]-1;
+                         else if(Str2[j]=='0')
+                             tempStr[j]='9';
+                         else
+                             tempStr[j]=Str2[j];
+                     } 
+                     break;
+                default:
+                     break;
+            }
+            tempStr[len]=0;
+            strcpy(Str2,tempStr);
+        }
+        printf("%s\n",Str2);
+    }
+    return 0;
+}

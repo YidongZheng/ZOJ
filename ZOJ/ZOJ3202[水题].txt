@@ -1,0 +1,35 @@
+#include<iostream>
+#include<cstdio>
+
+int main()
+{
+    int T,i,j,N,max,maxindex,secmax;
+    int A[110];
+    scanf("%d",&T);
+    for(i=0;i<T;i++)
+    {
+        scanf("%d",&N);
+        max=0;
+        maxindex=1;
+        secmax=0;
+        for(j=1;j<=N;j++)
+        {
+           scanf("%d",&A[j]);
+        }
+        for(j=1;j<=N;j++)
+        {
+           if(A[j]>max)
+           {
+              max=A[j];
+              maxindex=j;
+           }
+        }
+        for(j=1;j<=N;j++)
+        {
+           if(j != maxindex && A[j]>secmax)
+              secmax=A[j];
+        }
+        printf("%d %d\n",maxindex,secmax);
+    }
+    return 0;
+}

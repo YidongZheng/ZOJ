@@ -1,0 +1,33 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+
+int main()
+{
+    int brick;
+    int br[50];
+    scanf("%d",&brick);
+    int count = 1;
+    while(brick != 0)
+    {
+        int sum = 0;
+        int moven = 0;
+        for(int i=0;i<brick;i++)
+                {
+                   scanf("%d",&br[i]);
+                   sum += br[i];
+                }
+        int avg = sum / brick;
+        for(int i=0;i<brick;i++)
+        {
+                if(br[i] <= avg)
+                         moven+=(avg-br[i]);
+        }
+        printf("Set #%d\n",count++);
+        printf("The minimum number of moves is %d.\n\n",moven);
+        scanf("%d",&brick);
+        
+    }
+    
+    return 0;
+}

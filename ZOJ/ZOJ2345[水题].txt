@@ -1,0 +1,36 @@
+#include<iostream>
+#include<cstdio>
+int Ans(int a)
+{
+    int i,j=0;
+    int cnt=1;
+    int ans=0;
+    for(i=1;i<=a;i++)
+    {
+       ans+=cnt;
+       j++;
+       if(j>=cnt)
+           {cnt++;j=0;}    
+    }
+    return ans;
+}
+int main()
+{
+    int i,blocks,ttt;
+    scanf("%d",&blocks);
+    //printf("\n");
+    getchar();
+    //getchar();
+    for(i=0;i<blocks;i++)
+    {
+        while(scanf("%d",&ttt) != EOF)
+        {
+           if(ttt==0) break;
+           printf("%d %d\n",ttt,Ans(ttt));
+        }
+        if(i != blocks-1) getchar();
+        if(i != blocks-1) printf("\n");
+    }
+    getchar();
+    return 0;
+}

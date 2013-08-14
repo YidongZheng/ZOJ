@@ -1,0 +1,55 @@
+#include<iostream>
+#include<stdio.h>
+#include<string>
+using namespace std;
+
+int t;
+double a,b;
+
+double run1()
+{
+	return a*2+b*3+t*2.0/5.0;
+}
+
+double run2()
+{
+	return a*2.5+3.75*b+t*2.5/4.0;
+}
+
+int sw(double a)
+{
+	if((a-(int)a)>=0.5)
+	{
+		return (int)a+1;
+	}
+	else
+	{
+		return (int)a;
+	}
+}
+
+int main()
+{
+    //freopen("in.txt","r",stdin);
+	//freopen("out1.txt","w",stdout);
+	int T,d,Tax1,Tax2;
+	scanf("%d",&T);
+	while(T--)
+	{
+		scanf("%d%d",&d,&t);
+		a=0,b=0;
+		if(d>10)
+		{
+			b=d-10;
+			a=7;
+		}
+		else if(d>3)
+		{
+			a=d-3;
+		}
+		Tax1=sw(run1());
+		Tax2=sw(run2());
+		printf("%d\n",Tax2-Tax1);
+	}
+	return 0;
+}

@@ -1,0 +1,125 @@
+/*一般求余版，位数不高，但可以AC了*/
+
+#include<iostream>
+#include<cstdio>
+#include<cstdlib>
+#include<cstring>
+using namespace std;
+int NtoTen(char number[], int N);
+int SumDigit(int number);
+int main()
+{
+	int base;
+	char num[100];
+	int T;
+	scanf("%d",&T);
+	scanf("\n");
+	for(int i=0;i<T;i++)
+	{
+		scanf("%d",&base);
+		while(base != 0)
+		{
+			scanf("%s",&num);
+			int sum = 0;
+			for(int i=0;i<strlen(num);i++)
+			{
+				sum += num[i] - 48;
+			}
+			int numTen = NtoTen(num,base);
+			if(numTen % sum == 0)
+				printf("yes\n");
+			else
+				printf("no\n");
+			scanf("%d",&base);
+		}
+		if(i != T-1)
+			printf("\n");
+		
+		//printf("%d\n",NtoTen(ans,10));
+	}
+	int sum = 0;
+	
+
+	return 0;
+}
+int NtoTen(char number[], int N)
+{
+	int sum=0;
+	int k=1;
+	for(int i=strlen(number) - 1;i>=0;i--)
+	{
+		sum+=(number[i]-48)%10 * k;
+		k *= N;
+	}
+	return sum;
+	
+}
+int SumDigit(int number)
+{
+	int sum = 0;
+	while(number != 0)
+	{
+		sum+=(number%10);
+		number /= 10;
+	}
+	return sum;
+}
+/*以下是快速幂版，理论上可以处理比上面的程序多很多位时的情况*/
+#include<iostream>
+#include<cstdio>
+#include<cstdlib>
+#include<cstring>
+using namespace std;
+int PowerMod(int a, int b, int c);
+int SumDigit(int number);
+int main()
+{
+	int base;
+	char num[100];
+	int T;
+	scanf("%d",&T);
+	scanf("\n");
+	for(int i=0;i<T;i++)
+	{
+		scanf("%d",&base);
+		while(base != 0)
+		{
+			scanf("%s",&num);
+			int sum = 0;
+			for(int i=0;i<strlen(num);i++)
+			{
+				sum += num[i] - 48;
+			}
+			int reminder = 0;
+			for(int i=0;i<strlen(num);i++)
+            {
+                    reminder += ((num[i] - 48) % sum * PowerMod(base,strlen(num) - i - 1,sum))%sum;
+            }
+			if(reminder%sum == 0)
+				printf("yes\n");
+			else
+				printf("no\n");
+			scanf("%d",&base);
+		}
+		if(i != T-1)
+			printf("\n");
+	}
+	int sum = 0;
+	
+
+	return 0;
+}
+int PowerMod(int a, int b, int c)
+{
+    int ans = 1;
+    a = a % c;
+    while(b>0)
+    	{
+    	
+    	if(b % 2 == 1)
+    	ans = (ans * a) % c;
+    	b = b/2;
+    	a = (a * a) % c;
+    	}
+    return ans;
+}

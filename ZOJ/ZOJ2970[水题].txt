@@ -1,0 +1,36 @@
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+using namespace std;
+
+int main()
+{
+    int temp,i,j,N,T;
+    int Max, Min;
+    char Str[10];
+    scanf("%d",&T);
+    for(i=0;i<T;i++)
+    {
+        Min=5000;
+        Max=0;
+        scanf("%s",Str);
+        scanf("%d",&N);
+        for(j=0;j<N;j++)
+        {
+            scanf("%d",&temp);
+            if(temp > Max)
+                Max = temp;
+            if(temp < Min)
+                Min = temp;
+        }
+        if(!strcmp(Str,"Faster"))
+        {
+            printf("%d\n",Min);
+        }
+        else
+            printf("%d\n",Max);
+        
+    }
+
+    return 0;
+}

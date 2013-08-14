@@ -1,0 +1,66 @@
+#include<iostream>
+#include<cstdio>
+#include<set>
+#include<cmath>
+#include<cstring>
+
+/*因为Infinity选取的错误，浪费了1个多小时DEBUG。。。*/
+/*对于可能超过int的值，取下面的无穷比较好[话说这题为什么要超过int]*/
+#define Infinity ( (long long)(1) )<<62  
+using namespace std;
+void Shortest_Path_Bellman(int N, int Start, int End);
+
+double Map[310][310];
+double Distance[310];
+
+int main()
+{
+    int P;
+    int N,i,j,Start,End,M,tempS,tempE;
+    double tempN;
+    scanf("%d",&P);
+    while(P--)
+    {
+        scanf("%d%d%d%d",&N,&Start,&End,&M);
+        for(i=0;i<N;i++)
+           for(j=0;j<N;j++)
+             Map[i][j]=Infinity;
+        for(i=0;i<M;i++)
+        {
+            scanf("%d%d%lf",&tempS,&tempE,&tempN);
+            Map[tempS][tempE]=tempN;
+        }
+        Shortest_Path_Bellman(N,Start,End);
+    }
+    return 0;
+}
+void Shortest_Path_Bellman(int N, int Start, int End)
+{
+    int i,j,k;
+    bool in;
+    for(i=0;i<N;i++)
+      Distance[i]=Infinity;
+    Distance[Start]=0;
+    
+    for(i=0;i<N;i++)
+    {
+        in=false;
+        for(j=0;j<N;j++)
+        {
+            if(j!=Start)
+            {
+                for(k=0;k<N;k++)
+                {
+                  if(Map[k][j]!=Infinity && Distance[j]>Distance[k]+Map[k][j])
+                  {
+                      Distance[j]=Distance[k]+Map[k][j];
+                      in=true;
+                  }
+                }
+            }
+        }
+        if(!in) break;
+    }
+    if(i==N || (Distance[End]==Infinity)) printf("infinity\n");
+    else printf("%.0lf\n",Distance[End]);
+}

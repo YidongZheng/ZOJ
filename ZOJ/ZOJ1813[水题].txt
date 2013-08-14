@@ -1,0 +1,20 @@
+#include<iostream>
+#include<cstdio>
+
+using namespace std;
+
+int main()
+{
+    int R;
+    double D,T;
+    double dis,speed;
+    int cnt=1;
+    while(scanf("%lf%d%lf",&D,&R,&T) != EOF)
+    {
+        if(R==0) break;
+        dis=3.1415927*D*R/63360;
+        speed=dis/T*3600;
+        printf("Trip #%d: %.2lf %.2lf\n",cnt++,dis,speed);
+    }
+    return 0;
+}

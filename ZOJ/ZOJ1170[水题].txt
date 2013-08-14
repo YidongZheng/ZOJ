@@ -1,0 +1,65 @@
+#include<iostream>
+#include<cstdio>
+
+using namespace std;
+
+int GCD(int a, int b)
+{
+    int r=0;
+    while(b>0)
+    {
+        r=a%b;
+        a=b;
+        b=r;
+    }
+    return a;
+}
+int main()
+{
+    char Str1[1000],Str2[1000];
+    int len1,len2;
+    int i,j,k;
+    int Max;
+    int tempMax,temp;
+    while(scanf("%s",Str1) != EOF)
+    {
+        if(!strcmp(Str1,"-1")) break;
+        Max=0;
+        scanf("%s",Str2);
+        len1=strlen(Str1);
+        len2=strlen(Str2);
+        for(i=len1-1;i>=0;i--)
+        {
+            tempMax=0;
+            for(j=i,k=0;j<len1,k<len2;j++,k++)
+            {
+              if(Str1[j]==Str2[k])
+                  tempMax++;  
+            }
+            if(Max<tempMax) 
+                Max=tempMax;
+        }
+        for(i=len2-1;i>=0;i--)
+        {
+            tempMax=0;
+            for(j=i,k=0;j<len2,k<len1;j++,k++)
+            {
+              if(Str2[j]==Str1[k])
+                  tempMax++;  
+            }
+            if(Max<tempMax) 
+                Max=tempMax;
+        }
+        Max*=2;
+        if(Max==0)
+            printf("appx(%s,%s) = 0\n",Str1,Str2);
+        else if(Max==len1+len2)
+            printf("appx(%s,%s) = 1\n",Str1,Str2);
+        else
+        {
+            temp=GCD(Max,len1+len2);
+            printf("appx(%s,%s) = %d/%d\n",Str1,Str2,Max/temp,(len1+len2)/temp);
+        }
+    }
+    return 0;   
+}

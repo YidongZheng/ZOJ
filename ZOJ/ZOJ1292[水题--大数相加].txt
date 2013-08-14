@@ -1,0 +1,76 @@
+/*处理至多100个100位数相加的和*/
+#include<iostream>
+#include<cstdio>
+#include<cmath>
+#include<cstring>
+#include<cstdlib>
+int main()
+{
+    int T;
+    char a[200],ar[200],b[200],br[200],c[200],cr[200];
+    int  an[200],bn[200],cn[200];
+    scanf("%d",&T);
+    scanf("\n");
+        for(int cc=0;cc<T;cc++)
+           {
+                for(int i=0;i<200;i++)
+               {
+                 a[i] = b[i] = c[i] = 0;
+                 ar[i] = br[i] = cr[i] = 0;
+                 an[i] = bn[i] = cn[i] = 0;
+               }
+               scanf("%s",a);
+               scanf("%s",b);
+               int only = 0;
+               while(strcmp(b,"0"))
+               {
+                  only = 1;
+                  for(int i=0;i<strlen(a);i++)
+                  {
+                          ar[i] = a[strlen(a) - i - 1];
+                          an[i] = ar[i] - 48; 
+                  }
+                  for(int i=0;i<strlen(b);i++)
+                  {
+                          br[i] = b[strlen(b) - i - 1];
+                             bn[i] = br[i] - 48; 
+                  }
+                  int carry = 0;
+                  for(int i= 0;i<(strlen(a)> strlen(b)?strlen(a):strlen(b));i++)
+                  {
+                          
+                          cn[i] = an[i] + bn[i] + carry;
+                          if(cn[i]>=10)
+                               {
+                                 carry = 1;
+                                 cn[i] = cn[i] - 10;
+                               }
+                          else
+                              carry = 0;
+                          cr[i] = '0' + cn[i]; 
+                  }
+                  if(carry == 1)
+                           cr[(strlen(a)> strlen(b)?strlen(a):strlen(b))] = '1';
+                  for(int i=0;i<strlen(cr);i++)
+                  {
+                         c[i] = cr[strlen(cr) - i - 1];
+                  }
+                  for(int i=0;i<200;i++)
+                   {
+                     a[i] = c[i];
+                     b[i] = 0;
+                   }
+                   scanf("%s",b);
+               }
+           if(!strcmp(a,"0"))
+                   printf("0\n");
+           else if(!strcmp(b,"0"))
+                   printf("%s\n",a);
+           else
+           printf("%s\n",c);
+           if(cc != T - 1)
+                printf("\n");
+    
+    }
+    return 0;
+}

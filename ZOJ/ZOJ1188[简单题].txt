@@ -1,0 +1,52 @@
+#include<iostream>
+#include<algorithm>
+#include<cstdio>
+using namespace std;
+
+int main()
+{
+	int T;
+	scanf("%d",&T);
+	scanf("\n");
+	char* str[100];
+	int c[100];
+	for(int i=0;i<100;i++)
+		str[i] = (char*)malloc(sizeof(char) * 50);
+	for(int i=0;i<T;i++)
+    {
+		int len,num;
+		scanf("%d%d",&len,&num);
+		for(int j=0;j<num;j++)
+		{
+			scanf("%s",str[j]);
+			int count=0;
+			for(int k=0;k<len;k++)
+				for(int m=k+1;m<len;m++)
+				{
+						if(str[j][m] < str[j][k])
+							count++;
+				}
+			c[j] = count;
+		}	 
+	 for(int i=0;i<num;i++)
+	 {
+         int Min = 10000;
+		 int temp = 0;
+		 for(int j=0;j<num;j++)
+		 {
+			if (c[j] < Min)
+			{
+				Min = c[j];
+				temp = j;
+			}
+			
+		 }
+		 c[temp] = 10000;
+		 printf("%s\n",str[temp]);
+	 }
+      if(i != T-1)
+         printf("\n");  
+	}
+   system("pause");
+   return 0;
+}

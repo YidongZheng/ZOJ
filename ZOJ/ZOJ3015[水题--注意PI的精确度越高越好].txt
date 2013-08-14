@@ -1,0 +1,33 @@
+#include<iostream>
+#include<cstdio>
+#include<cmath>
+using namespace std;
+double RadiusToAngle(double a);
+double AngleToRadius(double a);
+int main()
+{
+    double k,h,a,b;
+    double s1,s2,s3,ang1,ang2,L,ang3;
+    while(scanf("%lf%lf%lf%lf",&k,&h,&a,&b)!=EOF)
+    {
+        s1=sqrt(a*a+b*b);
+        L=h/tan(AngleToRadius(k)); 
+        L=L-b;
+        s2=2*L*sin(AngleToRadius(k));
+        ang1=atan(a/b);
+        ang2=AngleToRadius(90-k);
+        ang3=3.1415926535898-ang1-ang2;
+        s3=a*a+b*b+s2*s2-2*s1*s2*cos(ang3);
+        s3=sqrt(s3);
+        printf("%.2lf\n",s3);
+    }
+    return 0;
+}
+double RadiusToAngle(double a)
+{
+       return a*180/3.1415926535898;
+}
+double AngleToRadius(double a)
+{
+       return a*3.1415926535898/180;
+}
